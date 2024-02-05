@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "LeskSoftware",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"arduino.h": "c"
+		}
+	}
+}
