@@ -1,12 +1,14 @@
-#ifndef STRIPES_H
-#define STRIPES_H
-#include <WS2812FX.h>
+#ifndef STRIPESFA_H
+#define STRIPESFA_H
+
+#include <FastLED.h>
 
 
-class Stripes {
+
+class StripesFA {
 
     public :
-        Stripes(int _port, int _length, int _direction, int _speed, short int _mode, uint32_t _color);
+        StripesFA(int _port, int _length, int _direction, int _speed, short int _mode, uint32_t _color);
 
         void setEffect(uint8_t effect);
         void setBrightness(uint8_t brightness);
@@ -20,7 +22,7 @@ class Stripes {
         int direction;
         int speed;
         uint32_t color;
-        WS2812FX ws2812fx;
+        CFastLED fastleds;
 
 };
 

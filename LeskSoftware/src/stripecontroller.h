@@ -1,7 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "stripes.h"
+#include "stripesWS.h"
+#include "stripesFA.h"
 
 
 class StripeController {
@@ -17,7 +18,11 @@ class StripeController {
         int getNumberOfStripes();
     
     private:
-        std::vector<Stripes> stripes;
+        // For WS2812FX
+        // std::vector<StripesWS> stripesWS;
+
+        // For FastLED
+        std::vector<StripesFA> stripesFA;
         
 
 };

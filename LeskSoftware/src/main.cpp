@@ -16,17 +16,13 @@ void setup() {
 
 void loop() {
 
-    std::cout << "Number of stripes : " << stripe_controller.getNumberOfStripes() << std::endl;
-    delay(3000);
-    // delay(5000);
-    // Serial.println("Switched colors");
-    // stripe_controller.setColor(255, 0, 0);
-    // delay(5000);
-    // Serial.println("Switched colors");
-    // stripe_controller.setColor(0, 255, 0);
-    // delay(5000);
-    // Serial.println("Switched colors");
-    // stripe_controller.setColor(0, 0, 255);
-    // delay(5000);
-    // stripe_controller.stop();
+    delay(5000);
+    Serial.println("Switched colors");
+    stripe_controller.setColor(255, 0, 0);
+    delay(5000);
+    Serial.println("Switched colors");
+    stripe_controller.setColor(0, 255, 0);
+    delay(5000);
+    Serial.println("Switched colors");
+    stripe_controller.setColor(0, 0, 255);
 }
