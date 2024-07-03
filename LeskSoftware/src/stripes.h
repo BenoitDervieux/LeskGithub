@@ -6,18 +6,21 @@
 class Stripes {
 
     public :
-        Stripes(int _port, int _length, int _direction, int _speed, short int _mode, WS2812FX _ws2812fx);
+        Stripes(int _port, int _length, int _direction, int _speed, short int _mode, uint32_t _color);
 
-        void setEffect();
-        void setBrightness();
-        void setColor();
+        void setEffect(uint8_t effect);
+        void setBrightness(uint8_t brightness);
+        void setColor(uint8_t g, uint8_t r, uint8_t b);
+        void stop();
+
 
     public : 
         int port;
         int length;
         int direction;
         int speed;
-        WS2812FX &ws2812fx;
+        uint32_t color;
+        WS2812FX ws2812fx;
 
 };
 

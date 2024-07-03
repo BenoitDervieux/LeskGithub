@@ -4,17 +4,21 @@
 #include "stripes.h"
 
 
-class Controller {
-    public:
-        Controller();
+class StripeController {
 
+    public:
+        StripeController();
+        void setup();
         void setColor(uint8_t red, uint8_t green, uint8_t blue);
         void setEffect(uint8_t effect);
         void setBrightness(uint8_t brightness);
         void run();
+        void stop();
+        int getNumberOfStripes();
     
     private:
-        Stripes stripes;
+        std::vector<Stripes> stripes;
+        
 
 };
 
