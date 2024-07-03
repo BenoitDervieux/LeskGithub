@@ -1,4 +1,4 @@
-#include "stripesWS.h"
+/*#include "stripesWS.h"
 #include "const.h"
 #include <iostream>
 #include <WS2812FX.h>
@@ -39,3 +39,4 @@ void StripesWS::stop() {
     ws2812fx.service();
 }
 
+*/

@@ -1,7 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "stripesWS.h"
 #include "stripesFA.h"
 
 
@@ -16,12 +15,17 @@ class StripeController {
         void run();
         void stop();
         int getNumberOfStripes();
+
+        std::vector<uint32_t> getColors1();
+        std::vector<uint32_t> getColors2();
+        std::vector<uint32_t> getColors3();
+        std::vector<int> getPorts();
+        std::vector<int> getLengths();
+        std::vector<int> getDirections();
+        std::vector<uint8_t> getEffects();
     
     private:
-        // For WS2812FX
-        // std::vector<StripesWS> stripesWS;
 
-        // For FastLED
         std::vector<StripesFA> stripesFA;
         
 
