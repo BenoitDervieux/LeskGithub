@@ -4,9 +4,6 @@
 #include <FastLED.h>
 
 
-// #define NUM_LEDS 10
-// #define DATA_PIN_1 18
-// #define DATA_PIN_2 23
 CRGB leds[NUM_LEDS];
 
 // Constructor 1 color
@@ -33,6 +30,9 @@ StripesFA::StripesFA(int _port, int _length, int _direction, uint32_t _color1, u
     this->setup(_port, _length);
 }
 
+
+
+
 void StripesFA::setup(int port, int _length) {
     if (port == DATA_PIN_1) {
     FastLED.addLeds<WS2812B, DATA_PIN_1, GRB>(leds, _length);
@@ -40,7 +40,6 @@ void StripesFA::setup(int port, int _length) {
     FastLED.addLeds<WS2812B, DATA_PIN_2, GRB>(leds, _length);
     }
     FastLED.setBrightness(100);
-
 }
 
 
@@ -51,12 +50,15 @@ void StripesFA::setEffect(uint8_t effect) {
     switch(effect) {
         case 0:
             fill_solid(leds, NUM_LEDS, CRGB(this->color1));
+            this->effect = 0;
             break;
         case 1:
             fill_rainbow(leds, NUM_LEDS, 0, 255 / NUM_LEDS);
+            this->effect = 1;
             break;
         case 2:
             fill_gradient_RGB(leds, NUM_LEDS, CRGB(255,0,0), CRGB(0,0,255));
+            this->effect = 2;
             break;
         case 3:
             break;

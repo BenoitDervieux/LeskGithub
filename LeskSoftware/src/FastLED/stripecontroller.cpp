@@ -55,15 +55,8 @@ void StripeController::setBrightness(uint8_t brightness) {
     }
 }
 
-void StripeController::stop() {
-    //[TODO]
-    //Here eventually we can think of a constant boolean if it's 1 we can't proceed anyfunction we have
-    // And the strip is black
-}
-
 int StripeController::getNumberOfStripes() {
-    return stripesFA.size();
-    
+    return stripesFA.size();  
 }
 
 
@@ -115,5 +108,11 @@ std::vector<uint8_t> StripeController::getEffects() {
         effects.push_back(s.getEffect());
     }
     return effects;
+}
 
+
+void StripeController::stop() {
+    //[TODO]
+    //Here eventually we can think of a constant boolean if it's 1 we can't proceed anyfunction we have
+    // And the strip is black
 }
