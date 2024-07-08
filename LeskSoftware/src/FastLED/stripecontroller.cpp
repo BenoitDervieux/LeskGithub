@@ -1,22 +1,42 @@
 #include "stripecontroller.h"
 #include <iostream>
 #include "listeffects.h"
+#include "XMLparser.h"
+#include "listeffectsmapping.h"
 
 StripeController::StripeController() {
     
 }
 
 void StripeController::setup() {
-    // Here we initialize the 1 stripe,let's fake it
-    // SIMULATE --> fetching the information here
-    int port = 18;
-    int length = 10;
-    int direction = 1;
+    // Here we initialize the stripes using the data from the XML file
+    // [TODO] Fetch all the data from the XML file
+    // [TODO] Check the problem of constants
+    XMLDocument doc;
+    XMLNodeList list;
     short int mode = 0;
-    uint32_t color = 0xFF0000;
+    if(loadXMLDocument(&doc, "../../data/Machine.xml", &list) == 1) {
+        // 1st function to retrieve the number of the function at start
+        XMLNode* functionStart = getNodeContent(&list, "functionStart");
+        if(!strcmp(functionStart->word, "none")) {
+            mode =0;
+        } else {
+            mode = atoi(functionStart->word);
+        }
+        // 2nd function to retrieve the name of the function at start
+        XMLNode* function_at_start = getNodeContent(&list, "function_at_start");
+        mode = getFunctionNumber(function_at_start->word);
+    }
+
+    int port = 18; // Should be a constant
+    int length = 10; // Should be a constant
+
+    int direction = 1; // Do not need to be a constant
+    // [TODO] --> Let's have 3 colors in total
+    uint32_t color = 0xFF0000; // Do not need to be a constant
 
     // Simulate the number of stripes fetched
-    int nb_stripes = 1;
+    int nb_stripes = 1; // Do not need to be a constant
 
     //*************************************
     for (int i = 0; i < nb_stripes; i++) {
