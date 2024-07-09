@@ -12,7 +12,7 @@
 CRGB leds[NUM_LEDS];
 
 // Constructor 1 color
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color, uint8_t effect_number = 0)
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color, uint8_t effect_number)
  : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color), effect(effect_number) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
@@ -20,7 +20,7 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_
 }
 
 // Constructor 2 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint8_t effect_number = 0)
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint8_t effect_number)
  : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color1), color2(_color2), effect(effect_number) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
@@ -28,7 +28,7 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_
 }
 
 // Constructor 3 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint32_t _color3, uint8_t effect_number = 0)
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint32_t _color3, uint8_t effect_number)
  : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color1), color2(_color2), color3(_color3), effect(effect_number) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
@@ -40,10 +40,13 @@ void StripesFA::setup(int port, int _length) {
 
     if (port == DATA_PIN_1) {
     FastLED.addLeds<WS2812B, DATA_PIN_1, GRB>(leds, _length);
+    this->fastleds = FastLED;
     } else if (port == DATA_PIN_2) {
     FastLED.addLeds<WS2812B, DATA_PIN_2, GRB>(leds, _length);
+    this->fastleds = FastLED;
     }
     FastLED.setBrightness(100);
+    FastLED.show();
 }
 
 

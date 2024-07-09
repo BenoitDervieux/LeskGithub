@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "SPIFFS.h"
 
 #ifndef TRUE
     #define TRUE 1
@@ -74,23 +75,24 @@ char* XMLNode_getWord(XMLNodeList* list,  const char* node);
 
 
 int loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
-    FILE* file = fopen(path, "r");
-    if (file == NULL) {
-        printf("Error opening file\n");
-        return 1;
-    }
-    
-    // The idea is to initialize a node, renew it every while
-    // add every elements one after the other
-    // and start again
-    // So 1 - we intialize a node
-    // 2 - we add its attribute when we have them
-    // 3 - we add it into a wider linked list
 
-    fseek(file, 0, SEEK_END);
-    int size = ftell(file);
-    fseek(file, 0, SEEK_SET);
-    char* buffer = (char*) malloc(sizeof(char) * size + 1);
+    if(!SPIFFS.begin(true)){
+        Serial.println("An Error has occurred while mounting SPIFFS");
+        return 0;
+    }
+    // Test here --> Opens
+    fs::File filep = SPIFFS.open("/Machine.xml", "r");
+    if (!filep) {
+        Serial.println("Failed to open file");
+        return 0;
+    }
+
+    size_t filesize = filep.size();
+    Serial.println("File size: " + String(filesize));
+    char* buffer = (char*) malloc(sizeof(char) * filesize + 1);
+
+    // Problem when the size is 629 or 630
+
     //
     // Variables
     //
@@ -98,6 +100,7 @@ int loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
     int d = 0;
     int tagBool = FALSE;
     int tagContent = FALSE;
+    int size = 1;
 
     // Node variables
     char wordu[256];
@@ -107,15 +110,19 @@ int loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
         "value"
     };
     int degree=0;
-    struct _XMLNode* prev;
-
 
     doc->root = XMLNode_init();
     XMLNode* current_node = doc->root;
     XMLNodeList* node_list = list;
     XMLNodeList_init(node_list);
 
-    while ((c = fgetc(file)) != EOF) {
+    size = 1;
+    // Serial.println("Oui je teste");
+    while (filep.available()) {
+        // Serial.print("Size: "); Serial.println(size);
+        c = filep.read();
+
+        
 
         // long position;
         // position = ftell(file);
@@ -140,7 +147,7 @@ int loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
             if (tagBool) {
                 // This is where we catch the end of a tag, need to be carefull with the index of the 
                 // tag. As we said, ftell starts with 1, not 0
-                current_node->end = ftell(file);
+                current_node->end = size;
                 // Here we check if we are in the beginning of a tag
                 // [TODO] --> To implement a way to define attributes here
                 // Not implemented on purpose
@@ -176,7 +183,7 @@ int loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
             // Reset the booleans
             tagBool = FALSE;
             tagContent = TRUE;
-            current_node->start = ftell(file);
+            current_node->start = size;
         }
 
         // Copies tag in buffer
@@ -200,9 +207,9 @@ int loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
             // We get the start position of any node here, the position starts with 1
             // but in ftell terms it's the 0. However, we'll have to add 1
             if (tagContent)
-                current_node->end = ftell(file);
+                current_node->end = size;
             else 
-                current_node->start = ftell(file);
+                current_node->start = size;
             if(tagContent) {
                 for (int i = 0; i < d + 1; i++) {
                     wordu[i] = buffer[i];
@@ -223,10 +230,12 @@ int loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
             tagContent = FALSE;
             tagBool = TRUE;
         }
-    
+        size++;
     }
-    printf("\n");
-    fclose(file);
+    // printf("\n");
+    // Serial.println("Print la liste");
+    // XMLNodeList_print(node_list);
+    filep.close();
     return 1;
 }
 
@@ -319,7 +328,6 @@ void XMLNodeList_free(XMLNodeList* list)
 // So it would be better with a "Get content node"
 char* XMLNode_getWord(XMLNodeList* list,  const char* node) {
     XMLNode* current;
-    XMLNode* next;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
         if (strcmp(current->word, node) == 0) {
@@ -336,7 +344,6 @@ char* XMLNode_getWord(XMLNodeList* list,  const char* node) {
 // Get the type of the node
 char* XMLNode_getType(XMLNodeList* list,  char* node) {
     XMLNode* current;
-    XMLNode* next;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
         if (strcmp(current->word, node) == 0) {
@@ -351,7 +358,6 @@ char* XMLNode_getType(XMLNodeList* list,  char* node) {
 // Get the degree of the node
 int XMLNode_getDegree(XMLNodeList* list,  char* node) {
     XMLNode* current;
-    XMLNode* next;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
         if (strcmp(current->word, node) == 0) {
@@ -366,7 +372,6 @@ int XMLNode_getDegree(XMLNodeList* list,  char* node) {
 // Get the start of the node
 long int XMLNode_getStart(XMLNodeList* list,  char* node) {
     XMLNode* current;
-    XMLNode* next;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
         if (strcmp(current->word, node) == 0) {
@@ -379,7 +384,6 @@ long int XMLNode_getStart(XMLNodeList* list,  char* node) {
 // Get the end of the node
 long int XMLNode_getEnd(XMLNodeList* list, char* node) {
     XMLNode* current;
-    XMLNode* next;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
         if (strcmp(current->word, node) == 0) {
@@ -394,7 +398,6 @@ long int XMLNode_getEnd(XMLNodeList* list, char* node) {
 // [TODO] --> Test this function because it seems as if it gives the normal amount of node
 char* XMLNode_getNode(XMLNodeList* list,  char* text) {
     XMLNode* current;
-    XMLNode* previous;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
         if (strcmp(current->word, text) == 0) {
@@ -416,8 +419,8 @@ char* getLast(XMLNodeList* list) {
 }
 
 XMLNode * getNodeContent(XMLNodeList * list, const char* node) {
+
     XMLNode* current;
-    XMLNode* next;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
         if (strcmp(current->word, node) == 0) {

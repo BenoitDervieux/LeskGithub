@@ -5,6 +5,7 @@
 #include "listeffectsmapping.h"
 #include "colormapping.h"
 #include "const.h"
+#include "SPIFFS.h"
 
 StripeController::StripeController() {
     
@@ -24,7 +25,7 @@ void StripeController::setup() {
 
     XMLDocument doc;
     XMLNodeList list;
-    if(loadXMLDocument(&doc, "../../data/Machine.xml", &list) == 1) {
+    if(loadXMLDocument(&doc, "Machine.xml", &list) == 1) {
         // 1st function to retrieve the number of the function at start
         XMLNode* result = getNodeContent(&list, "functionStart");
         if(!strcmp(result->word, "none")) {
@@ -59,6 +60,14 @@ void StripeController::setup() {
             result = getNodeContent(&list, placeholder_name_data_pin);
             ports[i] = atoi(result->word);
         }
+
+        Serial.println("Number of data pins: " + String(data_pins));
+        Serial.println("Number of stripes: " + String(nb_stripes));
+        Serial.println("Ports: " + String(ports[0]) + " " + String(ports[1]));
+        Serial.println("Mode: " + String(mode));
+        Serial.println("Color 1: " + String(color1));
+        Serial.println("Color 2: " + String(color2));
+        Serial.println("Color 3: " + String(color3));
     }
 
     for (int i = 0; i < nb_stripes; i++) {

@@ -44,7 +44,7 @@ class StripesFA {
         uint32_t color2;
         uint32_t color3;
         CFastLED fastleds;
-        uint8_t effect;
+        short int effect;
 };
 
 #endif
