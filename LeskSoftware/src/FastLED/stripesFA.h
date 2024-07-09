@@ -9,10 +9,9 @@ class StripesFA {
 
     public :
         // Constructor with one color
-        StripesFA(int _port, int _length, int _direction, uint32_t _color, uint8_t effect_number = 0);
-        // [TODO] Constructor with 2 and 3 colors
-        StripesFA(int _port, int _length, int _direction, uint32_t _color1, uint32_t _color2, uint8_t effect_number = 0);
-        StripesFA(int _port, int _length, int _direction, uint32_t _color1, uint32_t _color2, uint32_t _color3, uint8_t effect_number = 0);
+        StripesFA(int _port, int _length, int _direction, int speed, uint32_t _color, uint8_t effect_number = 0);
+        StripesFA(int _port, int _length, int _direction, int speed, uint32_t _color1, uint32_t _color2, uint8_t effect_number = 0);
+        StripesFA(int _port, int _length, int _direction, int speed, uint32_t _color1, uint32_t _color2, uint32_t _color3, uint8_t effect_number = 0);
 
         void setup(int port, int _length);
 
@@ -40,6 +39,7 @@ class StripesFA {
         int port;
         int length;
         int direction;
+        int speed;
         uint32_t color1;
         uint32_t color2;
         uint32_t color3;

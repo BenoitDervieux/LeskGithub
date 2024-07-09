@@ -3,37 +3,41 @@
 #include <iostream>
 #include <FastLED.h>
 
-
+// Here I have hard time to fetch a value from .xml and to make it a constant
+// So I will leave it like this and we'll see what happens
+// It breaks the idea of fetching information from a .xml file
+// But let's go from the idea of us having 2 stripes with 10 colors
+// The first one is connected to pin 18
+// The second one is connected to pin 23
 CRGB leds[NUM_LEDS];
 
 // Constructor 1 color
-StripesFA::StripesFA(int _port, int _length, int _direction, uint32_t _color, uint8_t effect_number = 0)
- : port(_port), length(_length), direction(_direction), color1(_color), effect(effect_number) {
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color, uint8_t effect_number = 0)
+ : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color), effect(effect_number) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
 }
 
 // Constructor 2 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, uint32_t _color1, uint32_t _color2, uint8_t effect_number = 0)
- : port(_port), length(_length), direction(_direction), color1(_color1), color2(_color2), effect(effect_number) {
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint8_t effect_number = 0)
+ : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color1), color2(_color2), effect(effect_number) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
 }
 
 // Constructor 3 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, uint32_t _color1, uint32_t _color2, uint32_t _color3, uint8_t effect_number = 0)
- : port(_port), length(_length), direction(_direction), color1(_color1), color2(_color2), color3(_color3), effect(effect_number) {
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint32_t _color3, uint8_t effect_number = 0)
+ : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color1), color2(_color2), color3(_color3), effect(effect_number) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
 }
 
 
-
-
 void StripesFA::setup(int port, int _length) {
+
     if (port == DATA_PIN_1) {
     FastLED.addLeds<WS2812B, DATA_PIN_1, GRB>(leds, _length);
     } else if (port == DATA_PIN_2) {
