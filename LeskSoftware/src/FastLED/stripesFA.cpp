@@ -12,24 +12,24 @@
 CRGB leds[NUM_LEDS];
 
 // Constructor 1 color
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color, uint8_t effect_number)
- : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color), effect(effect_number) {
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color)
+ : port(_port), length(_length), direction(_direction), speed(_speed), effect(_effect), color1(_color)  {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
 }
 
 // Constructor 2 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint8_t effect_number)
- : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color1), color2(_color2), effect(effect_number) {
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color1, uint32_t _color2)
+ : port(_port), length(_length), direction(_direction), speed(_speed), effect(_effect), color1(_color1), color2(_color2) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
 }
 
 // Constructor 3 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, uint32_t _color1, uint32_t _color2, uint32_t _color3, uint8_t effect_number)
- : port(_port), length(_length), direction(_direction), speed(_speed), color1(_color1), color2(_color2), color3(_color3), effect(effect_number) {
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color1, uint32_t _color2, uint32_t _color3)
+ : port(_port), length(_length), direction(_direction), speed(_speed), effect(_effect), color1(_color1), color2(_color2), color3(_color3) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
@@ -45,12 +45,15 @@ void StripesFA::setup(int port, int _length) {
     FastLED.addLeds<WS2812B, DATA_PIN_2, GRB>(leds, _length);
     this->fastleds = FastLED;
     }
+    Serial.print("Test what effect we have: ");
+    Serial.println(this->effect);
+    this->setEffect(this->effect);
     FastLED.setBrightness(100);
     FastLED.show();
 }
 
 
-void StripesFA::setEffect(uint8_t effect) {
+void StripesFA::setEffect(int effect) {
     // This system of switching effect seems good for now
     // I just need to get a lot of function and to define them
     // in the listeffects.h file
@@ -113,7 +116,7 @@ int StripesFA::getDirection() {
     return this->direction;
 
 }
-uint8_t StripesFA::getEffect() {
+int StripesFA::getEffect() {
     return this->effect;
 }
 

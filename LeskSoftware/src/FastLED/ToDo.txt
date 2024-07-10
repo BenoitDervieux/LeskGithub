@@ -1,0 +1,13 @@
+ToDo: 
+** XMLParser --> Write in the xml file after modification
+** Implement the webserver (Asyncwebserver + websockets)
+** Find the JSON Parser
+
+
+ToDo Low Energy:
+**Find new effect and map them
+**Find colors and map them (from this website: https://encycolorpedia.fr/html)
+
+ToDo Not Coding: 
+**Start learning graph theory
+**Analyse WLED to see what to copy, both the APP and the code
