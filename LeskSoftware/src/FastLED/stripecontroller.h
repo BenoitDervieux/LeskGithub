@@ -2,7 +2,7 @@
 #define STRIPECONTROLLER_H
 
 #include "stripesFA.h"
-#include "XMLParser2.h"
+#include "XMLParser.h"
 
 
 class StripeController {

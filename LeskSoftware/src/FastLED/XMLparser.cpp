@@ -1,8 +1,8 @@
-#include "XMLParser2.h"
+#include "XMLParser.h"
 
 
 
-int XMLParser2::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
+int XMLParser::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
 // int XMLParser2::loadXMLDocument(const char* path) {
     // XMLDocument document;
     // XMLNodeList temp_list;
@@ -159,12 +159,12 @@ int XMLParser2::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList*
 
 
 // Check if the string starts with a specific character 
-int XMLParser2::starts_with(const char *str, const char ch ){
+int XMLParser::starts_with(const char *str, const char ch ){
     return str[0] == ch;
 }
 
 // Instantiate a new node using a parent node
-XMLNode* XMLParser2::XMLNode_new(XMLNode* parent) {
+XMLNode* XMLParser::XMLNode_new(XMLNode* parent) {
     XMLNode* node = (XMLNode*)malloc(sizeof(XMLNode));;
     node->word = parent->word;
     node->type = parent->type;
@@ -175,7 +175,7 @@ XMLNode* XMLParser2::XMLNode_new(XMLNode* parent) {
 }
 
 // Free the node
-void XMLParser2::XMLNode_free(XMLNode* node) {
+void XMLParser::XMLNode_free(XMLNode* node) {
     if (node->word != NULL) {
         free(node->word);
     }
@@ -189,7 +189,7 @@ void XMLParser2::XMLNode_free(XMLNode* node) {
 };
 
 // Initialize a new Node
-XMLNode* XMLParser2::XMLNode_init() {
+XMLNode* XMLParser::XMLNode_init() {
     XMLNode* node = (XMLNode*)malloc(sizeof(XMLNode));;
     node->word = NULL;
     node->type = NULL;
@@ -200,7 +200,7 @@ XMLNode* XMLParser2::XMLNode_init() {
 }
 
 // Initialize the list of nodes
-void XMLParser2::XMLNodeList_init(XMLNodeList* list)
+void XMLParser::XMLNodeList_init(XMLNodeList* list)
 {
     list->heap_size = 1;
     list->size = 0;
@@ -208,7 +208,7 @@ void XMLParser2::XMLNodeList_init(XMLNodeList* list)
 }
 
 // Add a new node
-void XMLParser2::XMLNodeList_add(XMLNodeList* list, XMLNode* node)
+void XMLParser::XMLNodeList_add(XMLNodeList* list, XMLNode* node)
 {
     while (list->size >= list->heap_size) {
         list->heap_size *= 2;
@@ -218,7 +218,7 @@ void XMLParser2::XMLNodeList_add(XMLNodeList* list, XMLNode* node)
 }
 
 // Print the list of nodes
-void XMLParser2::XMLNodeList_print(XMLNodeList* list) {
+void XMLParser::XMLNodeList_print(XMLNodeList* list) {
     for (int i = 0; i < list->size; i++) {
         printf("Word : %s, Type: %s, Degree: %d, Start: %ld, End: %ld\n", 
         list->data[i]->word, list->data[i]->type, list->data[i]->degree,
@@ -227,7 +227,7 @@ void XMLParser2::XMLNodeList_print(XMLNodeList* list) {
 }
 
 // Free the list of Nodes
-void XMLParser2::XMLNodeList_free(XMLNodeList* list)
+void XMLParser::XMLNodeList_free(XMLNodeList* list)
 {
     if (list->data != NULL) {
         for (int i = 0; i < list->size; i++) {
@@ -244,7 +244,7 @@ void XMLParser2::XMLNodeList_free(XMLNodeList* list)
 // Get the content the word of Node
 // [TODO] --> Rename it because it feels like we get the content of the next node
 // So it would be better with a "Get content node"
-char* XMLParser2::XMLNode_getWord(XMLNodeList* list,  const char* node) {
+char* XMLParser::XMLNode_getWord(XMLNodeList* list,  const char* node) {
     XMLNode* current;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
@@ -260,7 +260,7 @@ char* XMLParser2::XMLNode_getWord(XMLNodeList* list,  const char* node) {
 }
 
 // Get the type of the node
-char* XMLParser2::XMLNode_getType(XMLNodeList* list,  char* node) {
+char* XMLParser::XMLNode_getType(XMLNodeList* list,  char* node) {
     XMLNode* current;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
@@ -274,7 +274,7 @@ char* XMLParser2::XMLNode_getType(XMLNodeList* list,  char* node) {
 }
 
 // Get the degree of the node
-int XMLParser2::XMLNode_getDegree(XMLNodeList* list,  char* node) {
+int XMLParser::XMLNode_getDegree(XMLNodeList* list,  char* node) {
     XMLNode* current;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
@@ -288,7 +288,7 @@ int XMLParser2::XMLNode_getDegree(XMLNodeList* list,  char* node) {
 }
 
 // Get the start of the node
-long int XMLParser2::XMLNode_getStart(XMLNodeList* list,  char* node) {
+long int XMLParser::XMLNode_getStart(XMLNodeList* list,  char* node) {
     XMLNode* current;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
@@ -300,7 +300,7 @@ long int XMLParser2::XMLNode_getStart(XMLNodeList* list,  char* node) {
 }
 
 // Get the end of the node
-long int XMLParser2::XMLNode_getEnd(XMLNodeList* list, char* node) {
+long int XMLParser::XMLNode_getEnd(XMLNodeList* list, char* node) {
     XMLNode* current;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
@@ -314,7 +314,7 @@ long int XMLParser2::XMLNode_getEnd(XMLNodeList* list, char* node) {
 
 // Get the previous node
 // [TODO] --> Test this function because it seems as if it gives the normal amount of node
-char* XMLParser2::XMLNode_getNode(XMLNodeList* list,  char* text) {
+char* XMLParser::XMLNode_getNode(XMLNodeList* list,  char* text) {
     XMLNode* current;
     for (int i = 0; i < list->size; i++) {
         current = list->data[i];
@@ -328,7 +328,7 @@ char* XMLParser2::XMLNode_getNode(XMLNodeList* list,  char* text) {
 }
 
 // Get Last Node
-char* XMLParser2::getLast(XMLNodeList* list) {
+char* XMLParser::getLast(XMLNodeList* list) {
     if (list->size != 0) {
         // printf("Get Last test %s\n", list->data[list->size-1]->word);
         return list->data[list->size-1]->word;
@@ -336,7 +336,7 @@ char* XMLParser2::getLast(XMLNodeList* list) {
     return NULL;
 }
 
-XMLNode * XMLParser2::getNodeContent(XMLNodeList * list, const char* node) {
+XMLNode * XMLParser::getNodeContent(XMLNodeList * list, const char* node) {
 
     XMLNode* current;
     for (int i = 0; i < list->size; i++) {
@@ -350,7 +350,7 @@ XMLNode * XMLParser2::getNodeContent(XMLNodeList * list, const char* node) {
     return NULL;
 }
 
-int XMLParser2::reloadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
+int XMLParser::reloadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* list) {
     XMLNodeList_free(list);
     XMLNodeList_init(list);
     return loadXMLDocument(doc, path, list);
@@ -358,7 +358,7 @@ int XMLParser2::reloadXMLDocument(XMLDocument* doc, const char* path, XMLNodeLis
 
 // It works as well when the field is empty
 
-int XMLParser2::replaceXMLtext(const char * file_name, const char * insertion, XMLNode * node) {
+int XMLParser::replaceXMLtext(const char * file_name, const char * insertion, XMLNode * node) {
 
     // Open the file and get the size of it
     if(!SPIFFS.begin(true)){

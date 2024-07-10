@@ -37,47 +37,47 @@ void StripeController::setup(XMLDocument _doc, XMLNodeList _list) {
     // ports[1] = 18;
 
 
-    XMLParser2::loadXMLDocument(this->doc, "Machine.xml", this->list);
-    XMLNode* result = XMLParser2::getNodeContent(this->list, "function_at_start");
+    XMLParser::loadXMLDocument(this->doc, "Machine.xml", this->list);
+    XMLNode* result = XMLParser::getNodeContent(this->list, "function_at_start");
     Serial.println("Get node content for functionStart: ");
     Serial.println(result->word);
 
 
-    if(XMLParser2::loadXMLDocument(this->doc, "Machine.xml", this->list) == 1) {
+    if(XMLParser::loadXMLDocument(this->doc, "Machine.xml", this->list) == 1) {
         // 1st function to retrieve the number of the function at start
-        XMLNode* result = XMLParser2::getNodeContent(this->list, "functionStart");
+        XMLNode* result = XMLParser::getNodeContent(this->list, "functionStart");
         if(!strcmp(result->word, "none")) {
             effect = 0;
         } else {
             effect = atoi(result->word);
         }
         // 2nd function to retrieve the name of the function at start
-        XMLNode* function_at_start = XMLParser2::getNodeContent(this->list, "function_at_start");
+        XMLNode* function_at_start = XMLParser::getNodeContent(this->list, "function_at_start");
         Serial.print("Function at start: ");
         Serial.println(function_at_start->word);
         effect = getFunctionNumber(function_at_start->word);
 
         // Here we'll get the colors
-        result = XMLParser2::getNodeContent(this->list, "color1");
+        result = XMLParser::getNodeContent(this->list, "color1");
         color1 = getColorNumber(result->word);
-        result = XMLParser2::getNodeContent(this->list, "color2");
+        result = XMLParser::getNodeContent(this->list, "color2");
         color2 = getColorNumber(result->word);
-        result = XMLParser2::getNodeContent(this->list, "color3");
+        result = XMLParser::getNodeContent(this->list, "color3");
         color3 = getColorNumber(result->word);
 
         // Get number of stripes
-        result = XMLParser2::getNodeContent(this->list, "number_of_stripes");
+        result = XMLParser::getNodeContent(this->list, "number_of_stripes");
         nb_stripes = atoi(result->word);
 
         // Handle the data pins
-        result = XMLParser2::getNodeContent(this->list, "number_of_data_pins");
+        result = XMLParser::getNodeContent(this->list, "number_of_data_pins");
         data_pins = atoi(result->word);
         for (int i = 0; i < nb_stripes; i++) {
             char str[10];
             sprintf(str, "%d", i+1);
             char node_title[] = "data_pin_";
             char * placeholder_name_data_pin = strcat(node_title, str);
-            result = XMLParser2::getNodeContent(this->list, placeholder_name_data_pin);
+            result = XMLParser::getNodeContent(this->list, placeholder_name_data_pin);
             ports[i] = atoi(result->word);
         }
 
@@ -93,16 +93,16 @@ void StripeController::setup(XMLDocument _doc, XMLNodeList _list) {
         // Here it is a code to replace values in the XML file. 
         // So far it works
         Serial.println("Test replacing values...");
-        XMLNode* to_replace = XMLParser2::getNodeContent(this->list, "wifi_name");
+        XMLNode* to_replace = XMLParser::getNodeContent(this->list, "wifi_name");
         Serial.print("Get node content for wifi_name: ");
         Serial.println(to_replace->word);
         if (to_replace == NULL) {
             printf("No content\n");
             return;
         }
-        XMLParser2::replaceXMLtext("Machine.xml", "V&B", to_replace);
+        XMLParser::replaceXMLtext("Machine.xml", "V&B", to_replace);
         Serial.println("Done replacing values...");
-        printf("Content in the node: %s\n", XMLParser2::XMLNode_getWord(this->list,  "wifi_name"));
+        printf("Content in the node: %s\n", XMLParser::XMLNode_getWord(this->list,  "wifi_name"));
     }
 
 

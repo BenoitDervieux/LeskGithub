@@ -1,14 +1,14 @@
 #include <iostream>
 #include "stripecontroller.h"
 #include "listeffects.h"
-#include "XMLparser2.h"
+#include "XMLparser.h"
 
 StripeController stripe_controller = StripeController();
 
 void setup() {
     XMLDocument doc;
     XMLNodeList list;
-    XMLParser2::loadXMLDocument(&doc, "Machine.xml", &list);
+    XMLParser::loadXMLDocument(&doc, "Machine.xml", &list);
     Serial.begin(9600);
     stripe_controller.setup(doc, list);
 }
