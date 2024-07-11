@@ -9,7 +9,7 @@ class StripeController {
 
     public:
         StripeController();
-        void setup(XMLDocument _doc, XMLNodeList _list);
+        void setup(XMLDocument _XMLdoc, XMLNodeList _XMLlist);
         void setColor(uint8_t red, uint8_t green, uint8_t blue);
         void setEffect(uint8_t effect);
         void setBrightness(uint8_t brightness);
@@ -31,8 +31,8 @@ class StripeController {
 
     private:
         std::vector<StripesFA> stripesFA;
-        XMLDocument* doc;
-        XMLNodeList* list;
+        XMLDocument* XMLdoc;
+        XMLNodeList* XMLlist;
 
         
 

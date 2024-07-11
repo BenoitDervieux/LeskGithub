@@ -153,7 +153,11 @@ int XMLParser::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* 
         }
         size++;
     }
+    
     filep.close();
+    free(buffer);
+    free(current_node);
+    // free(node_list);
     return 1;
 }
 
@@ -431,6 +435,6 @@ int XMLParser::replaceXMLtext(const char * file_name, const char * insertion, XM
     filep.close();
 
     free(buffer);
-    // free(buffer_fsize);
+    free(buffer_fsize);
     return 1;
 }

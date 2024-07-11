@@ -22,3 +22,23 @@ Reddit Channel : https://www.reddit.com/r/FastLED/
 ### SPIFFS
 To upload files on a microcontroller we need the SPIFFS library which is basically a file system. This is needed for loading the XML file containing all the information.
 Good explanation : https://randomnerdtutorials.com/esp32-vs-code-platformio-spiffs/
+
+## XML Parser
+
+Si I basically took inspiration from this video: 
+
+## AsyncWebServer
+
+To send request to the ESP, we need a web server that handles the requests. To do so, we will take inspiration from here: https://randomnerdtutorials.com/esp32-async-web-server-espasyncwebserver-library/
+
+Here is the github repository : https://github.com/me-no-dev/ESPAsyncWebServer
+
+Question?? Should we use this on a particular thread as it is asynchronous? Let's check later.
+Apparently, it's not possible to send more than one answer to a request --> Need to check if 
+
+## Serve file using SPIFFS
+
+https://randomnerdtutorials.com/esp32-web-server-spiffs-spi-flash-file-system/
+
+
+Updated: 10th of July, 2024
