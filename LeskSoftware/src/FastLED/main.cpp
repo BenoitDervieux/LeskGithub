@@ -1,9 +1,7 @@
 #include <iostream>
 #include "stripecontroller.h"
-#include "listeffects.h"
 #include "XMLparser.h"
 #include "outsidenetworking.h"
-#include "const.h"
 
 StripeController stripe_controller = StripeController();
 AsyncWebServer server(80);

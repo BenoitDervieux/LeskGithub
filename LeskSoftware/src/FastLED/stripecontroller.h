@@ -5,6 +5,7 @@
 #include "XMLParser.h"
 
 
+
 class StripeController {
 
     public:

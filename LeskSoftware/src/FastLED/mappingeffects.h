@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "defineeffects.h"
 
 // Define the structure for the mapping
 typedef struct {

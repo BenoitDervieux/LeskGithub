@@ -34,7 +34,14 @@ To send request to the ESP, we need a web server that handles the requests. To d
 Here is the github repository : https://github.com/me-no-dev/ESPAsyncWebServer
 
 Question?? Should we use this on a particular thread as it is asynchronous? Let's check later.
-Apparently, it's not possible to send more than one answer to a request --> Need to check if 
+Apparently, it's not possible to send more than one answer to a request --> Need to check if
+
+So, the part we are interested in now in the GitHub is: https://github.com/me-no-dev/ESPAsyncWebServer/tree/master?tab=readme-ov-file#respond-with-content-coming-from-a-file-containing-templates --> Respond with content coming from a file containing templates.
+
+Need to investigate the JSON responses
+Need to investigate the Param Rewrite With Matching
+
+Feels as if there is event listener function but maybe with the sockets. Need to investigate.
 
 ## Serve file using SPIFFS
 

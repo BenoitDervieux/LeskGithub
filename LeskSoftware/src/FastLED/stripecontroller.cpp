@@ -1,7 +1,7 @@
 #include "stripecontroller.h"
 #include <iostream>
 #include "listeffects.h"
-#include "listeffectsmapping.h"
+#include "mappingeffects.h"
 #include "colormapping.h"
 #include "const.h"
 #include "SPIFFS.h"
