@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Collection Details</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div id="collection-details"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const collectionName = urlParams.get('name');
+
+    fetch(`/api/collection?name=${collectionName}`)
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+          return response.json();
+        })
+      .then(data => {
+        const collectionsDiv = document.getElementById('collection-details');
+        data.collections.forEach(collection => {
+          // Here is for each collection but we have only 1 collection
+          const collectionDiv = document.createElement('div');
+          collectionsDiv.innerHTML = `<h1>${collection.name}</h1>`
+          collection.effects.forEach(effect => {
+            const effectDiv = document.createElement('div');
+            effectDiv.className = 'card';
+            effectDiv.innerHTML = `<h3 class="card-title" ">${effect.name}</h3>`;
+            effect.settings.forEach(setting => {
+              const settingsDiv = document.createElement('p');
+              settingsDiv.innerHTML = `Settings: ${setting}`;
+              effectDiv.appendChild(settingsDiv);
+           })
+            collectionDiv.appendChild(effectDiv);
+          });
+          collectionsDiv.appendChild(collectionDiv);
+        });
+      })
+      .catch(error => console.error('Error fetching collection details:', error));
+  </script>
+</body>
+</html>

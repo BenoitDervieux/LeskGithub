@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FromJSONtoHTML</title>
+  <title>Lesk Main Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="data:,">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h1>From JSON to HTML</h1>
-  <p>The idea of this small repository is to send JSON data from the ESP32 to the browser using a list and JSON informations with a bit of CSS styling.</p>
-  <p>I aim to have the possibility to create several cards like this:</p>
-  <div class="card">
-    <h2 class="card-title">This is the card name</h2>
-    <p class="card-description">This is the card description</p>
-  </div>
-  <p>Let's see what it looks like:</p>
+  <h1>Here is the main page with all the collections</h1>
+
   <div id="collections"></div>
 
 
@@ -36,10 +30,10 @@
           };
           collectionDiv.className = "card";
           collectionDiv.innerHTML = `<h2 class="card-title" ">${collection.name}</h2>`;
-          collection.elements.forEach(element => {
-            const elementDiv = document.createElement('p');
-            elementDiv.innerHTML = `Element: ${element.name}, Settings: ${element.settings.join(', ')}`;
-            collectionDiv.appendChild(elementDiv);
+          collection.effects.forEach(effect => {
+            const effectDiv = document.createElement('p');
+            effectDiv.innerHTML = `Effect: ${effect.name}, Settings: ${effect.settings.join(', ')}`;
+            collectionDiv.appendChild(effectDiv);
           });
           collectionsDiv.appendChild(collectionDiv);
         });

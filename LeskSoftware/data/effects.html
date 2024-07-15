@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Effects</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>All the effects</h1>
+  <p>Here are all the Lesk effects</p>
+  <div id="effects-details"></div>
+
+  <script>
+    fetch(`http://192.168.1.236/api/effects`)
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+          return response.json();
+        })
+      .then(data => {
+        const effectsDiv = document.getElementById('effects-details');
+          data.effects.forEach(effect => {
+            const effectDiv = document.createElement('div');
+            effectDiv.className = 'card';
+            effectDiv.innerHTML = `<h2 class="card-title" ">${effect.name}</h2>`;
+            effect.settings.forEach(setting => {
+              const settingsDiv = document.createElement('p');
+              settingsDiv.innerHTML = `Settings: ${setting}`;
+              effectDiv.appendChild(settingsDiv);
+           })
+           effectsDiv.appendChild(effectDiv);
+          });
+      })
+      .catch(error => console.error('Error fetching collection details:', error));
+  </script>
+</body>
+</html>

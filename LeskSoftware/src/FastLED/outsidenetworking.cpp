@@ -100,7 +100,6 @@ void OutSideNetworking::setup() {
             // Iterate through all the collections
             for (int i = 0; i < sizeof(collections) / sizeof(collections[0]); ++i) {
                 if (request->getParam("name")->value() == collections[i].name) {
-                    Serial.println("Comparing string values");
                     Serial.println(request->getParam("name")->value());
                     Serial.println(collections[i].name);
                     // Create a JSON Object for each collection
@@ -145,12 +144,12 @@ void OutSideNetworking::setup() {
         JsonArray effectsArray = doc.createNestedArray("effects");
 
         // Iterate through all the effects up until there is the end
-        for (int j = 0; j < sizeof(Effect) / sizeof(Effect); ++j) {
+        for (int j = 0; j < sizeof(effects) / sizeof(Effect); ++j) {
             if (effects[j].name == nullptr) break; // Stop at the end marker
             // Then create new Object
             JsonObject effect = effectsArray.createNestedObject();
             effect["name"] = effects[j].name;
-            effect["effects"] = effects[j].effect;
+            effect["effect"] = effects[j].effect;
             JsonArray settingsArray = effect.createNestedArray("settings");
 
             for (int k = 0; k < sizeof(effects[j].settings) / sizeof(int); ++k) {
