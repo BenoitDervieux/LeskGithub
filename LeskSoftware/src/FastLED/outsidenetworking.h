@@ -8,17 +8,20 @@
 #include "SPIFFS.h"
 #include "const.h"
 #include <ArduinoJson.h>
+#include "stripecontroller.h"
+#include "mappingeffects.h"
 
 
 
 class OutSideNetworking {
 
     public :
-        OutSideNetworking(AsyncWebServer* server);
+        OutSideNetworking(AsyncWebServer* server, StripeController* stripe_controller);
         void setup();
     private :
         static String processor(const String& var);
         AsyncWebServer* server;
+        StripeController* stripe_controller;
         
 
     private:

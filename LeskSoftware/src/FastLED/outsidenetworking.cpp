@@ -1,17 +1,13 @@
 #include "outsidenetworking.h"
 #include "listcollections.h"
+#include "../../.variables/variables.h"
+
 
 String ledState;   // Define the variable
 
-OutSideNetworking::OutSideNetworking(AsyncWebServer* server) : server(server) {}
+OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* _stripe_controller) : server(_server), stripe_controller(_stripe_controller) {}
 
 void OutSideNetworking::setup() {
-  // Serial port for debugging purposes
-  // Serial.begin(115200);
-  // pinMode(ledPin, OUTPUT);
-
-  // ssid = "Jovanovic"; // Define the variable
-  // password = "VUKOVAR333"; // Define the variable
 
   // Initialize SPIFFS
   if(!SPIFFS.begin(true)){
@@ -19,8 +15,8 @@ void OutSideNetworking::setup() {
     return;
   }
 
-  const char* ssid = "Jovanovic"; 
-  const char* password = "vukovar333";
+  const char* ssid = SSID; 
+  const char* password = SSID_PASSWORD;
 
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
@@ -48,9 +44,57 @@ void OutSideNetworking::setup() {
     });
 
     // Here it prints a special collection
-    server->on("/effects", HTTP_GET, [](AsyncWebServerRequest *request){
+    server->on("/effects", HTTP_GET, [this](AsyncWebServerRequest *request){
+      // Serial.print("The url: ");
+      // Serial.println(request->url());
+      // Serial.print("The contentType: ");
+      // Serial.println(request->contentType());
+      // Serial.print("The headers: ");
+      // Serial.println(request->headers());
+      // Serial.print("The args: ");
+      // Serial.println(request->args());
+      if (request->args() > 0) {
+        for (int i = 0; i < request->args(); i++) {
+          Serial.println(request->arg(i));
+          const char * argName = request->arg(i).c_str();
+          Serial.print("Test du const char : ");
+          Serial.println(argName);
+          Serial.print("Test du get function Number : ");
+          Serial.println(getFunctionNumber(argName));
+          this->stripe_controller->setEffect(getFunctionNumber(argName));
+        }
+      }
       request->send(SPIFFS, "/effects.html", "text/html");
     });
+
+    server->on("/effects", HTTP_POST, [this](AsyncWebServerRequest *request){
+
+      if (request->hasParam("effect", true)) {
+        String effect = request->getParam("effect", true)->value();
+        this->stripe_controller->setEffect(getFunctionNumber(effect.c_str()));
+        // Set the effect here
+        // Handle the effect change logic here
+        request->send(200, "text/plain", "Effect changed to " + effect);
+      } else {
+        request->send(400, "text/plain", "Bad Request");
+      }
+    });
+
+    server->on("/api/setEffect", HTTP_GET, [this](AsyncWebServerRequest *request){
+      if (request->args() > 0) {
+        for (int i = 0; i < request->args(); i++) {
+          Serial.println(request->arg(i));
+          const char * argName = request->arg(i).c_str();
+          Serial.print("Test du const char : ");
+          Serial.println(argName);
+          Serial.print("Test du get function Number : ");
+          Serial.println(getFunctionNumber(argName));
+          this->stripe_controller->setEffect(getFunctionNumber(argName));
+        }
+      }
+      request->send(200, "application/json");
+    });
+
 
     // Route to serve the collections as JSON
     server->on("/api/collections", HTTP_GET, [](AsyncWebServerRequest *request){

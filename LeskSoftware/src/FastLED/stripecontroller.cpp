@@ -140,6 +140,7 @@ void StripeController::setColor(uint8_t red, uint8_t green, uint8_t blue) {
 void StripeController::setEffect(uint8_t effect) {
     for (auto& s: stripesFA) {
         std::cout << "Setting color inside controller" << std::endl;
+        std::cout << "Effect: " << effect << std::endl;
         s.setEffect(effect);
     }
 }

@@ -23,6 +23,9 @@
             const effectDiv = document.createElement('div');
             effectDiv.className = 'card';
             effectDiv.innerHTML = `<h2 class="card-title" ">${effect.name}</h2>`;
+            effectDiv.onclick = function() {
+              changeEffect(effect.name);
+            };
             effect.settings.forEach(setting => {
               const settingsDiv = document.createElement('p');
               settingsDiv.innerHTML = `Settings: ${setting}`;
@@ -32,6 +35,27 @@
           });
       })
       .catch(error => console.error('Error fetching collection details:', error));
+
+      // Function to handle the effect change
+    function changeEffect(effectName) {
+      fetch('/effects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'effect=' + encodeURIComponent(effectName)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
+      .then(data => {
+        console.log(data);  // For debugging
+      })
+      .catch(error => console.error('Error:', error));
+    }
   </script>
 </body>
 </html>

@@ -5,7 +5,7 @@
 
 StripeController stripe_controller = StripeController();
 AsyncWebServer server(80);
-OutSideNetworking outside_networking = OutSideNetworking(&server);
+OutSideNetworking outside_networking = OutSideNetworking(&server, &stripe_controller);
 
 
 void setup() {
