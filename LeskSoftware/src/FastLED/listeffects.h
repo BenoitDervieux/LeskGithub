@@ -20,6 +20,8 @@ static Effect _rainbow_effect = {"Rainbow", RAINBOW, {SPEED}};
 static Effect _gradient_rgb_effect = {"Gradient RGB", GRADIENT_RGB, {SPEED, TWOCOLOR, THREECOLOR}};
 static Effect _end_effect = {nullptr, -1, {0}}; // End marker for effects array
 
+static Effect effects[] = {_fill_effect, _rainbow_effect, _gradient_rgb_effect, _end_effect};
+
 
 
 

@@ -1,45 +1,52 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-  <title>ESP32 Web Server</title>
+  <title>FromJSONtoHTML</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="data:,">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h1>ESP32 Web Server</h1>
-  <p>GPIO state: <strong> %STATE%</strong></p>
-  <p><a href="/on"><button class="button">ON</button></a></p>
-  <p><a href="/off"><button class="button button2">OFF</button></a></p>
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>LED Collections</title>
-</head>
-<body>
-  <h1>LED Collections</h1>
+  <h1>From JSON to HTML</h1>
+  <p>The idea of this small repository is to send JSON data from the ESP32 to the browser using a list and JSON informations with a bit of CSS styling.</p>
+  <p>I aim to have the possibility to create several cards like this:</p>
+  <div class="card">
+    <h2 class="card-title">This is the card name</h2>
+    <p class="card-description">This is the card description</p>
+  </div>
+  <p>Let's see what it looks like:</p>
   <div id="collections"></div>
 
+
   <script>
-    fetch('http://<ESP32_IP_ADDRESS>/collections')
-      .then(response => response.json())
+
+    fetch('http://192.168.1.236/api/collections') // Ensure this is the correct IP address
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
       .then(data => {
         const collectionsDiv = document.getElementById('collections');
         data.collections.forEach(collection => {
           const collectionDiv = document.createElement('div');
-          collectionDiv.innerHTML = `<h2>${collection.name}</h2>`;
-          collection.effects.forEach(effect => {
-            const effectDiv = document.createElement('div');
-            effectDiv.innerHTML = `Effect: ${effect.name}, Type: ${effect.effect}, Settings: ${effect.settings.join(', ')}`;
-            collectionDiv.appendChild(effectDiv);
+          collectionDiv.onclick = function() {
+            location.href = `/collection?name=${collection.name}`;
+          };
+          collectionDiv.className = "card";
+          collectionDiv.innerHTML = `<h2 class="card-title" ">${collection.name}</h2>`;
+          collection.elements.forEach(element => {
+            const elementDiv = document.createElement('p');
+            elementDiv.innerHTML = `Element: ${element.name}, Settings: ${element.settings.join(', ')}`;
+            collectionDiv.appendChild(elementDiv);
           });
           collectionsDiv.appendChild(collectionDiv);
         });
       })
       .catch(error => console.error('Error fetching collections:', error));
   </script>
+
+
 </body>
 </html>
