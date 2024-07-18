@@ -5,7 +5,8 @@
 
 String ledState;   // Define the variable
 
-OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* _stripe_controller) : server(_server), stripe_controller(_stripe_controller) {}
+OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* _stripe_controller) :
+         server(_server), stripe_controller(_stripe_controller) {}
 
 void OutSideNetworking::setup() {
 
@@ -213,18 +214,6 @@ void OutSideNetworking::setup() {
   
 }
 
-// Replaces placeholder with LED state value
-String OutSideNetworking::processor(const String& var){
-  Serial.println(var);
-  if(var == "STATE"){
-    if(digitalRead(ledPin)){
-      ledState = "ON";
-    }
-    else{
-      ledState = "OFF";
-    }
-    Serial.print(ledState);
-    return ledState;
-  }
-  return String();
+void OutSideNetworking::setParser(JSONParser* parser) {
+    this->parser = parser;
 }

@@ -10,18 +10,22 @@
 #include <ArduinoJson.h>
 #include "stripecontroller.h"
 #include "mappingeffects.h"
+#include "jsonparser.h"
 
 
 
 class OutSideNetworking {
 
     public :
+        // OutSideNetworking(AsyncWebServer* server, StripeController* stripe_controller, JSONParser* parser);
         OutSideNetworking(AsyncWebServer* server, StripeController* stripe_controller);
         void setup();
+        void setParser(JSONParser* parser);
     private :
         static String processor(const String& var);
         AsyncWebServer* server;
         StripeController* stripe_controller;
+        JSONParser* parser;
         
 
     private:

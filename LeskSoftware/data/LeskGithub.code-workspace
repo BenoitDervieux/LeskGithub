@@ -91,7 +91,8 @@
 			"xutility": "cpp",
 			"*.tcc": "cpp",
 			"string_view": "cpp",
-			"cinttypes": "cpp"
+			"cinttypes": "cpp",
+			"bitset": "cpp"
 		}
 	}
 }
