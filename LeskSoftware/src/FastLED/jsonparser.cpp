@@ -53,13 +53,38 @@ void JSONParser::setupByFile(const char* path) {
 }
 
 void JSONParser::setupByXML(XMLNodeList* list) {
+    // Note that most of those values have not been thought through or tested
+    // I add things just to have something to add
+
     DynamicJsonDocument docToCreate(1024);
-    docToCreate["activated"] = "true";
+    docToCreate["activated"] = true;
     docToCreate["effect"] = XMLParser::XMLNode_getWord(list, "function_at_start");
-    const char* test = docToCreate["activated"].as<const char*>();
-    Serial.println("On essaye là:");
-    Serial.println(test);
-}
+    docToCreate["brightness"] = XMLParser::XMLNode_getWord(list, "brightness_at_start");
+    docToCreate["speed"] = XMLParser::XMLNode_getWord(list, "speed_at_start");
+    // Create a JSON array here
+    JsonArray stripes = docToCreate.createNestedArray("stripes");
+    for (int i = 0; i < atoi(XMLParser::XMLNode_getWord(list, "line_number")); i++) {
+        JsonObject stripe = stripes.createNestedObject();
+        stripe["name"] = i + 1;
+        stripe["length"] = atoi(XMLParser::XMLNode_getWord(list, "line_length"));
+        stripe["direction"] = atoi(XMLParser::XMLNode_getWord(list, "line_direction"));
+    }
+    docToCreate["palette"] = XMLParser::XMLNode_getWord(list, "palette_at_start");
+    docToCreate["transition"] = atoi(XMLParser::XMLNode_getWord(list, "transition_at_start"));
+    docToCreate["playlist"] = XMLParser::XMLNode_getWord(list, "playlist_at_start");
+
+    // Here for potential lesk connection to graphs 
+    docToCreate.createNestedArray("lesk_connections");
+
+    // Here for the wifi password, maybe we can store several?
+    JsonArray router_connection = docToCreate.createNestedArray("router_connection");
+    JsonObject router_connection_object = router_connection.createNestedObject();
+    router_connection_object["enabled"] = false;
+    router_connection_object["wifi_name"] = XMLParser::XMLNode_getWord(list, "wifi_name");
+    router_connection_object["wifi_password"] = XMLParser::XMLNode_getWord(list, "wifi_password");
+
+
+}   
 
 void JSONParser::printDoc() {
     int size = measureJson(this->doc);
