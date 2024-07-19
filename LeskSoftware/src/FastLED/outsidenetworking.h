@@ -18,9 +18,8 @@ class OutSideNetworking {
 
     public :
         // OutSideNetworking(AsyncWebServer* server, StripeController* stripe_controller, JSONParser* parser);
-        OutSideNetworking(AsyncWebServer* server, StripeController* stripe_controller);
+        OutSideNetworking(AsyncWebServer* server, StripeController* stripe_controller, JSONParser* parser);
         void setup();
-        void setParser(JSONParser* parser);
     private :
         static String processor(const String& var);
         AsyncWebServer* server;

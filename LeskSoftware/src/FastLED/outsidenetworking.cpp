@@ -5,8 +5,8 @@
 
 String ledState;   // Define the variable
 
-OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* _stripe_controller) :
-         server(_server), stripe_controller(_stripe_controller) {}
+OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* _stripe_controller, JSONParser* _parser) :
+         server(_server), stripe_controller(_stripe_controller), parser(_parser) {}
 
 void OutSideNetworking::setup() {
 
@@ -212,8 +212,4 @@ void OutSideNetworking::setup() {
     // Start server
     server->begin();
   
-}
-
-void OutSideNetworking::setParser(JSONParser* parser) {
-    this->parser = parser;
 }

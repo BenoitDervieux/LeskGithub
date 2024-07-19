@@ -6,17 +6,17 @@
 
 StripeController stripe_controller = StripeController();
 AsyncWebServer server(80);
-OutSideNetworking outside_networking = OutSideNetworking(&server, &stripe_controller);
+JSONParser parser = JSONParser();
+OutSideNetworking outside_networking = OutSideNetworking(&server, &stripe_controller, &parser);
+
 
 
 void setup() {
+    Serial.begin(9600);
     XMLDocument XMLdoc;
     XMLNodeList XMLlist;
     XMLParser::loadXMLDocument(&XMLdoc, "Machine.xml", &XMLlist);
-    // JSONParser parser = JSONParser();
-    // outside_networking.setParser(&parser);
-    // parser.setupByXML(&XMLlist);
-    Serial.begin(9600);
+    parser.setupByXML(&XMLlist);
     stripe_controller.setup(XMLdoc, XMLlist);
     outside_networking.setup();
 }

@@ -53,11 +53,12 @@ void JSONParser::setupByFile(const char* path) {
 }
 
 void JSONParser::setupByXML(XMLNodeList* list) {
-    DynamicJsonDocument doc(1024);
-    doc["activated"] = true;
-    doc["effect"] = XMLParser::XMLNode_getWord(list, "effect");
-    Serial.println("Azy gros on essaye là : ");
-    Serial.println(XMLParser::XMLNode_getWord(list, "effect"));
+    DynamicJsonDocument docToCreate(1024);
+    docToCreate["activated"] = "true";
+    docToCreate["effect"] = XMLParser::XMLNode_getWord(list, "function_at_start");
+    const char* test = docToCreate["activated"].as<const char*>();
+    Serial.println("On essaye là:");
+    Serial.println(test);
 }
 
 void JSONParser::printDoc() {
