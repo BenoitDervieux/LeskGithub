@@ -4,36 +4,21 @@
 #include <iostream>
 #include <ArduinoJson.h>
 #include "SPIFFS.h"
-// #include "parserSubjectInterface.h"
+#include "parserSubjectInterface.h"
 #include <list>
 #include <string>
 #include "XMLparser.h"
 
 
 // class JSONParser : public ParserSubjectInterface {
-class JSONParser {
+class JSONParser : public ParserSubjectInterface {
 
     public:
         // // Pattern implementation
-        // void Add(SubscriberInterface* sub) override {
-        //     _subs.push_back(sub);
-        // }
-
-        // void Remove(SubscriberInterface* sub) override {
-        //     _subs.remove(sub);
-        // }
-
-        // void Notify() override {
-        //     if (_subs.empty()) {
-        //         return;
-        //     }
-        //     std::list<SubscriberInterface*>::iterator it = _subs.begin();
-        //     while (it != _subs.end()) {
-        //         (*it)->Update(_latest_message);
-        //         it++;
-        //     }
-        // }
-        // void AdvanceAndUpdateAll();
+        void Add(SubscriberInterface* sub) override;
+        void Remove(SubscriberInterface* sub) override;
+        void Notify() override;
+        void AdvanceAndUpdateAll();
 
         // Normal implementation
         JSONParser();
@@ -84,9 +69,6 @@ class JSONParser {
         void setControllerName(const char* name);
 
         // Set multiple values
-
-        
-
     
     private:
         // Need to change depending on the way of writing to a file
@@ -94,9 +76,9 @@ class JSONParser {
         JsonDocument doc;
         const char * path;
 
-
-        // std::list<SubscriberInterface*> _subs;
-        // std::string _latest_message;
+        // Subscriber Pattern
+        std::list<SubscriberInterface*> _subs;
+        std::string _latest_message;
 
 };
 

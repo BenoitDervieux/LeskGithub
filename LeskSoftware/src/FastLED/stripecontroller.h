@@ -3,14 +3,18 @@
 
 #include "stripesFA.h"
 #include "XMLParser.h"
+#include "subscriberInterface.h"
 
 
 
-class StripeController {
+class StripeController : public SubscriberInterface {
 
     public:
         StripeController();
-        void setup(XMLDocument _XMLdoc, XMLNodeList _XMLlist);
+        virtual ~StripeController();
+
+
+        void setup(XMLNodeList* _XMLlist);
         void setColor(uint8_t red, uint8_t green, uint8_t blue);
         void setEffect(uint8_t effect);
         void setBrightness(uint8_t brightness);
@@ -28,16 +32,19 @@ class StripeController {
         std::vector<int> getLengths();
         std::vector<int> getDirections();
         std::vector<uint8_t> getEffects();
+
+        void Update(const std::string& message) override;
     
 
     private:
         std::vector<StripesFA> stripesFA;
-        XMLDocument* XMLdoc;
         XMLNodeList* XMLlist;
-
-        
+        int _unique_id = -1;
+        static int _unique_subscribers;
 
 };
+
+int StripeController::_unique_subscribers = 0;
 
 
 #endif

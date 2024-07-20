@@ -9,16 +9,12 @@
 
 
 StripeController::StripeController() {
-    
+    _unique_id = ++_unique_subscribers;
 }
 
-void StripeController::setup(XMLDocument _XMLdoc, XMLNodeList _XMLlist) {
-    // Here we initialize the stripes using the data from the XML file
-    // [TODO] Fetch all the data from the XML file
-    // [TODO] Check the problem of constants
-    this->XMLdoc = &_XMLdoc;
-    this->XMLlist = &_XMLlist;
-
+void StripeController::setup(XMLNodeList* _XMLlist) {
+    
+    this->XMLlist = _XMLlist;
     // Variables from the XML document
     short int effect, direction, speed;
     uint32_t color1, color2, color3; // Do not need to be a constant
@@ -36,46 +32,29 @@ void StripeController::setup(XMLDocument _XMLdoc, XMLNodeList _XMLlist) {
     // ports[0] = 23;
     // ports[1] = 18;
 
-    
-    if(XMLParser::loadXMLDocument(this->XMLdoc, "Machine.xml", this->XMLlist) == 1) {
-        // 1st function to retrieve the number of the function at start
-        XMLNode* result = XMLParser::getNodeContent(this->XMLlist, "functionStart");
-        if(!strcmp(result->word, "none")) {
-            effect = 0;
-        } else {
-            effect = atoi(result->word);
-        }
-        // 2nd function to retrieve the name of the function at start
-        XMLNode* function_at_start = XMLParser::getNodeContent(this->XMLlist, "function_at_start");
-        // Serial.print("Function at start: ");
-        Serial.println(function_at_start->word);
-        effect = getFunctionNumber(function_at_start->word);
-        // free(function_at_start);
+    // 1st function to retrieve the number of the function at start
+    Serial.println("Point 949");
+    Serial.println(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
+    effect = getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
+    Serial.println("Point 950");
+    // Here we'll get the colors
+    color1 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color1"));
+    color2 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color2"));
+    color3 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color3"));
 
-        // Here we'll get the colors
-        result = XMLParser::getNodeContent(this->XMLlist, "color1");
-        color1 = getColorNumber(result->word);
-        result = XMLParser::getNodeContent(this->XMLlist, "color2");
-        color2 = getColorNumber(result->word);
-        result = XMLParser::getNodeContent(this->XMLlist, "color3");
-        color3 = getColorNumber(result->word);
+    // Get number of stripes
+    nb_stripes = atoi(XMLParser::XMLNode_getWord(this->XMLlist, "number_of_stripes"));
 
-        // Get number of stripes
-        result = XMLParser::getNodeContent(this->XMLlist, "number_of_stripes");
-        nb_stripes = atoi(result->word);
-
-        // Handle the data pins
-        result = XMLParser::getNodeContent(this->XMLlist, "number_of_data_pins");
-        data_pins = atoi(result->word);
-        for (int i = 0; i < nb_stripes; i++) {
-            char str[10];
-            sprintf(str, "%d", i+1);
-            char node_title[] = "data_pin_";
-            char * placeholder_name_data_pin = strcat(node_title, str);
-            result = XMLParser::getNodeContent(this->XMLlist, placeholder_name_data_pin);
-            led_ports[i] = atoi(result->word);
-        }
-        // free(result);
+    // Handle the data pins
+    data_pins = atoi(XMLParser::XMLNode_getWord(this->XMLlist, "number_of_data_pins"));
+    for (int i = 0; i < nb_stripes; i++) {
+        char str[10];
+        sprintf(str, "%d", i+1);
+        char node_title[] = "data_pin_";
+        char * placeholder_name_data_pin = strcat(node_title, str);
+        led_ports[i] = atoi(XMLParser::XMLNode_getWord(this->XMLlist, placeholder_name_data_pin));
+    }
+    // free(result);
 
         Serial.println("Number of data pins: " + String(data_pins));
         Serial.println("Number of stripes: " + String(nb_stripes));
@@ -109,8 +88,6 @@ void StripeController::setup(XMLDocument _XMLdoc, XMLNodeList _XMLlist) {
         // Serial.println("Done replacing values...");
         // printf("Content in the node: %s\n", XMLParser::XMLNode_getWord(this->XMLlist,  "wifi_name"));
         // XMLParser::XMLNodeList_free(XMLlist);
-
-    }
 
 
     for (int i = 0; i < nb_stripes; i++) {
@@ -226,3 +203,9 @@ void StripeController::stop() {
 
 
 // }
+
+// Pattern subscriber here
+
+void Update(const std::string& message) {
+    std::cout << "Update: " << message << std::endl;
+}

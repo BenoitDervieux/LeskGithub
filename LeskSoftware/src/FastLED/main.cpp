@@ -9,15 +9,13 @@ AsyncWebServer server(80);
 JSONParser parser = JSONParser();
 OutSideNetworking outside_networking = OutSideNetworking(&server, &stripe_controller, &parser);
 
-
-
 void setup() {
     Serial.begin(9600);
     XMLDocument XMLdoc;
     XMLNodeList XMLlist;
     XMLParser::loadXMLDocument(&XMLdoc, "Machine.xml", &XMLlist);
+    stripe_controller.setup(&XMLlist);
     parser.setupByXML(&XMLlist);
-    stripe_controller.setup(XMLdoc, XMLlist);
     outside_networking.setup();
 }
 

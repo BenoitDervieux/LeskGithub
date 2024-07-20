@@ -4,17 +4,6 @@ JSONParser::JSONParser() {
     
 }
 
-// void JSONParser::AdvanceAndUpdateAll() {
-//     static int num_updates = 0;
-//     char buffer[20];
-//     sprintf(buffer, "%d", ++num_updates);
-//     std::string str(buffer);
-//     _latest_message = "Update Number \"";
-//     _latest_message += str;
-//     _latest_message += "\" Processed";
-//     Notify();
-// }
-
 void JSONParser::setupByFile(const char* path) {
     this->path = path;
     // Initialize SPIFFS
@@ -56,11 +45,16 @@ void JSONParser::setupByXML(XMLNodeList* list) {
     // Note that most of those values have not been thought through or tested
     // I add things just to have something to add
 
-    DynamicJsonDocument docToCreate(1024);
+    JsonDocument docToCreate;
     docToCreate["activated"] = true;
     docToCreate["effect"] = XMLParser::XMLNode_getWord(list, "function_at_start");
     docToCreate["brightness"] = XMLParser::XMLNode_getWord(list, "brightness_at_start");
     docToCreate["speed"] = XMLParser::XMLNode_getWord(list, "speed_at_start");
+ 
+    docToCreate["color1"] = XMLParser::XMLNode_getWord(list, "color1");
+    docToCreate["color2"] = XMLParser::XMLNode_getWord(list, "color2");
+    docToCreate["color3"] = XMLParser::XMLNode_getWord(list, "color3");
+
     // Create a JSON array here
     JsonArray stripes = docToCreate.createNestedArray("stripes");
     for (int i = 0; i < atoi(XMLParser::XMLNode_getWord(list, "line_number")); i++) {
@@ -83,6 +77,15 @@ void JSONParser::setupByXML(XMLNodeList* list) {
     router_connection_object["wifi_name"] = XMLParser::XMLNode_getWord(list, "wifi_name");
     router_connection_object["wifi_password"] = XMLParser::XMLNode_getWord(list, "wifi_password");
 
+    // Here for the controller collection
+    JsonArray controller_connection = docToCreate.createNestedArray("controller_connection");
+    JsonObject controller_connection_object = controller_connection.createNestedObject();
+    controller_connection_object["enabled"] = false;
+    controller_connection_object["controller_name"] = "None";
+
+    // this->doc = docToCreate;
+
+    // this->printDoc();
 
 }   
 
@@ -298,4 +301,36 @@ void JSONParser::writeOnDoc(const char* path) const {
 
     fputs(buffer, file);
     fclose(file);
+}
+
+
+// Subscriber pattern here
+void JSONParser::Add(SubscriberInterface* sub) {
+            _subs.push_back(sub);
+}
+
+void JSONParser::Remove(SubscriberInterface* sub) {
+    _subs.remove(sub);
+}
+
+void JSONParser::Notify() {
+    if (_subs.empty()) {
+        return;
+    }
+    std::list<SubscriberInterface*>::iterator it = _subs.begin();
+    while (it != _subs.end()) {
+        (*it)->Update(_latest_message);
+        it++;
+    }
+}
+
+void JSONParser::AdvanceAndUpdateAll() {
+    static int num_updates = 0;
+    char buffer[20];
+    sprintf(buffer, "%d", ++num_updates);
+    std::string str(buffer);
+    _latest_message = "Update Number \"";
+    _latest_message += str;
+    _latest_message += "\" Processed";
+    Notify();
 }

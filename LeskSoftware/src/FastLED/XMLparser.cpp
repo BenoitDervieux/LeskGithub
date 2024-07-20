@@ -47,7 +47,7 @@ int XMLParser::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* 
     XMLNodeList_init(node_list);
 
     size = 1;
-    // Serial.println("Oui je teste");
+    Serial.println("Oui je teste");
     while (filep.available()) {
         // Serial.print("Size: "); Serial.println(size);
         c = filep.read();
