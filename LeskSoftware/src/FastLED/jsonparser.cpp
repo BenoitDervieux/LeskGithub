@@ -190,10 +190,15 @@ int JSONParser::getNumberOfLeskConnections(){
 
 void JSONParser::setEffectNumber(int effectNumber) {
     this->doc["effect"] = effectNumber;
+    char dest[20] = "EFF=";
+    char effNum[10];
+    sprintf(effNum, "%d", effectNumber);
+    strncat(dest, effNum, 9);
+    Notify(dest);
     // Need to think of the use of this function as we don't necessarily want to
     // write on the file everytime something happen
     // Wich means we might need to make doc static and public
-    writeOnDoc(this->path);
+    // writeOnDoc(this->path);
 }
 
 void JSONParser::increaseEffectNumber() {
@@ -313,24 +318,27 @@ void JSONParser::Remove(SubscriberInterface* sub) {
     _subs.remove(sub);
 }
 
-void JSONParser::Notify() {
+void JSONParser::Notify(const char* message) {
+    std::cout << "Notifying subscribers" << std::endl;
     if (_subs.empty()) {
+        std::cout << "No subscribers" << std::endl;
         return;
     }
     std::list<SubscriberInterface*>::iterator it = _subs.begin();
     while (it != _subs.end()) {
-        (*it)->Update(_latest_message);
+        std::cout << "Notifying just right now" << std::endl;
+        (*it)->Update(message);
         it++;
     }
 }
 
-void JSONParser::AdvanceAndUpdateAll() {
-    static int num_updates = 0;
-    char buffer[20];
-    sprintf(buffer, "%d", ++num_updates);
-    std::string str(buffer);
-    _latest_message = "Update Number \"";
-    _latest_message += str;
-    _latest_message += "\" Processed";
-    Notify();
-}
+// void JSONParser::AdvanceAndUpdateAll() {
+//     static int num_updates = 0;
+//     char buffer[20];
+//     sprintf(buffer, "%d", ++num_updates);
+//     std::string str(buffer);
+//     _latest_message = "Update Number \"";
+//     _latest_message += str;
+//     _latest_message += "\" Processed";
+//     Notify();
+// }

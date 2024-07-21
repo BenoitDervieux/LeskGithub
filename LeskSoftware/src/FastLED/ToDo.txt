@@ -1,7 +1,5 @@
 ToDo: 
-** XMLParser --> Write in the xml file after modification
 ** Implement the webserver (Asyncwebserver + websockets)
-** Find the JSON Parser
 ** Implement over the air (OTA)
 
 
@@ -12,3 +10,6 @@ ToDo Low Energy:
 ToDo Not Coding: 
 **Start learning graph theory
 **Analyse WLED to see what to copy, both the APP and the code
+
+Date 20/07/2024
+I should implement now the HTML/Javascript logic to post thing and then activate the subscriber pattern.

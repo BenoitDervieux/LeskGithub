@@ -12,19 +12,20 @@ typedef struct {
 } SettingsMapping;
 
 // Initialize the array with mappings
-SettingsMapping settings_mappings[] = {
+static SettingsMapping settings_mappings[] = {
     {"SETTING_SPEED", 1},
     {"SETTING_INTENSITY", 2},
     {"SETTING_PAUSE", 3},
     {"SETTING_ONECOLOR", 4},
     {"SETTING_TWOCOLOR", 5},
     {"SETTING_THREECOLOR", 6},
+    {"EFF", 1},
     // Add more mappings as needed
 };
 
 #define MAPPINGS_SIZE (sizeof(settings_mappings) / sizeof(SettingsMapping))
 
-int getSettingsNumber(const char *name) {
+static int getSettingsNumber(const char *name) {
     for (size_t i = 0; i < MAPPINGS_SIZE; ++i) {
         if (strcmp(settings_mappings[i].name, name) == 0) {
             return settings_mappings[i].number;

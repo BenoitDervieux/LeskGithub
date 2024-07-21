@@ -8,7 +8,7 @@ public:
     virtual ~ParserSubjectInterface() {};
     virtual void Add(SubscriberInterface* subscriber) = 0;
     virtual void Remove(SubscriberInterface* subscriber) = 0;
-    virtual void Notify() = 0;
+    virtual void Notify(const char* message) = 0;
 };
 
 

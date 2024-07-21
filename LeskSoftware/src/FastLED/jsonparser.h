@@ -17,8 +17,8 @@ class JSONParser : public ParserSubjectInterface {
         // // Pattern implementation
         void Add(SubscriberInterface* sub) override;
         void Remove(SubscriberInterface* sub) override;
-        void Notify() override;
-        void AdvanceAndUpdateAll();
+        void Notify(const char* message) override;
+        // void AdvanceAndUpdateAll();
 
         // Normal implementation
         JSONParser();

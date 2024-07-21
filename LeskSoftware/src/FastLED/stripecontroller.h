@@ -4,6 +4,7 @@
 #include "stripesFA.h"
 #include "XMLParser.h"
 #include "subscriberInterface.h"
+#include "mappingsettings.h"
 
 
 
@@ -43,8 +44,6 @@ class StripeController : public SubscriberInterface {
         static int _unique_subscribers;
 
 };
-
-int StripeController::_unique_subscribers = 0;
 
 
 #endif

@@ -70,15 +70,30 @@ void OutSideNetworking::setup() {
 
     server->on("/effects", HTTP_POST, [this](AsyncWebServerRequest *request){
 
+      // Here we will implement the logic for the subscriber pattern
       if (request->hasParam("effect", true)) {
         String effect = request->getParam("effect", true)->value();
-        this->stripe_controller->setEffect(getFunctionNumber(effect.c_str()));
+        Serial.println("Point 454: Print the effect");
+        Serial.println(effect);
+        parser->setEffectNumber(getFunctionNumber(effect.c_str()));
         // Set the effect here
         // Handle the effect change logic here
         request->send(200, "text/plain", "Effect changed to " + effect);
       } else {
         request->send(400, "text/plain", "Bad Request");
       }
+
+
+      // Here is the straightforward code for the stripes changing effects
+      // if (request->hasParam("effect", true)) {
+      //   String effect = request->getParam("effect", true)->value();
+      //   this->stripe_controller->setEffect(getFunctionNumber(effect.c_str()));
+      //   // Set the effect here
+      //   // Handle the effect change logic here
+      //   request->send(200, "text/plain", "Effect changed to " + effect);
+      // } else {
+      //   request->send(400, "text/plain", "Bad Request");
+      // }
     });
 
     server->on("/api/setEffect", HTTP_GET, [this](AsyncWebServerRequest *request){

@@ -17,6 +17,7 @@ void setup() {
     stripe_controller.setup(&XMLlist);
     parser.setupByXML(&XMLlist);
     outside_networking.setup();
+    parser.Add(&stripe_controller);
 }
 
 void loop() {

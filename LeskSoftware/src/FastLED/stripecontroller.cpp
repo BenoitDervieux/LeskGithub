@@ -2,14 +2,18 @@
 #include <iostream>
 #include "listeffects.h"
 #include "mappingeffects.h"
-#include "colormapping.h"
+#include "mappingcolor.h"
 #include "const.h"
 #include "SPIFFS.h"
 
-
+int StripeController::_unique_subscribers = 0;
 
 StripeController::StripeController() {
     _unique_id = ++_unique_subscribers;
+}
+
+StripeController::~StripeController() {
+
 }
 
 void StripeController::setup(XMLNodeList* _XMLlist) {
@@ -33,10 +37,8 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     // ports[1] = 18;
 
     // 1st function to retrieve the number of the function at start
-    Serial.println("Point 949");
     Serial.println(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
     effect = getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
-    Serial.println("Point 950");
     // Here we'll get the colors
     color1 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color1"));
     color2 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color2"));
@@ -206,6 +208,39 @@ void StripeController::stop() {
 
 // Pattern subscriber here
 
-void Update(const std::string& message) {
+void  StripeController::Update(const std::string& message) {
     std::cout << "Update: " << message << std::endl;
+    char prefix[10]; // prefix
+    char suffixe[10]; // prefix
+    int i = 0;
+    int j = 0;
+    int _s_p_choice = 0;
+    while(message[i] != '\0') {
+        if (_s_p_choice == 0) {
+            prefix[i] = message[i];
+            i++;
+        } else {
+            suffixe[i-j] = message[i];
+            i++;
+        }
+        if (message[i] == '=') {
+            prefix[i] = '\0';
+            _s_p_choice = 1;
+            i++;
+            j = i;
+        }
+    }
+    suffixe[i-j] = '\0';
+
+    // printf("%s\n", prefix);
+    // printf("%s\n", suffixe);
+
+    switch(getSettingsNumber(prefix)) {
+    case 1:
+        this->setEffect(atoi(suffixe));
+        break;
+    default:
+        // code block
+        std::cout<< "Error" << std::endl;
+    }
 }
