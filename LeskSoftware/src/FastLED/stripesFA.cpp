@@ -58,24 +58,288 @@ void StripesFA::setEffect(int effect) {
     // I just need to get a lot of function and to define them
     // in the listeffects.h file
     switch(effect) {
-        case 0:
-            fill_solid(leds, NUM_LEDS, CRGB(this->color1));
-            this->effect = 0;
-            break;
-        case 1:
-            fill_rainbow(leds, NUM_LEDS, 0, 255 / NUM_LEDS);
-            this->effect = 1;
-            break;
-        case 2:
-            fill_gradient_RGB(leds, NUM_LEDS, CRGB(255,0,0), CRGB(0,0,255));
-            this->effect = 2;
-            break;
-        case 3:
-            break;
-        default:
-            break;
-    }
-    FastLED.show();
+    case 1:
+        FastLedEffects::fill(ColorFunctions::extractRGB(color1)[0], ColorFunctions::extractRGB(color1)[1], ColorFunctions::extractRGB(color1)[2], leds);
+        this->effect = 0;
+        break;
+    case 2:
+        FastLedEffects::blink(ColorFunctions::extractRGB(color1)[0], ColorFunctions::extractRGB(color1)[1], ColorFunctions::extractRGB(color1)[2], leds, time);
+        this->effect = 1;
+        break;
+    case 3:
+        FastLedEffects::rainbowStatic(leds);
+        this->effect = 2;
+        break;
+    case 4:
+        FastLedEffects::fillGradientTwoColors(r1, g1, b1, r2, g2, b2, leds);
+        this->effect = 3;
+        break;
+    case 5:
+        FastLedEffects::fillGradientThreeColors(r1, g1, b1, r2, g2, b2, r3, g3, b3, leds);
+        this->effect = 4;
+        break;
+    case 6:
+        FastLedEffects::backAndForthNoSmoothOneDot(r, g, b, leds, time);
+        this->effect = 5;
+        break;
+    case 7:
+        FastLedEffects::backAndForthNoSmoothLengthedDot(r, g, b, leds, time, length);
+        this->effect = 6;
+        break;
+    case 8:
+        FastLedEffects::hueFading(milliseconds, leds);
+        this->effect = 7;
+        break;
+    case 9:
+        FastLedEffects::hueWhiteWave(hueInsert, milliseconds, leds);
+        this->effect = 8;
+        break;
+    case 10:
+        FastLedEffects::displayPaletteLinear(palette, leds);
+        this->effect = 9;
+        break;
+    case 11:
+        FastLedEffects::movingPaletteLinear(palette, milliseconds, leds);
+        this->effect = 10;
+        break;
+    case 12:
+        FastLedEffects::spotlightingPalette(palette, milliseconds, fade, leds);
+        this->effect = 11;
+        break;
+    case 13:
+        FastLedEffects::sinBeat8(r1, r2, r3, fade, bpm, leds);
+        this->effect = 12;
+        break;
+    case 14:
+        FastLedEffects::sinBeat8PhaseOff(r1, r2, r3, fade, bpm, phaseOffset, leds);
+        this->effect = 13;
+        break;
+    case 15:
+        FastLedEffects::sinBeat8TimeOff(r1, r2, r3, fade, bpm, time, leds);
+        this->effect = 14;
+        break;
+    case 16:
+        FastLedEffects::twoSinBeat8(r1, g1, b1, r2, g2, b2, fade, bpm, leds);
+        this->effect = 15;
+        break;
+    case 17:
+        FastLedEffects::threeSinBeat8(r1, g1, b1, r2, g2, b2, r3, g3, b3, fade, bpm, leds);
+        this->effect = 16;
+        break;
+    case 18:
+        FastLedEffects::brightnessSinBeat8Palette(palette, bpm, milliseconds, leds);
+        this->effect = 17;
+        break;
+    case 19:
+        FastLedEffects::funkyRainbowSinBeat8(fade, leds);
+        this->effect = 18;
+        break;
+    case 20:
+        FastLedEffects::funkyRangeSinBeat8(fade, color, leds);
+        this->effect = 19;
+        break;
+    case 21:
+        FastLedEffects::funkyRainbowSinBeat8Two(fade, leds);
+        this->effect = 20;
+        break;
+    case 22:
+        FastLedEffects::funkyRangeSinBeat8Two(fade, color, leds);
+        this->effect = 21;
+        break;
+    case 23:
+        FastLedEffects::movingFunkyPalette(palette, bpm1, bpm2, leds);
+        this->effect = 22;
+        break;
+    case 24:
+        FastLedEffects::rainbowWave(beat, milliseconds, fade, leds);
+        this->effect = 23;
+        break;
+    case 25:
+        FastLedEffects::choosenWave(milliseconds, fade, color, leds);
+        this->effect = 24;
+        break;
+    case 26:
+        FastLedEffects::firstNoiseRainbow(bpm, leds);
+        this->effect = 25;
+        break;
+    case 27:
+        FastLedEffects::firstNoiseColor(color, bpm, leds);
+        this->effect = 26;
+        break;
+    case 28:
+        FastLedEffects::noisePalette(palette, scale, leds);
+        this->effect = 27;
+        break;
+    case 29:
+        FastLedEffects::runFire(palette, leds);
+        this->effect = 28;
+        break;
+    case 30:
+        FastLedEffects::secondNoise(palette, leds);
+        this->effect = 29;
+        break;
+    case 31:
+        FastLedEffects::fillNoise16(leds);
+        this->effect = 30;
+        break;
+    case 32:
+        FastLedEffects::rainbowDave(density, delta, leds);
+        this->effect = 31;
+        break;
+    case 33:
+        FastLedEffects::marqueeDave(inter, hueChanging, length, leds);
+        this->effect = 32;
+        break;
+    case 34:
+        FastLedEffects::twinkleOld(inter, leds);
+        this->effect = 33;
+        break;
+    case 35:
+        FastLedEffects::twinkle(inter, leds);
+        this->effect = 34;
+        break;
+    case 36:
+        FastLedEffects::comet(inter, fade, cometSize, delathue, leds);
+        this->effect = 35;
+        break;
+    case 37:
+        FastLedEffects::cometOnce(inter, fade, cometsize, delathue, cometspeed, leds);
+        this->effect = 36;
+        break;
+    case 38:
+        FastLedEffects::bounce(leds, balls, fade, mirror);
+        this->effect = 37;
+        break;
+    case 39:
+        FastLedEffects::fire(size, cooling, sparking, sparks, sparkHeight, breversed, bmirrored);
+        this->effect = 38;
+        break;
+    case 40:
+        FastLedEffects::storm(CHANCE, CLUSTER, SPEED, FADE, leds);
+        this->effect = 39;
+        break;
+    case 41:
+        FastLedEffects::stormColored(CHANCE, CLUSTER, SPEED, FADE, color, leds);
+        this->effect = 40;
+        break;
+    case 42:
+        FastLedEffects::stormPalette(CHANCE, CLUSTER, SPEED, FADE, palette, leds);
+        this->effect = 41;
+        break;
+    case 43:
+        FastLedEffects::lighting(ledstart, ledlen, flashes, dimmer, frequency, leds);
+        this->effect = 42;
+        break;
+    case 44:
+        FastLedEffects::lightingColored(ledstart, ledlen, flashes, dimmer, frequency, color, leds);
+        this->effect = 43;
+        break;
+    case 45:
+        FastLedEffects::lightingPalette(ledstart, ledlen, flashes, dimmer, frequency, palette, leds);
+        this->effect = 44;
+        break;
+    case 46:
+        FastLedEffects::beat8_tail(moveSpeed, fade, leds);
+        this->effect = 45;
+        break;
+    case 47:
+        FastLedEffects::blendIntoRainbow(waitTime, colorTime, leds);
+        this->effect = 46;
+        break;
+    case 48:
+        FastLedEffects::breatheV2(pulseSp, leds);
+        this->effect = 47;
+        break;
+    case 49:
+        FastLedEffects::chaseTargetTalesVarA(time, leds);
+        this->effect = 48;
+        break;
+    case 50:
+        FastLedEffects::chaseTargetTalesVarB(time, leds);
+        this->effect = 49;
+        break;
+    case 51:
+        FastLedEffects::chaseTargetTalesVarC(boilingTime, smoothFading, fade, leds);
+        this->effect = 50;
+        break;
+    case 52:
+        FastLedEffects::everyNTimerVariables(timerA, timerB, leds);
+        this->effect = 51;
+        break;
+    case 53:
+        FastLedEffects::fillUpStrip(leds);
+        this->effect = 52;
+        break;
+    case 54:
+        FastLedEffects::heartBeat2(beat_speed, dub_offset, leds);
+        this->effect = 53;
+        break;
+    case 55:
+        FastLedEffects::heartBeat3(rainbow, leds);
+        this->effect = 54;
+        break;
+    case 56:
+        FastLedEffects::heartPulseBloodFlowing(leds);
+        this->effect = 55;
+        break;
+    case 57:
+        FastLedEffects::lighthouseBeaconV2(width, time, fadeRate, leds);
+        this->effect = 56;
+        break;
+    case 58:
+        FastLedEffects::matchingGlitter1(leds);
+        this->effect = 57;
+        break;
+    case 59:
+        FastLedEffects::matchingGlitter2(leds);
+        this->effect = 58;
+        break;
+    case 60:
+        FastLedEffects::matchingGlitter3(second, thrid, leds);
+        this->effect = 59;
+        break;
+    case 61:
+        FastLedEffects::matchingGlitter4(more, leds);
+        this->effect = 60;
+        break;
+    case 62:
+        FastLedEffects::mirrorFadeEnds(fadeOver, leds);
+        this->effect = 61;
+        break;
+    case 63:
+        FastLedEffects::Fire2012(time, cooling, sparking, leds);
+        this->effect = 62;
+        break;
+    case 64:
+        FastLedEffects::Fire2012_halfStrip(time, cooling, sparking, gReverseDirection, leds);
+        this->effect = 63;
+        break;
+    case 65:
+        FastLedEffects::movingColoredBar(palette, leds, colorBarLength, frameDelay);
+        this->effect = 64;
+        break;
+    case 66:
+        FastLedEffects::repeatingPattern(time1, time2, fade, leds);
+        this->effect = 65;
+        break;
+    case 67:
+        FastLedEffects::savedPixel(time, leds);
+        this->effect = 66;
+        break;
+    case 68:
+        FastLedEffects::sinCosLinear(leds);
+        this->effect = 67;
+        break;
+    case 69:
+        FastLedEffects::sparkles(leds, sparkel_duration, sparkel_amount, sparkel_spread);
+        this->effect = 68;
+        break;
+    default:
+        break;
+}
+
+FastLED.show();
+
 
 }
 

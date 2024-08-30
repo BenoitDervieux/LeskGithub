@@ -5,7 +5,6 @@ ToDo:
 
 ToDo Low Energy:
 **Find new effect and map them
-**Find colors and map them (from this website: https://encycolorpedia.fr/html)
 
 ToDo Not Coding: 
 **Start learning graph theory
@@ -13,3 +12,34 @@ ToDo Not Coding:
 
 Date 20/07/2024
 I should implement now the HTML/Javascript logic to post thing and then activate the subscriber pattern.
+
+Date 21/07/2024
+Si the subscriber pattern functions now --> When I click on one of the "effect button" in the /effects link it refreshes the JSON doc
+and using the subscriber pattern it refreshes the stripes.
+
+Now, to fill up the programme, it would be good to: 
+- Add more effects
+- Add more collections
+- Add more color mapping
+- Add more effect mapping
+- Add more setting mapping
+- Put the brightness in HTML
+- Put the play button in HTML
+- Make the brightness logic for the stripes
+- Make the stop logic for the stripes
+- Increment and list this logic in all the instance we have: HTML, Parser and stripes
+- Increment and list the logic for writing information in the JSON doc
+- Check the HSV color model from the introduction to fastLed here : https://www.youtube.com/watch?v=FQpXStjJ4Vc&list=PLgXkGn3BBAGi5dTOCuEwrLuFtfz0kGFTC&index=2
+- Check the correction of the color (same video as HSV model)
+- Having a speed converter for each effect, like if we have a curser which has a high speed, sometimes it can be traduced differently depending on the effect,
+then we need to traduce for each effect.
+- List a lot of palettes : possible tot use css gradient, minutes 6:30 on this video : https://www.youtube.com/watch?v=Ukq0tH2Tnkc&list=PLgXkGn3BBAGi5dTOCuEwrLuFtfz0kGFTC&index=3
+or here : https://fastled.io/tools/paletteknife/
+- Check how to blend palette/effects : 5 minutes 30 here : https://www.youtube.com/watch?v=fRXJQVdwrog&list=PLgXkGn3BBAGi5dTOCuEwrLuFtfz0kGFTC&index=5
+There a problem of memory here so let's look up how to use less memory
+- Check how to integrate the blur1d function
+- Be carefull to have some max value for some effects in order to not have epilepsy things
+- Check the function .setMaximalPower to see what you can do with it and all the power supply functions
+- Check the program blend_to_target_color from https://github.com/marmilicious/FastLED_examples for blending colors between effects
+- Look this easy button library for the controller : https://github.com/ncmreynolds/EasyButton
+- Find a better way to map the functions without hardcoding them (but complex as they are related to methods in a class)

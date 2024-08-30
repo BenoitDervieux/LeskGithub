@@ -47,5 +47,23 @@ Feels as if there is event listener function but maybe with the sockets. Need to
 
 https://randomnerdtutorials.com/esp32-web-server-spiffs-spi-flash-file-system/
 
+## ESP32 Web Server using SPIFFS (SPI Flash File System)
+
+https://randomnerdtutorials.com/esp32-web-server-spiffs-spi-flash-file-system/
+
+## ESP32 Async Web Server – Control Outputs with Arduino IDE (ESPAsyncWebServer library)
+
+https://randomnerdtutorials.com/esp32-async-web-server-espasyncwebserver-library/
+
+## Arduino JSON
+
+https://arduinojson.org/v7/api/jsondocument/
+
+## FastLED functions & Palettes
+
+https://fastled.io/docs/group__lib8tion.html
+https://fastled.io/tools/paletteknife/
+
+
 
 Updated: 10th of July, 2024

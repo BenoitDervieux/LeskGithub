@@ -2,6 +2,8 @@
 #define STRIPESFA_H
 
 #include <FastLED.h>
+#include "./FastLedEffects/FastLedEffects.h"
+#include "color_functions.h"
 
 
 

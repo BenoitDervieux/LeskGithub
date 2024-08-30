@@ -92,7 +92,9 @@
 			"*.tcc": "cpp",
 			"string_view": "cpp",
 			"cinttypes": "cpp",
-			"bitset": "cpp"
+			"bitset": "cpp",
+			"regex": "cpp",
+			"stack": "cpp"
 		}
 	}
 }
