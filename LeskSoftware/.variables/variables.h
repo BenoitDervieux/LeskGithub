@@ -1,4 +1,4 @@
 #define USERNAME "username"
 #define PASSWORD "password"
-#define SSID "Jovanovic"
-#define SSID_PASSWORD "vukovar333"
+#define SSID "V&B"
+#define SSID_PASSWORD "franceserbia41"

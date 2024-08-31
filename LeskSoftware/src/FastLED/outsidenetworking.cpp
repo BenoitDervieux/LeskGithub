@@ -46,14 +46,7 @@ void OutSideNetworking::setup() {
 
     // Here it prints a special collection
     server->on("/effects", HTTP_GET, [this](AsyncWebServerRequest *request){
-      // Serial.print("The url: ");
-      // Serial.println(request->url());
-      // Serial.print("The contentType: ");
-      // Serial.println(request->contentType());
-      // Serial.print("The headers: ");
-      // Serial.println(request->headers());
-      // Serial.print("The args: ");
-      // Serial.println(request->args());
+
       if (request->args() > 0) {
         for (int i = 0; i < request->args(); i++) {
           Serial.println(request->arg(i));
@@ -75,6 +68,8 @@ void OutSideNetworking::setup() {
         String effect = request->getParam("effect", true)->value();
         Serial.println("Point 454: Print the effect");
         Serial.println(effect);
+        Serial.println("Point 455: Check effect number");
+        Serial.println(getFunctionNumber(effect.c_str()));
         parser->setEffectNumber(getFunctionNumber(effect.c_str()));
         // Set the effect here
         // Handle the effect change logic here
@@ -82,18 +77,6 @@ void OutSideNetworking::setup() {
       } else {
         request->send(400, "text/plain", "Bad Request");
       }
-
-
-      // Here is the straightforward code for the stripes changing effects
-      // if (request->hasParam("effect", true)) {
-      //   String effect = request->getParam("effect", true)->value();
-      //   this->stripe_controller->setEffect(getFunctionNumber(effect.c_str()));
-      //   // Set the effect here
-      //   // Handle the effect change logic here
-      //   request->send(200, "text/plain", "Effect changed to " + effect);
-      // } else {
-      //   request->send(400, "text/plain", "Bad Request");
-      // }
     });
 
     server->on("/api/setEffect", HTTP_GET, [this](AsyncWebServerRequest *request){

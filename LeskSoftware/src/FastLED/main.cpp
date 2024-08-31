@@ -21,6 +21,7 @@ void setup() {
 }
 
 void loop() {
-    Serial.println("Dans l'attente...");
-    delay(5000);
+    stripe_controller.run();
+    // Serial.println("Dans l'attente...");
+    // delay(5000);
 }

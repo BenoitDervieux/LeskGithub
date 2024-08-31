@@ -13,7 +13,7 @@ CRGB leds[NUM_LEDS];
 
 // Constructor 1 color
 StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color)
- : port(_port), length(_length), direction(_direction), speed(_speed), effect(_effect), color1(_color)  {
+ : port(_port), length(_length), direction(_direction), speed(_speed), effectClassLvl(_effect), color1(_color)  {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
@@ -21,7 +21,7 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _ef
 
 // Constructor 2 colors
 StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color1, uint32_t _color2)
- : port(_port), length(_length), direction(_direction), speed(_speed), effect(_effect), color1(_color1), color2(_color2) {
+ : port(_port), length(_length), direction(_direction), speed(_speed), effectClassLvl(_effect), color1(_color1), color2(_color2) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
@@ -29,7 +29,7 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _ef
 
 // Constructor 3 colors
 StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color1, uint32_t _color2, uint32_t _color3)
- : port(_port), length(_length), direction(_direction), speed(_speed), effect(_effect), color1(_color1), color2(_color2), color3(_color3) {
+ : port(_port), length(_length), direction(_direction), speed(_speed), effectClassLvl(_effect), color1(_color1), color2(_color2), color3(_color3) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
@@ -46,8 +46,8 @@ void StripesFA::setup(int port, int _length) {
     this->fastleds = FastLED;
     }
     Serial.print("Test what effect we have: ");
-    Serial.println(this->effect);
-    this->setEffect(this->effect);
+    Serial.println(effect);
+    this->setEffect(effect);
     FastLED.setBrightness(100);
     FastLED.show();
 }
@@ -59,14 +59,17 @@ void StripesFA::setEffect(int effect) {
     // in the listeffects.h file
     switch(effect) {
     case 1:
+        Serial.println("Point : 654 - Dans le cas 1");
         FastLedEffects::fill(ColorFunctions::extractRGB(color1)[0], ColorFunctions::extractRGB(color1)[1], ColorFunctions::extractRGB(color1)[2], leds);
-        this->effect = 0;
+        effect = 1;
         break;
     case 2:
-        FastLedEffects::blink(ColorFunctions::extractRGB(color1)[0], ColorFunctions::extractRGB(color1)[1], ColorFunctions::extractRGB(color1)[2], leds, time);
-        this->effect = 1;
+        Serial.println("Point : 654 - Dans le cas 2");
+        Serial.println(tid);
+        FastLedEffects::blink(ColorFunctions::extractRGB(color1)[0], ColorFunctions::extractRGB(color1)[1], ColorFunctions::extractRGB(color1)[2], leds, tid);
+        effect = 2;
         break;
-    case 3:
+    /*case 3:
         FastLedEffects::rainbowStatic(leds);
         this->effect = 2;
         break;
@@ -79,11 +82,11 @@ void StripesFA::setEffect(int effect) {
         this->effect = 4;
         break;
     case 6:
-        FastLedEffects::backAndForthNoSmoothOneDot(r, g, b, leds, time);
+        FastLedEffects::backAndForthNoSmoothOneDot(r, g, b, leds, tid);
         this->effect = 5;
         break;
     case 7:
-        FastLedEffects::backAndForthNoSmoothLengthedDot(r, g, b, leds, time, length);
+        FastLedEffects::backAndForthNoSmoothLengthedDot(r, g, b, leds, tid, length);
         this->effect = 6;
         break;
     case 8:
@@ -115,7 +118,7 @@ void StripesFA::setEffect(int effect) {
         this->effect = 13;
         break;
     case 15:
-        FastLedEffects::sinBeat8TimeOff(r1, r2, r3, fade, bpm, time, leds);
+        FastLedEffects::sinBeat8TimeOff(r1, r2, r3, fade, bpm, tid, leds);
         this->effect = 14;
         break;
     case 16:
@@ -215,7 +218,7 @@ void StripesFA::setEffect(int effect) {
         this->effect = 38;
         break;
     case 40:
-        FastLedEffects::storm(CHANCE, CLUSTER, SPEED, FADE, leds);
+        FastLedEffects::storm(CHANCE, CLUSTER, speeda, FADE, leds);
         this->effect = 39;
         break;
     case 41:
@@ -251,11 +254,11 @@ void StripesFA::setEffect(int effect) {
         this->effect = 47;
         break;
     case 49:
-        FastLedEffects::chaseTargetTalesVarA(time, leds);
+        FastLedEffects::chaseTargetTalesVarA(tid, leds);
         this->effect = 48;
         break;
     case 50:
-        FastLedEffects::chaseTargetTalesVarB(time, leds);
+        FastLedEffects::chaseTargetTalesVarB(tid, leds);
         this->effect = 49;
         break;
     case 51:
@@ -283,7 +286,7 @@ void StripesFA::setEffect(int effect) {
         this->effect = 55;
         break;
     case 57:
-        FastLedEffects::lighthouseBeaconV2(width, time, fadeRate, leds);
+        FastLedEffects::lighthouseBeaconV2(width, tid, fadeRate, leds);
         this->effect = 56;
         break;
     case 58:
@@ -303,15 +306,15 @@ void StripesFA::setEffect(int effect) {
         this->effect = 60;
         break;
     case 62:
-        FastLedEffects::mirrorFadeEnds(fadeOver, leds);
+        FastLedEffects::mirrorFadeEnds(fade, leds);
         this->effect = 61;
         break;
     case 63:
-        FastLedEffects::Fire2012(time, cooling, sparking, leds);
+        FastLedEffects::Fire2012(tid, cooling, sparking, leds);
         this->effect = 62;
         break;
     case 64:
-        FastLedEffects::Fire2012_halfStrip(time, cooling, sparking, gReverseDirection, leds);
+        FastLedEffects::Fire2012_halfStrip(tid, cooling, sparking, gReverseDirection, leds);
         this->effect = 63;
         break;
     case 65:
@@ -323,7 +326,7 @@ void StripesFA::setEffect(int effect) {
         this->effect = 65;
         break;
     case 67:
-        FastLedEffects::savedPixel(time, leds);
+        FastLedEffects::savedPixel(tid, leds);
         this->effect = 66;
         break;
     case 68:
@@ -333,7 +336,7 @@ void StripesFA::setEffect(int effect) {
     case 69:
         FastLedEffects::sparkles(leds, sparkel_duration, sparkel_amount, sparkel_spread);
         this->effect = 68;
-        break;
+        break;*/
     default:
         break;
 }
@@ -381,6 +384,6 @@ int StripesFA::getDirection() {
 
 }
 int StripesFA::getEffect() {
-    return this->effect;
+    return this->effectClassLvl;
 }
 

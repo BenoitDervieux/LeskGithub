@@ -15,12 +15,15 @@ struct Effect {
     int settings[10];
 };
 
-static Effect _fill_effect = {"Fill", FILL, {ONECOLOR}};
-static Effect _rainbow_effect = {"Rainbow", RAINBOW, {SPEED}};
-static Effect _gradient_rgb_effect = {"Gradient RGB", GRADIENT_RGB, {SPEED, TWOCOLOR, THREECOLOR}};
+static Effect _fill_effect = {"Fill", FX_MODE_FILL, {red_1, green_1, blue_1}};
+static Effect _blink = {"Blink", FX_MODE_BLINK, {red_1, green_1, blue_1, tid} }; 
+
+
+
+
 static Effect _end_effect = {nullptr, -1, {0}}; // End marker for effects array
 
-static Effect effects[] = {_fill_effect, _rainbow_effect, _gradient_rgb_effect, _end_effect};
+static Effect effects[] = {_fill_effect, _blink, _end_effect};
 
 
 

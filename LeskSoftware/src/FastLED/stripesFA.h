@@ -4,6 +4,7 @@
 #include <FastLED.h>
 #include "./FastLedEffects/FastLedEffects.h"
 #include "color_functions.h"
+#include "defineeffectsettings.h"
 
 
 
@@ -11,9 +12,9 @@ class StripesFA {
 
     public :
         // Constructor with one color
-        StripesFA(int _port, int _length, int _direction, int speed, int effect_number, uint32_t _color);
-        StripesFA(int _port, int _length, int _direction, int speed, int effect_number, uint32_t _color1, uint32_t _color2);
-        StripesFA(int _port, int _length, int _direction, int speed, int effect_number, uint32_t _color1, uint32_t _color2, uint32_t _color3);
+        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, uint32_t _color);
+        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, uint32_t _color1, uint32_t _color2);
+        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, uint32_t _color1, uint32_t _color2, uint32_t _color3);
 
         void setup(int port, int _length);
 
@@ -41,7 +42,7 @@ class StripesFA {
         int length;
         int direction;
         int speed;
-        int effect;
+        int effectClassLvl;
         uint32_t color1;
         uint32_t color2;
         uint32_t color3;

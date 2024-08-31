@@ -5,6 +5,7 @@
 #include "XMLParser.h"
 #include "subscriberInterface.h"
 #include "mappingsettings.h"
+#include "defineeffectsettings.h"
 
 
 

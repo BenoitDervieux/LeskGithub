@@ -20,7 +20,7 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     
     this->XMLlist = _XMLlist;
     // Variables from the XML document
-    short int effect, direction, speed;
+    short int direction, speed;
     uint32_t color1, color2, color3; // Do not need to be a constant
     int nb_stripes, data_pins;
     int led_ports[2];
@@ -102,6 +102,10 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
 
 
 void StripeController::run() {
+    for (auto& s: stripesFA) {
+        std::cout << "loop" << std::endl;
+        s.setEffect(effect);
+    }
 
     FastLED.show();
 }
@@ -116,7 +120,8 @@ void StripeController::setColor(uint8_t red, uint8_t green, uint8_t blue) {
 
 }
 
-void StripeController::setEffect(uint8_t effect) {
+void StripeController::setEffect(uint8_t _effect) {
+    effect = _effect;
     for (auto& s: stripesFA) {
         std::cout << "Setting color inside controller" << std::endl;
         std::cout << "Effect: " << effect << std::endl;

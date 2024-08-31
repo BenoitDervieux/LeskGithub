@@ -10,7 +10,7 @@
 <number_of_data_pins>2</number_of_data_pins>
     <data_pin_1>23</data_pin_1>
     <data_pin_2>18</data_pin_2>
-<function_at_start>FX_MODE_STATIC</function_at_start>
+<function_at_start>FX_MODE_FILL</function_at_start>
 <brightness_at_start>150</brightness_at_start>
 <color1>CHARTREUSE</color1>
 <color2>PINK</color2>
