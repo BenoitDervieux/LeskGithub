@@ -12,7 +12,7 @@
 CRGB leds[NUM_LEDS];
 
 // Constructor 1 color
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color)
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, CRGB _color)
  : port(_port), length(_length), direction(_direction), speed(_speed), effectClassLvl(_effect), color1(_color)  {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
@@ -20,7 +20,7 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _ef
 }
 
 // Constructor 2 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color1, uint32_t _color2)
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, CRGB _color1, CRGB _color2)
  : port(_port), length(_length), direction(_direction), speed(_speed), effectClassLvl(_effect), color1(_color1), color2(_color2) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
@@ -28,7 +28,7 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _ef
 }
 
 // Constructor 3 colors
-StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, uint32_t _color1, uint32_t _color2, uint32_t _color3)
+StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _effect, CRGB _color1, CRGB _color2, CRGB _color3)
  : port(_port), length(_length), direction(_direction), speed(_speed), effectClassLvl(_effect), color1(_color1), color2(_color2), color3(_color3) {
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
@@ -59,21 +59,20 @@ void StripesFA::setEffect(int effect) {
     // in the listeffects.h file
     switch(effect) {
     case 1:
-        Serial.println("Point : 654 - Dans le cas 1");
-        FastLedEffects::fill(ColorFunctions::extractRGB(color1)[0], ColorFunctions::extractRGB(color1)[1], ColorFunctions::extractRGB(color1)[2], leds);
+        FastLedEffects::fill(SettingTest::getColor().r, SettingTest::getColor().g, SettingTest::getColor().b, leds);
+        // FastLedEffects::fill(this->color1.r,this->color1.g, this->color1.b, leds);
         effect = 1;
         break;
     case 2:
-        Serial.println("Point : 654 - Dans le cas 2");
-        Serial.println(tid);
-        FastLedEffects::blink(ColorFunctions::extractRGB(color1)[0], ColorFunctions::extractRGB(color1)[1], ColorFunctions::extractRGB(color1)[2], leds, tid);
+        // Serial.println("Point : 654 - Dans le cas 2");
+        FastLedEffects::blink(this->color1.r,this->color1.g, this->color1.b, leds, tid_blink);
         effect = 2;
         break;
-    /*case 3:
+    case 3:
         FastLedEffects::rainbowStatic(leds);
-        this->effect = 2;
+        effect = 2;
         break;
-    case 4:
+    /*case 4:
         FastLedEffects::fillGradientTwoColors(r1, g1, b1, r2, g2, b2, leds);
         this->effect = 3;
         break;
@@ -361,15 +360,15 @@ void StripesFA::stop() {
 
 }
 
-uint32_t StripesFA::getColor1() {
+CRGB StripesFA::getColor1() {
     return this->color1;
 }
 
-uint32_t StripesFA::getColor2() {
+CRGB StripesFA::getColor2() {
     return this->color2;
 }
 
-uint32_t StripesFA::getColor3() {
+CRGB StripesFA::getColor3() {
     return this->color3;
 }
 

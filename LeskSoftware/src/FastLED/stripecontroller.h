@@ -6,6 +6,8 @@
 #include "subscriberInterface.h"
 #include "mappingsettings.h"
 #include "defineeffectsettings.h"
+#include "color_functions.h"
+#include "SettingTest.h"
 
 
 
@@ -27,9 +29,9 @@ class StripeController : public SubscriberInterface {
         // Feels like we'll need to make some XML operations here, let's see...
         // void checkNode(const char * node);
 
-        std::vector<uint32_t> getColors1();
-        std::vector<uint32_t> getColors2();
-        std::vector<uint32_t> getColors3();
+        std::vector<CRGB> getColors1();
+        std::vector<CRGB> getColors2();
+        std::vector<CRGB> getColors3();
         std::vector<int> getPorts();
         std::vector<int> getLengths();
         std::vector<int> getDirections();

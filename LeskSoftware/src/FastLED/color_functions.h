@@ -14,6 +14,8 @@ class ColorFunctions {
         static CRGB hexToCRGB(const std::string& hex);
         // static std::string decimalStringToHex(std::string decimalString);
         static std::vector<uint8_t> extractRGB(uint32_t color);
+        static String CRGBToString(const CRGB& color);
+        static std::vector<uint8_t> extractRGB(CRGB color);
     
 };
 

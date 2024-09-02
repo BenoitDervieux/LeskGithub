@@ -15,8 +15,8 @@ struct Effect {
     int settings[10];
 };
 
-static Effect _fill_effect = {"Fill", FX_MODE_FILL, {red_1, green_1, blue_1}};
-static Effect _blink = {"Blink", FX_MODE_BLINK, {red_1, green_1, blue_1, tid} }; 
+static Effect _fill_effect = {"Fill", FX_MODE_FILL, {r, g, b}};
+static Effect _blink = {"Blink", FX_MODE_BLINK, {r, g, b, tid_blink} }; 
 
 
 

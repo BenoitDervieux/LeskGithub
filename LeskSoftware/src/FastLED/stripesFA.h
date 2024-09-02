@@ -5,6 +5,7 @@
 #include "./FastLedEffects/FastLedEffects.h"
 #include "color_functions.h"
 #include "defineeffectsettings.h"
+#include "SettingTest.h"
 
 
 
@@ -12,9 +13,9 @@ class StripesFA {
 
     public :
         // Constructor with one color
-        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, uint32_t _color);
-        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, uint32_t _color1, uint32_t _color2);
-        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, uint32_t _color1, uint32_t _color2, uint32_t _color3);
+        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, CRGB _color);
+        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, CRGB _color, CRGB _color2);
+        StripesFA(int _port, int _length, int _direction, int speed, int effectClassLvl, CRGB _color, CRGB _color2, CRGB _color3);
 
         void setup(int port, int _length);
 
@@ -27,9 +28,9 @@ class StripesFA {
         // [TODO] to have several way to set the color
         void setColor(uint8_t g, uint8_t r, uint8_t b);
         
-        uint32_t getColor1();
-        uint32_t getColor2();
-        uint32_t getColor3();
+        CRGB getColor1();
+        CRGB getColor2();
+        CRGB getColor3();
         int getPort();
         int getLength();
         int getDirection();
@@ -43,9 +44,9 @@ class StripesFA {
         int direction;
         int speed;
         int effectClassLvl;
-        uint32_t color1;
-        uint32_t color2;
-        uint32_t color3;
+        CRGB color1;
+        CRGB color2;
+        CRGB color3;
         CFastLED fastleds;
         
 };

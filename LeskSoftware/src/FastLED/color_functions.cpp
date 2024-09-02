@@ -51,3 +51,18 @@ std::vector<uint8_t> ColorFunctions::extractRGB(uint32_t color) {
     rgb[2] = color & 0xFF;         // Blue component
     return rgb;
 }
+
+String ColorFunctions::CRGBToString(const CRGB& color) {
+    // Create a buffer to hold the hexadecimal string
+    char buf[8]; // 7 chars for #RRGGBB and 1 for null terminator
+    snprintf(buf, sizeof(buf), "#%02X%02X%02X", color.r, color.g, color.b);
+    return String(buf);
+}
+
+std::vector<uint8_t> ColorFunctions::extractRGB(CRGB color) {
+        std::vector<uint8_t> rgb(3); // Vector to hold RGB values
+        rgb[0] = color.r; // Red component
+        rgb[1] = color.g; // Green component
+        rgb[2] = color.b; // Blue component
+        return rgb;
+}

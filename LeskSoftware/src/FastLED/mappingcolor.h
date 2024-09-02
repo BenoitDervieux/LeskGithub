@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
+#include <FastLED.h> 
 
 // Define the structure for the mapping
 typedef struct {
@@ -158,13 +159,23 @@ ColorMapping color_mappings[] = {
 
 #define COLOR_MAPPINGS_SIZE (sizeof(color_mappings) / sizeof(ColorMapping))
 
-uint32_t getColorNumber(const char *name) {
+// uint32_t getColorNumber(const char *name) {
+//     for (size_t i = 0; i < COLOR_MAPPINGS_SIZE; ++i) {
+//         if (strcmp(color_mappings[i].name, name) == 0) {
+//             return color_mappings[i].color;
+//         }
+//     }
+//     return -1; 
+// }
+
+
+CRGB getColorCRGB(const char* name) {
     for (size_t i = 0; i < COLOR_MAPPINGS_SIZE; ++i) {
         if (strcmp(color_mappings[i].name, name) == 0) {
-            return color_mappings[i].color;
+            return CRGB(color_mappings[i].color); // Convert uint32_t to CRGB
         }
     }
-    return -1; 
+    return CRGB::Black; // Return black color if name not found
 }
 
 

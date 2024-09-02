@@ -21,28 +21,22 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     this->XMLlist = _XMLlist;
     // Variables from the XML document
     short int direction, speed;
-    uint32_t color1, color2, color3; // Do not need to be a constant
     int nb_stripes, data_pins;
     int led_ports[2];
 
-    // effect = 0;
-    // direction = 1;
-    // speed = 100;
-    // color1 = 0xFF0000;
-    // color2 = 0x00FF00;
-    // color3 = 0x0000FF;
-    // nb_stripes = 2;
-    // data_pins = 2;
-    // ports[0] = 23;
-    // ports[1] = 18;
-
     // 1st function to retrieve the number of the function at start
-    Serial.println(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
     effect = getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
     // Here we'll get the colors
-    color1 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color1"));
-    color2 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color2"));
-    color3 = getColorNumber(XMLParser::XMLNode_getWord(this->XMLlist, "color3"));
+    SettingTest::setColor(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1")));
+    Serial.println("Pt 568541 : Color : " + ColorFunctions::CRGBToString(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1"))));
+    Serial.print("Pt 99999 : ");
+    Serial.print(SettingTest::getColor()[0]);
+    Serial.print(" ");
+    Serial.print(SettingTest::getColor()[1]);
+    Serial.print(" ");
+    Serial.print(SettingTest::getColor()[2]);
+    color2 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color2"));
+    color3 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color3"));
 
     // Get number of stripes
     nb_stripes = atoi(XMLParser::XMLNode_getWord(this->XMLlist, "number_of_stripes"));
@@ -58,13 +52,10 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     }
     // free(result);
 
-        Serial.println("Number of data pins: " + String(data_pins));
-        Serial.println("Number of stripes: " + String(nb_stripes));
-        Serial.println("Ports: " + String(led_ports[0]) + " " + String(led_ports[1]));
-        Serial.println("Effect: " + String(effect));
-        Serial.println("Color 1: " + String(color1));
-        Serial.println("Color 2: " + String(color2));
-        Serial.println("Color 3: " + String(color3));
+        // Serial.println("Number of data pins: " + String(data_pins));
+        // Serial.println("Number of stripes: " + String(nb_stripes));
+        // Serial.println("Ports: " + String(led_ports[0]) + " " + String(led_ports[1]));
+        // Serial.println("Effect: " + String(effect));
 
         //          @@         So here we have a buffer overflow, this might be due to the writing function
         //         @  @        from the XMLParser
@@ -91,19 +82,19 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
         // printf("Content in the node: %s\n", XMLParser::XMLNode_getWord(this->XMLlist,  "wifi_name"));
         // XMLParser::XMLNodeList_free(XMLlist);
 
-
+    // Serial.print("Pt 65842 - Color extract: ");
+    // Serial.println(color.r);
+    // Serial.println(color.g);
+    // Serial.println(color.b);
     for (int i = 0; i < nb_stripes; i++) {
-        stripesFA.emplace_back(led_ports[i], NUM_LEDS, direction, speed, effect, color1, color2, color3);
+        stripesFA.emplace_back(led_ports[i], NUM_LEDS, direction, speed, effect, SettingTest::getColor(), color2, color3);
     }
 
     Serial.println("Setup done");
-
 }
-
-
 void StripeController::run() {
-    for (auto& s: stripesFA) {
-        std::cout << "loop" << std::endl;
+    for (StripesFA& s: stripesFA) {
+        // std::cout << "loop" << std::endl;
         s.setEffect(effect);
     }
 
@@ -141,22 +132,22 @@ int StripeController::getNumberOfStripes() {
 }
 
 
-std::vector<uint32_t> StripeController::getColors1() {
-    std::vector<uint32_t> colors;
+std::vector<CRGB> StripeController::getColors1() {
+    std::vector<CRGB> colors;
     for (auto& s: stripesFA) {
         colors.push_back(s.getColor1());
     }
     return colors;
 }
-std::vector<uint32_t> StripeController::getColors2() {
-    std::vector<uint32_t> colors;
+std::vector<CRGB> StripeController::getColors2() {
+    std::vector<CRGB> colors;
     for (auto& s: stripesFA) {
         colors.push_back(s.getColor2());
     }
     return colors;
 }
-std::vector<uint32_t> StripeController::getColors3() {
-    std::vector<uint32_t> colors;
+std::vector<CRGB> StripeController::getColors3() {
+    std::vector<CRGB> colors;
     for (auto& s: stripesFA) {
         colors.push_back(s.getColor3());
     }
