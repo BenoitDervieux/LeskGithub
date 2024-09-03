@@ -25,18 +25,12 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     int led_ports[2];
 
     // 1st function to retrieve the number of the function at start
-    effect = getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
+    Settings::setEffect(getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start")));
+    Settings::setEffect(2);
     // Here we'll get the colors
-    SettingTest::setColor(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1")));
-    Serial.println("Pt 568541 : Color : " + ColorFunctions::CRGBToString(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1"))));
-    Serial.print("Pt 99999 : ");
-    Serial.print(SettingTest::getColor()[0]);
-    Serial.print(" ");
-    Serial.print(SettingTest::getColor()[1]);
-    Serial.print(" ");
-    Serial.print(SettingTest::getColor()[2]);
-    color2 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color2"));
-    color3 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color3"));
+    Settings::setColor(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1")));
+    Settings::setColor2(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color2")));
+    Settings::setColor3(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color3")));
 
     // Get number of stripes
     nb_stripes = atoi(XMLParser::XMLNode_getWord(this->XMLlist, "number_of_stripes"));
@@ -52,42 +46,38 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     }
     // free(result);
 
-        // Serial.println("Number of data pins: " + String(data_pins));
-        // Serial.println("Number of stripes: " + String(nb_stripes));
-        // Serial.println("Ports: " + String(led_ports[0]) + " " + String(led_ports[1]));
-        // Serial.println("Effect: " + String(effect));
+    // Serial.println("Number of data pins: " + String(data_pins));
+    // Serial.println("Number of stripes: " + String(nb_stripes));
+    // Serial.println("Ports: " + String(led_ports[0]) + " " + String(led_ports[1]));
+    // Serial.println("Effect: " + String(effect));
 
-        //          @@         So here we have a buffer overflow, this might be due to the writing function
-        //         @  @        from the XMLParser
-        //        @    @       
-        //       @  @@  @      [TODO] -> Fix that zeubi
-        //      @   @@   @     
-        //     @    @@    @    
-        //    @            @   
-        //   @      @+      @  
-        //  @@@@@@@@@@@@@@@@@@ 
-                    
-        // // Here it is a code to replace values in the XML file. 
-        // // So far it works
-        // Serial.println("Test replacing values...");
-        // XMLNode* to_replace = XMLParser::getNodeContent(this->XMLlist, "wifi_name");
-        // Serial.print("Get node content for wifi_name: ");
-        // Serial.println(to_replace->word);
-        // if (to_replace == NULL) {
-        //     printf("No content\n");
-        //     return;
-        // }
-        // XMLParser::replaceXMLtext("Machine.xml", "V&B", to_replace);
-        // Serial.println("Done replacing values...");
-        // printf("Content in the node: %s\n", XMLParser::XMLNode_getWord(this->XMLlist,  "wifi_name"));
-        // XMLParser::XMLNodeList_free(XMLlist);
+    //          @@         So here we have a buffer overflow, this might be due to the writing function
+    //         @  @        from the XMLParser
+    //        @    @       
+    //       @  @@  @      [TODO] -> Fix that zeubi
+    //      @   @@   @     
+    //     @    @@    @    
+    //    @            @   
+    //   @      @+      @  
+    //  @@@@@@@@@@@@@@@@@@ 
+                
+    // // Here it is a code to replace values in the XML file. 
+    // // So far it works
+    // Serial.println("Test replacing values...");
+    // XMLNode* to_replace = XMLParser::getNodeContent(this->XMLlist, "wifi_name");
+    // Serial.print("Get node content for wifi_name: ");
+    // Serial.println(to_replace->word);
+    // if (to_replace == NULL) {
+    //     printf("No content\n");
+    //     return;
+    // }
+    // XMLParser::replaceXMLtext("Machine.xml", "V&B", to_replace);
+    // Serial.println("Done replacing values...");
+    // printf("Content in the node: %s\n", XMLParser::XMLNode_getWord(this->XMLlist,  "wifi_name"));
+    // XMLParser::XMLNodeList_free(XMLlist);
 
-    // Serial.print("Pt 65842 - Color extract: ");
-    // Serial.println(color.r);
-    // Serial.println(color.g);
-    // Serial.println(color.b);
     for (int i = 0; i < nb_stripes; i++) {
-        stripesFA.emplace_back(led_ports[i], NUM_LEDS, direction, speed, effect, SettingTest::getColor(), color2, color3);
+        stripesFA.emplace_back(led_ports[i], NUM_LEDS, direction, speed, Settings::getEffect(), Settings::getColor(), Settings::getColor2(), Settings::getColor3());
     }
 
     Serial.println("Setup done");
@@ -95,7 +85,7 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
 void StripeController::run() {
     for (StripesFA& s: stripesFA) {
         // std::cout << "loop" << std::endl;
-        s.setEffect(effect);
+        s.setEffect(Settings::effect);
     }
 
     FastLED.show();
@@ -112,11 +102,11 @@ void StripeController::setColor(uint8_t red, uint8_t green, uint8_t blue) {
 }
 
 void StripeController::setEffect(uint8_t _effect) {
-    effect = _effect;
+    Settings::setEffect(_effect);
     for (auto& s: stripesFA) {
         std::cout << "Setting color inside controller" << std::endl;
-        std::cout << "Effect: " << effect << std::endl;
-        s.setEffect(effect);
+        std::cout << "Effect: " << Settings::effect << std::endl;
+        s.setEffect(Settings::getEffect());
     }
 }
 

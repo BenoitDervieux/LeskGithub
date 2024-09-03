@@ -3,6 +3,7 @@
 
 #include "defineeffects.h"
 #include "defineeffectsettings.h"
+#include "Settings.h"
 
 
 // The idea of this structure is to get the parameters of the effect as well as it's name
@@ -16,7 +17,7 @@ struct Effect {
 };
 
 static Effect _fill_effect = {"Fill", FX_MODE_FILL, {r, g, b}};
-static Effect _blink = {"Blink", FX_MODE_BLINK, {r, g, b, tid_blink} }; 
+static Effect _blink = {"Blink", FX_MODE_BLINK, {r, g, b, Settings::tid_blink} }; 
 
 
 

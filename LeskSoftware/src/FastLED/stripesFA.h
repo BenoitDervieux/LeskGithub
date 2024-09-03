@@ -5,7 +5,7 @@
 #include "./FastLedEffects/FastLedEffects.h"
 #include "color_functions.h"
 #include "defineeffectsettings.h"
-#include "SettingTest.h"
+#include "Settings.h"
 
 
 

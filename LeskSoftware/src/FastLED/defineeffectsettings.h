@@ -1,17 +1,8 @@
 #ifndef DEFINEEFFECTSETTINGS_H
 #define DEFINEEFFECTSETTINGS_H
 
-static int effect = 1;
-static int speed = 100;
 
-
-static CRGB             color2 = CRGB::Red;
-static CRGB             color3 = CRGB::Red;
 static CRGBPalette16    palette;
-static uint8_t          bpm_sinBeat8 = 30;
-static uint8_t          bpm_sinBeat8PhaseOff = 30;
-static uint8_t          phaseOffset_sinBeat8PhaseOff = 30;
-static uint8_t          bpm_sinBeat8TimeOff = 30;
 static uint8_t          hueInsert_hueWhiteWave;
 static uint8_t          bpm_twoSinBeat8;
 static uint8_t          bpm_threeSinBeat8;
@@ -33,16 +24,12 @@ static byte fade_bounce;
 static int              r;
 static int              g;
 static int              b;
-static int              tid_blink = 100;
 static int              r2;
 static int              g2;
 static int              b2;
 static int              r3;
 static int              g3;
 static int              b3;
-static int              tid_backAndForthNoSmoothOneDot = 30;
-static int              tid_backAndForthNoSmoothLengthedDot = 30;
-static int              length_backAndForthNoSmoothLengthedDot = 3;
 static int              tid_hueFading;
 static int              tid_hueWhiteWave;
 static int              tid_movingPaletteLinear;

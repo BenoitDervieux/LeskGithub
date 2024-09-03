@@ -7,7 +7,7 @@
 #include "mappingsettings.h"
 #include "defineeffectsettings.h"
 #include "color_functions.h"
-#include "SettingTest.h"
+#include "Settings.h"
 
 
 

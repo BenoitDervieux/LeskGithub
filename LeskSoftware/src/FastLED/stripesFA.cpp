@@ -46,8 +46,8 @@ void StripesFA::setup(int port, int _length) {
     this->fastleds = FastLED;
     }
     Serial.print("Test what effect we have: ");
-    Serial.println(effect);
-    this->setEffect(effect);
+    Serial.println(Settings::getEffect());
+    this->setEffect(Settings::getEffect());
     FastLED.setBrightness(100);
     FastLED.show();
 }
@@ -59,13 +59,13 @@ void StripesFA::setEffect(int effect) {
     // in the listeffects.h file
     switch(effect) {
     case 1:
-        FastLedEffects::fill(SettingTest::getColor().r, SettingTest::getColor().g, SettingTest::getColor().b, leds);
+        FastLedEffects::fill(Settings::getColor().r, Settings::getColor().g, Settings::getColor().b, leds);
         // FastLedEffects::fill(this->color1.r,this->color1.g, this->color1.b, leds);
         effect = 1;
         break;
     case 2:
         // Serial.println("Point : 654 - Dans le cas 2");
-        FastLedEffects::blink(this->color1.r,this->color1.g, this->color1.b, leds, tid_blink);
+        FastLedEffects::blink(Settings::getColor().r, Settings::getColor().g, Settings::getColor().b, leds, Settings::getTidBlink());
         effect = 2;
         break;
     case 3:
