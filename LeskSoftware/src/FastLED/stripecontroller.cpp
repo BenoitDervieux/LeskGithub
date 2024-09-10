@@ -26,7 +26,6 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
 
     // 1st function to retrieve the number of the function at start
     Settings::setEffect(getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start")));
-    Settings::setEffect(2);
     // Here we'll get the colors
     Settings::setColor(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1")));
     Settings::setColor2(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color2")));

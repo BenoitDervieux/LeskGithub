@@ -11,3 +11,64 @@
     padding: 20px;
     margin: 10px;
 }
+
+/*
+#
+# Modal Bottom Sheet
+#
+#
+*/
+
+.main-content {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Modal Bottom Sheet Styles */
+.modal-sheet {
+  position: fixed;
+  bottom: -75%;
+  left: 0;
+  width: 100%;
+  background-color: rgb(214, 55, 55);
+  box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.2);
+  transition: bottom 0.3s ease-in-out;
+  height: 90%; /* Adjust this to control the size */
+  border-radius: 20px 20px 0 0;
+  z-index: 100;
+}
+
+.sheet-content {
+  padding: 20px;
+}
+
+.sheet-content h2 {
+  margin-top: 0;
+}
+
+/* Close button */
+.close-sheet {
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+/* Setting item styles */
+.setting-item {
+  margin: 20px 0;
+}
+
+/* Open state */
+.modal-sheet.show {
+  bottom: 0;
+}
+
+
+/*
+#
+# End Modal Bottom Sheet
+#
+#
+*/
