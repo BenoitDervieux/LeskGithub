@@ -36,6 +36,11 @@
   height: 90%; /* Adjust this to control the size */
   border-radius: 20px 20px 0 0;
   z-index: 100;
+  pointer-events: auto;
+}
+
+.modal-sheet .range-input {
+  pointer-events: none;
 }
 
 .sheet-content {
@@ -65,6 +70,22 @@
   bottom: 0;
 }
 
+.containerArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  background-color: #f5f5f5;
+  border-radius: 15px 15px 0 0;
+}
+
+#arrow {
+  transform: rotate(-90deg);
+  width: 35px;
+  height: 35px;
+  margin: auto;
+}
 
 /*
 #
