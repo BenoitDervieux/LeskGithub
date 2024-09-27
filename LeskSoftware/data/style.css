@@ -27,10 +27,10 @@
 /* Modal Bottom Sheet Styles */
 .modal-sheet {
   position: fixed;
-  bottom: -75%;
+  bottom: -72%;
   left: 0;
   width: 100%;
-  background-color: rgb(214, 55, 55);
+  background-color: #f5f5f5;
   box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.2);
   transition: bottom 0.3s ease-in-out;
   height: 90%; /* Adjust this to control the size */
@@ -44,7 +44,11 @@
 }
 
 .sheet-content {
-  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0px;
+  padding-top: 0%;
+
 }
 
 .sheet-content h2 {
@@ -61,9 +65,6 @@
 }
 
 /* Setting item styles */
-.setting-item {
-  margin: 20px 0;
-}
 
 /* Open state */
 .modal-sheet.show {
@@ -78,13 +79,16 @@
   width: 100%;
   background-color: #f5f5f5;
   border-radius: 15px 15px 0 0;
+  margin-bottom: 0%;
 }
 
 #arrow {
   transform: rotate(-90deg);
-  width: 35px;
-  height: 35px;
-  margin: auto;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #830707;
+  padding: 5px;
+
 }
 
 /*
@@ -93,3 +97,106 @@
 #
 #
 */
+
+.sheet_content {
+  display: flex;
+  border: 1px solid #830707;
+  padding: 5px;
+  margin:auto;
+  width: 100%;
+}
+
+.setting_item_left {
+  border: 1px solid #830707;
+  padding: 5px;
+  width: 50%;
+}
+.setting_item_right {
+  border: 1px solid #830707;
+  padding: 5px;
+  width: 50%;
+}
+
+.rangeAndNumber {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  border: 1px solid #830707;
+  padding: 5px;
+  width: 90%;
+}
+
+.bri_range input[type="range"] {
+  flex-grow: 1; /* Make the range input expand to fill the available space */
+}
+
+.bri_range .value_mic_input .value_bri {
+  width: 50px; /* Set a fixed width for the value div */
+  text-align: center;
+}
+
+#brightness_range {
+  cursor: pointer;
+}
+
+.mic_range input[type="range"] {
+  flex-grow: 1; /* Make the range input expand to fill the available space */
+}
+
+#mic_range {
+  cursor: pointer;
+}
+
+.mic_range .value_mic_input {
+  width: 50px; /* Set a fixed width for the value div */
+  text-align: center;
+}
+
+.bri_range .value_bri {
+  width: 50px; /* Set a fixed width for the value div */
+  text-align: center;
+}
+
+.mic_range_button::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+input[type="range"] {
+  height: 10px;
+  background-color: #c0c0c0;
+  border: none;
+  appearance: none; /* Remove default appearance */
+}
+
+input[type="range"]::-webkit-slider-thumb { /* Webkit-specific styling */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+
+.brightness {
+  font-weight: 600;
+  display: block;
+  margin: auto;
+  border: 1px solid #830707;
+  padding: 5px;
+  width: 90%;
+  text-align: center;
+}
+
+.mic_input_title {
+  font-weight: 600;
+  display: block;
+  margin: auto;
+  border: 1px solid #830707;
+  padding: 5px;
+  width: 90%;
+  text-align: center;
+}

@@ -14,10 +14,21 @@
     <div class="containerArrow">
       <div class="arr top"><img src="img/right-arrow.png" id="arrow" onclick="moveSheet()"></div>
     </div>
-    <div class="sheet-content">
-      <div class="setting-item">
-        <label for="brightness">Brightness:</label>
-        <input type="range" id="bass" name="bass" min="0" max="250">
+    <div class="sheet_content">
+      <div class="setting_item_left">
+        <label class="brightness" for="brightness">Brightness</label>
+          <div class="rangeAndNumber bri_range">
+          <input type="range" id="brightness_range" name="brightness" min="0" max="255">
+          <div class="value_bri">0</div>
+        </div>
+      </div>
+      <div class="setting_item_right">
+        <label class="mic_input_title" for="mic_input_title">Mic</label>
+        <div class="rangeAndNumber mic_range">
+        <input type="range" id="mic_range" name="mic_range" class="mic_range_button" min="0" max="255">
+        <div class="value_mic_input">0</div>
+      </div>
+      </div>
       </div>
     </div>
   </div>
@@ -70,11 +81,7 @@
       .catch(error => console.error('Error:', error));
     }
 
-    const rangeInput = document.getElementById('brightness');
-    // Listen for changes in the range input
-    rangeInput.addEventListener('input', function() {
-      console.log('Range value changed to:', rangeInput.value);
-    });
+    
 
 
     function moveSheet() {
@@ -82,6 +89,10 @@
         document.getElementById("modal-sheet").classList.remove("closed");
         document.getElementById("modal-sheet").classList.add("open");
         document.getElementById("modal-sheet").style.bottom = '0%';
+        document.getElementById("arrow").style.transition = 'transform 150ms ease-in';
+        document.getElementById("arrow").style.transform = 'rotate(90deg)';
+      } else {
+        closePanel();
       }
     }
 
@@ -90,8 +101,40 @@
         document.getElementById("modal-sheet").classList.remove("open");
         document.getElementById("modal-sheet").classList.add("closed");
         document.getElementById("modal-sheet").style.bottom = '-75%';
+        document.getElementById("arrow").style.transition = 'transform 150ms ease-in';
+        document.getElementById("arrow").style.transform = 'rotate(270deg)';
       }
     }
+
+
+    const rangeInput = document.getElementById('brightness_range');
+    // Listen for changes in the range input
+    rangeInput.addEventListener('input', function() {
+      console.log('Range value changed to:', rangeInput.value);
+    });
+    const sliderBrightness = document.getElementById('brightness_range');
+    const sliderValueBrightness = document.querySelector(".value_bri")
+
+    sliderBrightness.addEventListener("input", (event) => {
+      console.log(sliderBrightness)
+      const tempSliderValue = event.target.value; 
+      sliderValueBrightness.textContent = tempSliderValue;
+      
+      const progress = (tempSliderValue / sliderBrightness.max) * 100;
+    
+    })
+
+    const sliderMic = document.getElementById('mic_range');
+    const sliderValueMicInput = document.querySelector(".value_mic_input")
+
+    sliderMic.addEventListener("input", (event) => {
+      console.log(sliderBrightness)
+      const tempSliderValue = event.target.value; 
+      sliderValueMicInput.textContent = tempSliderValue;
+      
+      const progress = (tempSliderValue / sliderMic.max) * 100;
+    
+    })
 
   
 
