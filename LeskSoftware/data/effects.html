@@ -14,22 +14,24 @@
     <div class="containerArrow">
       <div class="arr top"><img src="img/right-arrow.png" id="arrow" onclick="moveSheet()"></div>
     </div>
-    <div class="sheet_content">
-      <div class="setting_item_left">
-        <label class="brightness" for="brightness">Brightness</label>
-          <div class="rangeAndNumber bri_range">
-          <input type="range" id="brightness_range" name="brightness" min="0" max="255">
-          <div class="value_bri">0</div>
+    <div class="grid-container">
+        <div class="setting_item_left">
+          <label class="brightness setting_name" for="brightness">Brightness</label>
+            <div class="rangeAndNumber bri_range setting_range">
+            <input type="range" id="brightness_range" name="brightness" class="setting_button" min="0" max="255">
+            <div class="value_bri">0</div>
+          </div>
+        </div>
+        <div class="setting_item_right">
+          <label class="mic_input_title setting_name" for="mic_input_title">Mic</label>
+          <div class="rangeAndNumber mic_range setting_range">
+          <input type="range" id="mic_range" name="mic_range" class="mic_range_button setting_button" min="0" max="255">
+          <div class="value_mic_input">0</div>
         </div>
       </div>
-      <div class="setting_item_right">
-        <label class="mic_input_title" for="mic_input_title">Mic</label>
-        <div class="rangeAndNumber mic_range">
-        <input type="range" id="mic_range" name="mic_range" class="mic_range_button" min="0" max="255">
-        <div class="value_mic_input">0</div>
-      </div>
-      </div>
-      </div>
+      <div id="settings-details"></div>
+    </div>
+
     </div>
   </div>
 
@@ -60,6 +62,33 @@
       })
       .catch(error => console.error('Error fetching collection details:', error));
 
+      fetch(`http://192.168.1.236/api/settings`)
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+          return response.json();
+        })
+      .then(data => {
+        const settingsDiv = document.getElementById('setting-details');
+        var number = 0;
+          data.effects.forEach(settings => {
+            const effectDiv = document.createElement('div');
+            if (number % 2 == 0) {
+              effectDiv.className = 'setting_item_left';
+            } else {
+              effectDiv.className = 'setting_item_right';
+            }
+            number += 1;
+            settings.settings.forEach(setting => {
+              const settingsDiv = document.createElement('p');
+              settingsDiv.innerHTML = `Settings: ${setting}`;
+              effectDiv.appendChild(settingsDiv);
+           })
+           effectsDiv.appendChild(effectDiv);
+          });
+      })
+      .catch(error => console.error('Error fetching collection details:', error));
       // Function to handle the effect change
     function changeEffect(effectName) {
       fetch('/effects', {
@@ -133,9 +162,7 @@
       sliderValueMicInput.textContent = tempSliderValue;
       
       const progress = (tempSliderValue / sliderMic.max) * 100;
-    
     })
-
   
 
   </script>

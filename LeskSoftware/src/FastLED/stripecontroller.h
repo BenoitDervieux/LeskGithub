@@ -36,6 +36,7 @@ class StripeController : public SubscriberInterface {
         std::vector<int> getLengths();
         std::vector<int> getDirections();
         std::vector<uint8_t> getEffects();
+        int getEffect();
 
         void Update(const std::string& message) override;
     

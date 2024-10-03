@@ -13,8 +13,12 @@ void setup() {
     Serial.begin(9600);
     XMLDocument XMLdoc;
     XMLNodeList XMLlist;
+    Serial.println("Ca commence la machine....!!!!");
     XMLParser::loadXMLDocument(&XMLdoc, "Machine.xml", &XMLlist);
+    Serial.println("Ca commence la machine2....!!!!");
+    // Probleme est ici
     stripe_controller.setup(&XMLlist);
+    Serial.println("Ca commence la machine3....!!!!");
     parser.setupByXML(&XMLlist);
     outside_networking.setup();
     parser.Add(&stripe_controller);

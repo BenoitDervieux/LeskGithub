@@ -14,10 +14,11 @@ struct Effect {
     const char* name;
     int effect;
     int settings[10];
+    const char* settingNames[10];
 };
 
-static Effect _fill_effect = {"Fill", FX_MODE_FILL, {r, g, b}};
-static Effect _blink = {"Blink", FX_MODE_BLINK, {r, g, b, Settings::tid_blink} }; 
+static Effect _fill_effect = {"Fill", FX_MODE_FILL, {r, g, b}, {"Red", "Green", "Blue"}};
+static Effect _blink = {"Blink", FX_MODE_BLINK, {r, g, b, Settings::tid_blink}, {"Red", "Green", "Blue", "Time"}}; 
 
 
 

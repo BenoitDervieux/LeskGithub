@@ -311,6 +311,7 @@ void JSONParser::writeOnDoc(const char* path) const {
 
 // Subscriber pattern here
 void JSONParser::Add(SubscriberInterface* sub) {
+    Serial.println("Point 888775: Adding subscriber");
             _subs.push_back(sub);
 }
 

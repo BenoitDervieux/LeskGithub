@@ -187,6 +187,7 @@ void OutSideNetworking::setup() {
         JsonArray effectsArray = doc.createNestedArray("effects");
 
         // Iterate through all the effects up until there is the end
+        // I think it fetches it from the class listeffects
         for (int j = 0; j < sizeof(effects) / sizeof(Effect); ++j) {
             if (effects[j].name == nullptr) break; // Stop at the end marker
             // Then create new Object
@@ -195,12 +196,37 @@ void OutSideNetworking::setup() {
             effect["effect"] = effects[j].effect;
             JsonArray settingsArray = effect.createNestedArray("settings");
 
-            for (int k = 0; k < sizeof(effects[j].settings) / sizeof(int); ++k) {
-            if (effects[j].settings[k] == 0) break; // Stop at the end marker
-            settingsArray.add(effects[j].settings[k]);
+            for (int k = 0; k < sizeof(effects[j].settingNames) / sizeof(int); ++k) {
+            if (effects[j].settingNames[k] == 0) break; // Stop at the end marker
+            settingsArray.add(effects[j].settingNames[k]);
             }
         }
         // Convert the JSON document to a string
+        // Send 200 OK
+        String jsonString;
+        serializeJson(doc, jsonString);
+        request->send(200, "application/json", jsonString);
+    });
+
+    server->on("/api/settings", HTTP_GET, [this](AsyncWebServerRequest *request) {
+      DynamicJsonDocument doc(2048); // Adjust size as needed
+      JsonArray effectsArray = doc.createNestedArray("settings");
+      int num_effect = this->stripe_controller->getEffect();
+      Serial.print("Le num de l'effet est: ");
+      Serial.println(num_effect);
+
+            if (effects[num_effect-1].name == nullptr) return; // Stop at the end marker
+            // Then create new Object
+            JsonObject effect = effectsArray.createNestedObject();
+            effect["name"] = effects[num_effect-1].name;
+            effect["effect"] = effects[num_effect-1].effect;
+            JsonArray settingsArray = effect.createNestedArray("settings");
+
+            for (int k = 0; k < sizeof(effects[num_effect-1].settingNames) / sizeof(int); ++k) {
+            if (effects[num_effect-1].settingNames[k] == 0) break; // Stop at the end marker
+            settingsArray.add(effects[num_effect-1].settingNames[k]);
+            }
+            // Convert the JSON document to a string
         // Send 200 OK
         String jsonString;
         serializeJson(doc, jsonString);

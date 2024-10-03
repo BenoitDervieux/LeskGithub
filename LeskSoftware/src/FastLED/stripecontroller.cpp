@@ -25,23 +25,35 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     int led_ports[2];
 
     // 1st function to retrieve the number of the function at start
-    Settings::setEffect(getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start")));
+    int function_number = getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
+    Settings::setEffect(function_number);
+    Serial.println("Function number: " + String(function_number));
     // Here we'll get the colors
-    Settings::setColor(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1")));
-    Settings::setColor2(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color2")));
-    Settings::setColor3(getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color3")));
+    CRGB color_1 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1"));
+    CRGB color_2 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color2"));
+    CRGB color_3 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color3"));
+    Settings::setColor(color_1);
+    Settings::setColor2(color_2);
+    Settings::setColor3(color_3);
 
+    Serial.println("Color 1:" + String(ColorFunctions::CRGBToString(color_1)));
+    Serial.println("Color 2:" + String(ColorFunctions::CRGBToString(color_2)));
+    Serial.println("Color 3:" + String(ColorFunctions::CRGBToString(color_3)));
     // Get number of stripes
     nb_stripes = atoi(XMLParser::XMLNode_getWord(this->XMLlist, "number_of_stripes"));
+    Serial.println("Number of stripes: " + String(nb_stripes));
 
     // Handle the data pins
     data_pins = atoi(XMLParser::XMLNode_getWord(this->XMLlist, "number_of_data_pins"));
+    Serial.println("Number of data pins: " + String(data_pins));
     for (int i = 0; i < nb_stripes; i++) {
         char str[10];
         sprintf(str, "%d", i+1);
         char node_title[] = "data_pin_";
         char * placeholder_name_data_pin = strcat(node_title, str);
         led_ports[i] = atoi(XMLParser::XMLNode_getWord(this->XMLlist, placeholder_name_data_pin));
+        // Serial.print("Point 897: Data pin: ");
+        // Serial.println(led_ports[i]);
     }
     // free(result);
 
@@ -75,12 +87,20 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     // printf("Content in the node: %s\n", XMLParser::XMLNode_getWord(this->XMLlist,  "wifi_name"));
     // XMLParser::XMLNodeList_free(XMLlist);
 
+
+
+    // ERRORS TO REPORT
+    // 28/09/2024 I had some memory problem that I couldn't really explain
+    // Then I kind of  put everything into a variable rather than directly in a call
+    // and it resolved it. Still can't explain
+
     for (int i = 0; i < nb_stripes; i++) {
         stripesFA.emplace_back(led_ports[i], NUM_LEDS, direction, speed, Settings::getEffect(), Settings::getColor(), Settings::getColor2(), Settings::getColor3());
     }
 
     Serial.println("Setup done");
 }
+
 void StripeController::run() {
     for (StripesFA& s: stripesFA) {
         // std::cout << "loop" << std::endl;
@@ -101,6 +121,7 @@ void StripeController::setColor(uint8_t red, uint8_t green, uint8_t blue) {
 }
 
 void StripeController::setEffect(uint8_t _effect) {
+    Serial.println("Point 845758");
     Settings::setEffect(_effect);
     for (auto& s: stripesFA) {
         std::cout << "Setting color inside controller" << std::endl;
@@ -169,6 +190,9 @@ std::vector<uint8_t> StripeController::getEffects() {
         effects.push_back(s.getEffect());
     }
     return effects;
+}
+int StripeController::getEffect() {
+    return stripesFA[0].getEffect();
 }
 
 

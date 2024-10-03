@@ -62,15 +62,20 @@ void StripesFA::setEffect(int effect) {
         FastLedEffects::fill(Settings::getColor().r, Settings::getColor().g, Settings::getColor().b, leds);
         // FastLedEffects::fill(this->color1.r,this->color1.g, this->color1.b, leds);
         effect = 1;
+        effectClassLvl = effect-1;
+        // Serial.println("Point 859: Effect number: " + String(effect));
         break;
     case 2:
         // Serial.println("Point : 654 - Dans le cas 2");
         FastLedEffects::blink(Settings::getColor().r, Settings::getColor().g, Settings::getColor().b, leds, Settings::getTidBlink());
         effect = 2;
+        effectClassLvl = effect-1;
+        // Serial.println("Point 860: Effect number: " + String(effect));
         break;
     case 3:
         FastLedEffects::rainbowStatic(leds);
         effect = 2;
+        // Serial.println("Point 861: Effect number: " + String(effect));
         break;
     /*case 4:
         FastLedEffects::fillGradientTwoColors(r1, g1, b1, r2, g2, b2, leds);
@@ -338,6 +343,7 @@ void StripesFA::setEffect(int effect) {
         break;*/
     default:
         break;
+    
 }
 
 FastLED.show();

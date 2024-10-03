@@ -20,6 +20,11 @@ static SettingsMapping settings_mappings[] = {
     {"SETTING_TWOCOLOR", 5},
     {"SETTING_THREECOLOR", 6},
     {"EFF", 1},
+
+    {"Red", 22},
+    {"Green", 23},
+    {"Blue", 24},
+
     // Add more mappings as needed
 };
 

@@ -1,7 +1,7 @@
 #ifndef DEFINEEFFECTS_H
 #define DEFINEEFFECTS_H
 
-#define END                                             -1
+#define END                                                     -1
 #define FX_MODE_FILL                                            1
 #define FX_MODE_BLINK                                           2
 #define FX_MODE_RAINBOW_STATIC                                  3
