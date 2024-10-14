@@ -11,6 +11,7 @@
 #include "stripecontroller.h"
 #include "mappingeffects.h"
 #include "jsonparser.h"
+#include "effectmanager.h"
 
 
 

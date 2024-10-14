@@ -4,6 +4,7 @@
 
 // Blink effect
 unsigned long previousMillisBlink = 0;
+bool ledsOn = true;
 // Back And Forth One Dot effect
 static int posBackAndForthOneDot = 0;           // Current position of the dot
 static int directionBackAndForthOneDot = 1;
@@ -148,12 +149,22 @@ void FastLedEffects::fill(int r, int g, int b, CRGB leds[]) {
 // Add link to video : https://www.youtube.com/watch?v=4Ut4UK7612M&list=PLgXkGn3BBAGi5dTOCuEwrLuFtfz0kGFTC&index=2
 void FastLedEffects::blink(int r, int g, int b, CRGB leds[], int tid_blink) {
     unsigned long currentMillis = millis();
+
+    // Check if it's time to toggle the state
     if (currentMillis - previousMillisBlink >= tid_blink) {
         previousMillisBlink = currentMillis;
-        fill_solid(leds, NUM_LEDS, CRGB(r, g, b));
-        FastLED.show();
-    } else {
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
+
+        // Toggle the LED state
+        ledsOn = !ledsOn;
+
+        if (ledsOn) {
+            // Turn the LEDs on
+            fill_solid(leds, NUM_LEDS, CRGB(r, g, b));
+        } else {
+            // Turn the LEDs off
+            fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
+        }
+
         FastLED.show();
     }
 }

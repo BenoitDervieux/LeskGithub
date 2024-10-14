@@ -4,6 +4,7 @@
 #include "outsidenetworking.h"
 #include "jsonparser.h"
 
+
 StripeController stripe_controller = StripeController();
 AsyncWebServer server(80);
 JSONParser parser = JSONParser();
@@ -22,10 +23,12 @@ void setup() {
     parser.setupByXML(&XMLlist);
     outside_networking.setup();
     parser.Add(&stripe_controller);
+
 }
 
 void loop() {
     stripe_controller.run();
+
     // Serial.println("Dans l'attente...");
     // delay(5000);
 }

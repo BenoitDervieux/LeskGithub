@@ -36,9 +36,15 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     Settings::setColor2(color_2);
     Settings::setColor3(color_3);
 
-    Serial.println("Color 1:" + String(ColorFunctions::CRGBToString(color_1)));
-    Serial.println("Color 2:" + String(ColorFunctions::CRGBToString(color_2)));
-    Serial.println("Color 3:" + String(ColorFunctions::CRGBToString(color_3)));
+    std::vector<uint8_t> colors = ColorFunctions::extractRGB(color_1);
+    Settings::setR(colors[0]);
+    Settings::setG(colors[1]);
+    Settings::setB(colors[2]);
+    Serial.println("Pt 222: Color 1: R: " + String(Settings::getR()) + " G: " + String(Settings::getG()) + " B: " + String(Settings::getB()));
+
+    // Serial.println("Color 1:" + String(ColorFunctions::CRGBToString(color_1)));
+    // Serial.println("Color 2:" + String(ColorFunctions::CRGBToString(color_2)));
+    // Serial.println("Color 3:" + String(ColorFunctions::CRGBToString(color_3)));
     // Get number of stripes
     nb_stripes = atoi(XMLParser::XMLNode_getWord(this->XMLlist, "number_of_stripes"));
     Serial.println("Number of stripes: " + String(nb_stripes));

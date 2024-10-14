@@ -4,6 +4,7 @@
 
 
 String ledState;   // Define the variable
+EffectManager effectManager;
 
 OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* _stripe_controller, JSONParser* _parser) :
          server(_server), stripe_controller(_stripe_controller), parser(_parser) {}
@@ -46,15 +47,14 @@ void OutSideNetworking::setup() {
 
     // Here it prints a special collection
     server->on("/effects", HTTP_GET, [this](AsyncWebServerRequest *request){
-
       if (request->args() > 0) {
         for (int i = 0; i < request->args(); i++) {
-          Serial.println(request->arg(i));
+          // Serial.println(request->arg(i));
           const char * argName = request->arg(i).c_str();
-          Serial.print("Test du const char : ");
-          Serial.println(argName);
-          Serial.print("Test du get function Number : ");
-          Serial.println(getFunctionNumber(argName));
+          // Serial.print("Test du const char : ");
+          // Serial.println(argName);
+          // Serial.print("Test du get function Number : ");
+          // Serial.println(getFunctionNumber(argName));
           this->stripe_controller->setEffect(getFunctionNumber(argName));
         }
       }
@@ -66,11 +66,15 @@ void OutSideNetworking::setup() {
       // Here we will implement the logic for the subscriber pattern
       if (request->hasParam("effect", true)) {
         String effect = request->getParam("effect", true)->value();
-        Serial.println("Point 454: Print the effect");
-        Serial.println(effect);
-        Serial.println("Point 455: Check effect number");
-        Serial.println(getFunctionNumber(effect.c_str()));
+        // Serial.println("Point 454: Print the effect");
+        // Serial.println(effect);
+        // Serial.println("Point 455: Check effect number");
+        // Serial.println(getFunctionNumber(effect.c_str()));
+        // unsigned long startTime = millis();
         parser->setEffectNumber(getFunctionNumber(effect.c_str()));
+        // unsigned long endTime = millis();
+        // Serial.print("Time taken to set effect: ");
+        // Serial.println(endTime - startTime);
         // Set the effect here
         // Handle the effect change logic here
         request->send(200, "text/plain", "Effect changed to " + effect);
@@ -79,20 +83,47 @@ void OutSideNetworking::setup() {
       }
     });
 
+    server->on("/setSetting", HTTP_POST, [this](AsyncWebServerRequest *request) {
+      // Check if the "setting" and "value" parameters are present in the POST request
+      if (request->hasParam("setting", true) && request->hasParam("value", true)) {
+          // Correct parameter names: "setting" for the setting name, and "value" for the new value
+          String settingName = request->getParam("setting", true)->value(); // Get setting name
+          int newValue = request->getParam("value", true)->value().toInt(); // Get new value
+          // Serial.print("The setting is: ");
+          // Serial.println(settingName);
+          // Serial.print("The value is: ");
+          // Serial.println(newValue);
+          // Call the effect manager to update the setting
+          unsigned long startTime = millis();
+          effectManager.setSetting(settingName, newValue); // Update the setting
+          unsigned long endTime = millis();
+          Serial.print("Time taken to set setting: ");
+          Serial.println(endTime - startTime);
+          // Respond with a success message
+          request->send(200, "text/plain", "Effect changed: " + settingName);
+      } else {
+          // Respond with a 400 error if required parameters are missing
+          request->send(400, "text/plain", "Bad Request: Missing parameters");
+      }
+  });
+
+
     server->on("/api/setEffect", HTTP_GET, [this](AsyncWebServerRequest *request){
       if (request->args() > 0) {
         for (int i = 0; i < request->args(); i++) {
-          Serial.println(request->arg(i));
+          // Serial.println(request->arg(i));
           const char * argName = request->arg(i).c_str();
-          Serial.print("Test du const char : ");
-          Serial.println(argName);
-          Serial.print("Test du get function Number : ");
-          Serial.println(getFunctionNumber(argName));
+          // Serial.print("Pt 987: Test du const char : ");
+          // Serial.println(argName);
+          // Serial.print("Pt 988: Test du get function Number : ");
+          // Serial.println(getFunctionNumber(argName));
           this->stripe_controller->setEffect(getFunctionNumber(argName));
         }
       }
       request->send(200, "application/json");
     });
+
+    
 
 
     // Route to serve the collections as JSON
@@ -122,9 +153,9 @@ void OutSideNetworking::setup() {
             effect["effects"] = collections[i].effect[j].effect;
             JsonArray settingsArray = effect.createNestedArray("settings");
 
-            for (int k = 0; k < sizeof(collections[i].effect[j].settings) / sizeof(int); ++k) {
-            if (collections[i].effect[j].settings[k] == 0) break; // Stop at the end marker
-            settingsArray.add(collections[i].effect[j].settings[k]);
+            for (int k = 0; k < sizeof(collections[i].effect[j].settingNames) / sizeof(int); ++k) {
+            if (collections[i].effect[j].settingNames[k] == 0) break; // Stop at the end marker
+            settingsArray.add(collections[i].effect[j].settingNames[k]);
             }
         }
         }
@@ -164,9 +195,9 @@ void OutSideNetworking::setup() {
                         effect["effects"] = collections[i].effect[j].effect;
                         JsonArray settingsArray = effect.createNestedArray("settings");
 
-                        for (int k = 0; k < sizeof(collections[i].effect[j].settings) / sizeof(int); ++k) {
-                        if (collections[i].effect[j].settings[k] == 0) break; // Stop at the end marker
-                        settingsArray.add(collections[i].effect[j].settings[k]);
+                        for (int k = 0; k < sizeof(collections[i].effect[j].settingNames) / sizeof(int); ++k) {
+                        if (collections[i].effect[j].settingNames[k] == 0) break; // Stop at the end marker
+                        settingsArray.add(collections[i].effect[j].settingNames[k]);
                         }
                     }
                 }
@@ -210,21 +241,30 @@ void OutSideNetworking::setup() {
 
     server->on("/api/settings", HTTP_GET, [this](AsyncWebServerRequest *request) {
       DynamicJsonDocument doc(2048); // Adjust size as needed
-      JsonArray effectsArray = doc.createNestedArray("settings");
+      JsonArray effectsArray = doc.createNestedArray("Settings");
       int num_effect = this->stripe_controller->getEffect();
       Serial.print("Le num de l'effet est: ");
       Serial.println(num_effect);
 
-            if (effects[num_effect-1].name == nullptr) return; // Stop at the end marker
+            if (effects[num_effect].name == nullptr) return; // Stop at the end marker
             // Then create new Object
             JsonObject effect = effectsArray.createNestedObject();
-            effect["name"] = effects[num_effect-1].name;
-            effect["effect"] = effects[num_effect-1].effect;
+            effect["name"] = effects[num_effect].name;
+            effect["effect"] = effects[num_effect].effect;
             JsonArray settingsArray = effect.createNestedArray("settings");
 
-            for (int k = 0; k < sizeof(effects[num_effect-1].settingNames) / sizeof(int); ++k) {
-            if (effects[num_effect-1].settingNames[k] == 0) break; // Stop at the end marker
-            settingsArray.add(effects[num_effect-1].settingNames[k]);
+            for (int k = 0; k < effects[num_effect].numSettings; ++k) {
+            if (effects[num_effect].settingNames[k] == 0) break; // Stop at the end marker
+            JsonObject setting = settingsArray.createNestedObject();
+            setting["name"] = effects[num_effect].settingNames[k];
+            setting["minValue"] = effects[num_effect].minValues[k];
+            setting["maxValue"] = effects[num_effect].maxValues[k];
+            setting["realNames"] = effects[num_effect].realNames[k];
+            setting["values"] = effects[num_effect].settings[k]();
+            Serial.print("Setting name: ");
+            Serial.println(effects[num_effect].settingNames[k]);
+       
+            // settingsArray.add(effects[num_effect].settingNames[k]);
             }
             // Convert the JSON document to a string
         // Send 200 OK
@@ -233,7 +273,11 @@ void OutSideNetworking::setup() {
         request->send(200, "application/json", jsonString);
     });
 
+
     // Start server
     server->begin();
   
 }
+
+
+

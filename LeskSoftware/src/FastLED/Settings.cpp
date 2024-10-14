@@ -13,3 +13,6 @@ int         Settings::tid_blink                                 = 100;
 int         Settings::tid_backAndForthNoSmoothOneDot            = 30;
 int         Settings::tid_backAndForthNoSmoothLengthedDot       = 30;
 int         Settings::length_backAndForthNoSmoothLengthedDot    = 3;
+uint8_t     Settings::r                                         = 0;
+uint8_t     Settings::g                                         = 0;
+uint8_t     Settings::b                                         = 0;

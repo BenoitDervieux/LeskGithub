@@ -106,6 +106,7 @@
 .setting_range {
   width: 50%; /* Set a fixed width for the value div */
   text-align: center;
+  padding-bottom: 20px;
 }
 
 .setting_range input[type="range"] {

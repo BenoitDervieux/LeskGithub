@@ -10,6 +10,9 @@ class Settings {
         static CRGB             color;
         static int              effect;
         static int              speed;
+        static uint8_t          r;
+        static uint8_t          g;
+        static uint8_t          b;
         static CRGB             color2;
         static CRGB             color3;
         static uint8_t          bpm_sinBeat8;
@@ -30,6 +33,15 @@ class Settings {
         //speed
         static int getSpeed() {return speed;};
         static void setSpeed(int newSpeed) {speed = newSpeed;};
+        // r
+        static uint8_t getR() {return r;};
+        static void setR(uint8_t newR) {r = newR;};
+        // g
+        static uint8_t getG() {return g;};
+        static void setG(uint8_t newG) {g = newG;};
+        // b
+        static uint8_t getB() {return b;};
+        static void setB(uint8_t newB) {b = newB;};
         //color2
         static CRGB getColor2() {return color2;};
         static void setColor2(CRGB newColor2) {color2 = newColor2;};

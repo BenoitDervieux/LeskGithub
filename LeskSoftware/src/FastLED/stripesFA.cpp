@@ -59,7 +59,8 @@ void StripesFA::setEffect(int effect) {
     // in the listeffects.h file
     switch(effect) {
     case 1:
-        FastLedEffects::fill(Settings::getColor().r, Settings::getColor().g, Settings::getColor().b, leds);
+        // Serial.println("Pt 444: Color 1: R: " + String(Settings::getR()) + " G: " + String(Settings::getG()) + " B: " + String(Settings::getB()));
+        FastLedEffects::fill(Settings::getR(), Settings::getG(), Settings::getB(), leds);
         // FastLedEffects::fill(this->color1.r,this->color1.g, this->color1.b, leds);
         effect = 1;
         effectClassLvl = effect-1;
@@ -67,7 +68,7 @@ void StripesFA::setEffect(int effect) {
         break;
     case 2:
         // Serial.println("Point : 654 - Dans le cas 2");
-        FastLedEffects::blink(Settings::getColor().r, Settings::getColor().g, Settings::getColor().b, leds, Settings::getTidBlink());
+        FastLedEffects::blink(Settings::getR(), Settings::getG(), Settings::getB(), leds, Settings::getTidBlink());
         effect = 2;
         effectClassLvl = effect-1;
         // Serial.println("Point 860: Effect number: " + String(effect));
