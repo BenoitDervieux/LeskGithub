@@ -120,7 +120,7 @@ void StripeController::setColor(uint8_t red, uint8_t green, uint8_t blue) {
     std::cout << "Inside color function" << std::endl;
 
     for (auto& s: stripesFA) {
-        std::cout << "Setting color inside controller" << std::endl;
+        // std::cout << "Setting color inside controller" << std::endl;
         s.setColor(red, green, blue);
     }
 
@@ -130,15 +130,15 @@ void StripeController::setEffect(uint8_t _effect) {
     Serial.println("Point 845758");
     Settings::setEffect(_effect);
     for (auto& s: stripesFA) {
-        std::cout << "Setting color inside controller" << std::endl;
-        std::cout << "Effect: " << Settings::effect << std::endl;
+        // std::cout << "Setting color inside controller" << std::endl;
+        // std::cout << "Effect: " << Settings::effect << std::endl;
         s.setEffect(Settings::getEffect());
     }
 }
 
 void StripeController::setBrightness(uint8_t brightness) {
     for (auto& s: stripesFA) {
-        std::cout << "Setting color inside controller" << std::endl;
+        // std::cout << "Setting color inside controller" << std::endl;
         s.setBrightness(brightness);
     }
 }

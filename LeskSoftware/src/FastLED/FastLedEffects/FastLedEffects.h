@@ -1,3 +1,5 @@
+#define FASTLED_INTERRUPT_RETRY_COUNT 5
+#define FASTLED_ALLOW_INTERRUPTS 0
 #include <FastLED.h>
 #include <vector>
 #include <sys/time.h>

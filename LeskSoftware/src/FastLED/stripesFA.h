@@ -1,6 +1,9 @@
 #ifndef STRIPESFA_H
 #define STRIPESFA_H
 
+#define FASTLED_INTERRUPT_RETRY_COUNT 5
+#define FASTLED_ALLOW_INTERRUPTS 0
+
 #include <FastLED.h>
 #include "./FastLedEffects/FastLedEffects.h"
 #include "color_functions.h"

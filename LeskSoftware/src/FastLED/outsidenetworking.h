@@ -12,7 +12,8 @@
 #include "mappingeffects.h"
 #include "jsonparser.h"
 #include "effectmanager.h"
-
+#define FASTLED_INTERRUPT_RETRY_COUNT 5
+#define FASTLED_ALLOW_INTERRUPTS 0
 
 
 class OutSideNetworking {

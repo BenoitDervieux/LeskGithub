@@ -17,6 +17,9 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _ef
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
+    FastLED.setMaxRefreshRate(60);  // Limit to 60 frames per second
+
+
 }
 
 // Constructor 2 colors
@@ -25,6 +28,8 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _ef
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
+    FastLED.setMaxRefreshRate(60);  // Limit to 60 frames per second
+
 }
 
 // Constructor 3 colors
@@ -33,6 +38,8 @@ StripesFA::StripesFA(int _port, int _length, int _direction, int _speed, int _ef
     // This is a way to instantiate different stripes here
     // Not the smartest but let's take it for now
     this->setup(_port, _length);
+    FastLED.setMaxRefreshRate(60);  // Limit to 60 frames per second
+
 }
 
 
@@ -358,7 +365,7 @@ void StripesFA::setBrightness(uint8_t brightness) {
 }
 
 void StripesFA::setColor(uint8_t g, uint8_t r, uint8_t b) {
-   std::cout << "Inside color function in the stripe" << std::endl;
+//    std::cout << "Inside color function in the stripe" << std::endl;
    fill_solid(leds, NUM_LEDS, CRGB(g, r, b));
    FastLED.show();
 }

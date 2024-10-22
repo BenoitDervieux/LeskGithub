@@ -13,7 +13,6 @@
 struct Effect {
     const char* name;
     int effect;
-    // int settings[10];
     std::function<int()> settings[10];
     const char* settingNames[10];
     int minValues[10];
@@ -29,12 +28,12 @@ static Effect _blink = {"Blink", FX_MODE_BLINK,
                         {[]() { return Settings::getR(); }, []() { return Settings::getG(); }, []() { return Settings::getB(); }, []() { return Settings::getTidBlink(); }}, 
                         {"Red", "Green", "Blue", "Time"}, {0, 0, 0, 30}, {255, 255, 255, 1000}, {"r", "g", "b", "tid_blink"}, 4}; 
 
-
+static Effect _rainbowStatic = {"Rainbow Static", FX_MODE_RAINBOW_STATIC, nullptr,nullptr,nullptr,nullptr,nullptr, 0};
 
 
 static Effect _end_effect = {nullptr, -1, {0}}; // End marker for effects array
 
-static Effect effects[] = {_fill_effect, _blink, _end_effect};
+static Effect effects[] = {_fill_effect, _blink, _rainbowStatic, _end_effect};
 
 
 

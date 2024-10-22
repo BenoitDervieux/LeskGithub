@@ -1,5 +1,7 @@
 #ifndef STRIPECONTROLLER_H
 #define STRIPECONTROLLER_H
+#define FASTLED_INTERRUPT_RETRY_COUNT 5
+#define FASTLED_ALLOW_INTERRUPTS 0
 
 #include "stripesFA.h"
 #include "XMLParser.h"

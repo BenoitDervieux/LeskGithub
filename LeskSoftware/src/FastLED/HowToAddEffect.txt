@@ -1,0 +1,24 @@
+So here in this guide, at date of the 22nd of October 2024, I will describe how to add effects in the system.
+
+1. Let's consider that the effect has already been added in the static file FastLedEffects.h and FastLedEffect.cpp
+Now what we have to do is to add it in the system.
+
+2. First we are going to go to stripesFA.cpp and add a new case for the effect we aim to add.
+We need to take the name from there directly.
+
+3. Then, we go to listeffects.h and we add the effect as a static structure.
+Here, we need to put the informations:
+- The name
+- The number's name from the file defineeffects.h, should start by FX_ something
+- The lambda's to be able to trigger the changes
+- The setting's name to display
+- The minimum values
+- The maximum values
+- The real name of each effect
+- The number of effects
+
+4. Add the getter and setters in the Settings.h
+
+5. Add the variables and the initial value in the Setting.cpp
+
+6. Set up the settingmap in the effectmanager.h 

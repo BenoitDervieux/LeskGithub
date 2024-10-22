@@ -7,7 +7,7 @@ String ledState;   // Define the variable
 EffectManager effectManager;
 
 OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* _stripe_controller, JSONParser* _parser) :
-         server(_server), stripe_controller(_stripe_controller), parser(_parser) {}
+         server(_server), stripe_controller(_stripe_controller), parser(_parser) { }
 
 void OutSideNetworking::setup() {
 
@@ -66,10 +66,10 @@ void OutSideNetworking::setup() {
       // Here we will implement the logic for the subscriber pattern
       if (request->hasParam("effect", true)) {
         String effect = request->getParam("effect", true)->value();
-        // Serial.println("Point 454: Print the effect");
-        // Serial.println(effect);
-        // Serial.println("Point 455: Check effect number");
-        // Serial.println(getFunctionNumber(effect.c_str()));
+        Serial.println("Point 454: Print the effect");
+        Serial.println(effect);
+        Serial.println("Point 455: Check effect number");
+        Serial.println(getFunctionNumber(effect.c_str()));
         // unsigned long startTime = millis();
         parser->setEffectNumber(getFunctionNumber(effect.c_str()));
         // unsigned long endTime = millis();
@@ -94,11 +94,11 @@ void OutSideNetworking::setup() {
           // Serial.print("The value is: ");
           // Serial.println(newValue);
           // Call the effect manager to update the setting
-          unsigned long startTime = millis();
+          // unsigned long startTime = millis();
           effectManager.setSetting(settingName, newValue); // Update the setting
-          unsigned long endTime = millis();
-          Serial.print("Time taken to set setting: ");
-          Serial.println(endTime - startTime);
+          // unsigned long endTime = millis();
+          // Serial.print("Time taken to set setting: ");
+          // Serial.println(endTime - startTime);
           // Respond with a success message
           request->send(200, "text/plain", "Effect changed: " + settingName);
       } else {
@@ -174,8 +174,8 @@ void OutSideNetworking::setup() {
             // Iterate through all the collections
             for (int i = 0; i < sizeof(collections) / sizeof(collections[0]); ++i) {
                 if (request->getParam("name")->value() == collections[i].name) {
-                    Serial.println(request->getParam("name")->value());
-                    Serial.println(collections[i].name);
+                    // Serial.println(request->getParam("name")->value());
+                    // Serial.println(collections[i].name);
                     // Create a JSON Object for each collection
                     JsonObject collection = collectionsArray.createNestedObject();
 
@@ -242,9 +242,11 @@ void OutSideNetworking::setup() {
     server->on("/api/settings", HTTP_GET, [this](AsyncWebServerRequest *request) {
       DynamicJsonDocument doc(2048); // Adjust size as needed
       JsonArray effectsArray = doc.createNestedArray("Settings");
-      int num_effect = this->stripe_controller->getEffect();
-      Serial.print("Le num de l'effet est: ");
-      Serial.println(num_effect);
+      int num_effect = parser->getEffectNumber() - 1;
+      // Serial.print("Le num de l'effet par controlleur est: ");
+      // Serial.println(num_effect);
+      // Serial.print("Le num de l'effet par parseur est: ");
+      // Serial.println(parser->getEffectNumber());
 
             if (effects[num_effect].name == nullptr) return; // Stop at the end marker
             // Then create new Object
@@ -261,8 +263,8 @@ void OutSideNetworking::setup() {
             setting["maxValue"] = effects[num_effect].maxValues[k];
             setting["realNames"] = effects[num_effect].realNames[k];
             setting["values"] = effects[num_effect].settings[k]();
-            Serial.print("Setting name: ");
-            Serial.println(effects[num_effect].settingNames[k]);
+            // Serial.print("Setting name: ");
+            // Serial.println(effects[num_effect].settingNames[k]);
        
             // settingsArray.add(effects[num_effect].settingNames[k]);
             }

@@ -72,78 +72,7 @@
       .catch(error => console.error('Error fetching collection details:', error));
     }
 
-      /*fetch(`http://192.168.1.236/api/settings`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-      })
-      .then(data => {
-        const mainSettingsDiv = document.getElementById('settings-details');
-        let number = 0;
-
-        data.Settings.forEach(effect => {
-          mainSettingsDiv.classList.add('grid-container');
-
-          effect.settings.forEach(setting => {
-            // Create a div for each individual setting
-            const settingDiv = document.createElement('div');
-            settingDiv.classList.add('setting-group', 'setting_name');
-            
-            // Alternating classes for left/right positioning
-            if (number % 2 === 0) {
-              settingDiv.classList.add('setting_item_left');
-            } else {
-              settingDiv.classList.add('setting_item_right');
-            }
-            number += 1;
-
-            // Create a label element for the setting
-            const settingLabel = document.createElement('label');
-            settingLabel.classList.add('setting_name');
-            settingLabel.setAttribute('for', `${setting.name}_range`);
-            settingLabel.textContent = setting.name;
-
-            // Create a div to hold the range slider and its value
-            const rangeContainer = document.createElement('div');
-            rangeContainer.classList.add('rangeAndNumber', 'setting_range');
-            
-            // Create an input element (range slider)
-            const rangeInput = document.createElement('input');
-            rangeInput.type = 'range';
-            rangeInput.id = `${setting.name}_range`;
-            rangeInput.name = setting.name;
-            rangeInput.classList.add('setting_button');
-            rangeInput.min = setting.minValue;  // Set minValue from the JSON
-            rangeInput.max = setting.maxValue;  // Set maxValue from the JSON
-            rangeInput.value = setting.minValue;  // Initialize to min value
-
-            // Create a div to display the value of the range slider
-            const valueDiv = document.createElement('div');
-            valueDiv.classList.add('value_display');
-            valueDiv.textContent = rangeInput.value; // Initial value (minValue)
-
-            // Update the displayed value as the range slider changes
-            rangeInput.addEventListener('input', () => {
-              valueDiv.textContent = rangeInput.value;
-            });
-
-            // Append the range slider and value to the container div
-            rangeContainer.appendChild(rangeInput);
-            rangeContainer.appendChild(valueDiv);
-
-            // Append the label and range container to the setting div
-            settingDiv.appendChild(settingLabel);
-            settingDiv.appendChild(rangeContainer);
-
-            // Append the setting div to the main container
-            mainSettingsDiv.appendChild(settingDiv);
-          });
-        });
-      })
-      .catch(error => console.error('Error fetching settings details:', error));
-    */
+     
 
     
       // Function to handle the effect change
