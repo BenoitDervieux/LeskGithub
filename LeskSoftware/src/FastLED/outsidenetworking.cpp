@@ -51,10 +51,10 @@ void OutSideNetworking::setup() {
         for (int i = 0; i < request->args(); i++) {
           // Serial.println(request->arg(i));
           const char * argName = request->arg(i).c_str();
-          // Serial.print("Test du const char : ");
-          // Serial.println(argName);
-          // Serial.print("Test du get function Number : ");
-          // Serial.println(getFunctionNumber(argName));
+          Serial.print("Test du const char : ");
+          Serial.println(argName);
+          Serial.print("Test du get function Number : ");
+          Serial.println(getFunctionNumber(argName));
           this->stripe_controller->setEffect(getFunctionNumber(argName));
         }
       }
@@ -68,7 +68,7 @@ void OutSideNetworking::setup() {
         String effect = request->getParam("effect", true)->value();
         Serial.println("Point 454: Print the effect");
         Serial.println(effect);
-        Serial.println("Point 455: Check effect number");
+        Serial.print("Point 455: Check effect number: ");
         Serial.println(getFunctionNumber(effect.c_str()));
         // unsigned long startTime = millis();
         parser->setEffectNumber(getFunctionNumber(effect.c_str()));
@@ -243,10 +243,6 @@ void OutSideNetworking::setup() {
       DynamicJsonDocument doc(2048); // Adjust size as needed
       JsonArray effectsArray = doc.createNestedArray("Settings");
       int num_effect = parser->getEffectNumber() - 1;
-      // Serial.print("Le num de l'effet par controlleur est: ");
-      // Serial.println(num_effect);
-      // Serial.print("Le num de l'effet par parseur est: ");
-      // Serial.println(parser->getEffectNumber());
 
             if (effects[num_effect].name == nullptr) return; // Stop at the end marker
             // Then create new Object

@@ -82,42 +82,51 @@ void StripesFA::setEffect(int effect) {
         break;
     case 3:
         FastLedEffects::rainbowStatic(leds);
-        effect = 2;
+        effect = 3;
+        effectClassLvl = effect-1;
         // Serial.println("Point 861: Effect number: " + String(effect));
         break;
-    /*case 4:
-        FastLedEffects::fillGradientTwoColors(r1, g1, b1, r2, g2, b2, leds);
-        this->effect = 3;
+    case 4:
+        FastLedEffects::fillGradientTwoColors(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(), leds);
+        effect = 4;
+        effectClassLvl = effect-1;
         break;
     case 5:
-        FastLedEffects::fillGradientThreeColors(r1, g1, b1, r2, g2, b2, r3, g3, b3, leds);
-        this->effect = 4;
+        FastLedEffects::fillGradientThreeColors(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(),  Settings::getR3(), Settings::getG3(), Settings::getB3(), leds);
+        effect = 5;
+        effectClassLvl = effect-1;
         break;
     case 6:
-        FastLedEffects::backAndForthNoSmoothOneDot(r, g, b, leds, tid);
-        this->effect = 5;
+        FastLedEffects::backAndForthNoSmoothOneDot(Settings::getR(), Settings::getG(), Settings::getB(), leds, Settings::getTidBackAndForthNoSmoothOneDot());
+        effect = 6;
+        effectClassLvl = effect-1;
         break;
     case 7:
-        FastLedEffects::backAndForthNoSmoothLengthedDot(r, g, b, leds, tid, length);
-        this->effect = 6;
+        FastLedEffects::backAndForthNoSmoothLengthedDot(Settings::getR(), Settings::getG(), Settings::getB(), leds, Settings::getTidBackAndForthNoSmoothLengthedDot(), Settings::getLengthBackAndForthNoSmoothLengthedDot());
+        effect = 7;
+        effectClassLvl = effect-1;
         break;
     case 8:
-        FastLedEffects::hueFading(milliseconds, leds);
-        this->effect = 7;
+        FastLedEffects::hueFading(Settings::getTidHueFading(), leds);
+        effect = 8;
+        effectClassLvl = effect-1;
         break;
     case 9:
-        FastLedEffects::hueWhiteWave(hueInsert, milliseconds, leds);
-        this->effect = 8;
+        FastLedEffects::hueWhiteWave(Settings::getHueInsert_hueWhiteWave(), Settings::getTidHueWhiteWave(), leds);
+        effect = 9;
+        effectClassLvl = effect-1;
         break;
     case 10:
-        FastLedEffects::displayPaletteLinear(palette, leds);
-        this->effect = 9;
+        FastLedEffects::displayPaletteLinear(Settings::getPalette1(), leds);
+        effect = 10;
+        effectClassLvl = effect-1;
         break;
     case 11:
-        FastLedEffects::movingPaletteLinear(palette, milliseconds, leds);
-        this->effect = 10;
+        FastLedEffects::movingPaletteLinear(Settings::getPalette1(), Settings::getTidMovingPaletteLinear(), leds);
+        effect = 11;
+        effectClassLvl = effect-1;
         break;
-    case 12:
+    /*case 12:
         FastLedEffects::spotlightingPalette(palette, milliseconds, fade, leds);
         this->effect = 11;
         break;

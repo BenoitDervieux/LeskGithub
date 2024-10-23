@@ -22,6 +22,19 @@ class EffectManager {
         settingMap["r"] = Settings::setR;
         settingMap["g"] = Settings::setG;
         settingMap["b"] = Settings::setB;
+        settingMap["r2"] = Settings::setR2;
+        settingMap["g2"] = Settings::setG2;
+        settingMap["b2"] = Settings::setB2;
+        settingMap["r3"] = Settings::setR3;
+        settingMap["g3"] = Settings::setG3;
+        settingMap["b3"] = Settings::setB3;
+        settingMap["tid_backAndForthNoSmoothOneDot"] = Settings::setTidBackAndForthNoSmoothOneDot;
+        settingMap["tid_backAndForthNoSmoothLengthedDot"] = Settings::setTidBackAndForthNoSmoothLengthedDot;
+        settingMap["length_backAndForthNoSmoothLengthedDot"] = Settings::setLengthBackAndForthNoSmoothLengthedDot;
+        settingMap["tid_hueFading"] = Settings::setTidHueFading;
+        settingMap["hueInsert_hueWhiteWave"] = Settings::setHueInsert_hueWhiteWave;
+        settingMap["tid_hueWhiteWave"] = Settings::setTidHueWhiteWave;
+        settingMap["tid_movingPaletteLinear"] = Settings::setTidMovingPaletteLinear;
     }
 
     void setSetting(const String& settingName, int value);

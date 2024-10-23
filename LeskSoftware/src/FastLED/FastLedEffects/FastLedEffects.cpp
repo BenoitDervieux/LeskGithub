@@ -190,12 +190,20 @@ void FastLedEffects::fillGradientThreeColors(int r1, int g1, int b1, int r2, int
 
 // Add link to video : https://www.youtube.com/watch?v=4Ut4UK7612M&list=PLgXkGn3BBAGi5dTOCuEwrLuFtfz0kGFTC&index=2
 void FastLedEffects::backAndForthNoSmoothOneDot(int r, int g, int b, CRGB leds[], int tid_backAndForthNoSmoothOneDot) {
-    EVERY_N_MILLISECONDS(tid_backAndForthNoSmoothOneDot) {   // Update every 100 milliseconds
+    static unsigned long lastUpdate = 0;
+    
+    // Get the current time
+    unsigned long currentTime = millis();
+    
+    // Check if enough time has passed based on the value of tid
+    if (currentTime - lastUpdate >= tid_backAndForthNoSmoothOneDot) {
+        lastUpdate = currentTime;  // Update the last update time
+
         // Turn off all LEDs
         fill_solid(leds, NUM_LEDS, CRGB::Black);
 
         // Light up the current position
-        leds[posBackAndForthOneDot] = CRGB(r, g, b);  // Red color for the dot
+        leds[posBackAndForthOneDot] = CRGB(r, g, b);
         FastLED.show();
 
         // Update the position
@@ -209,37 +217,65 @@ void FastLedEffects::backAndForthNoSmoothOneDot(int r, int g, int b, CRGB leds[]
 }
 
 void FastLedEffects::backAndForthNoSmoothLengthedDot(int r, int g, int b, CRGB leds[], int tid_backAndForthNoSmoothLengthedDot, int length_backAndForthNoSmoothLengthedDot) {
-    EVERY_N_MILLISECONDS(tid_backAndForthNoSmoothLengthedDot) {   // Update every 100 milliseconds
+    static unsigned long lastUpdate = 0;
+
+    // Get the current time
+    unsigned long currentTime = millis();
+
+    // Check if enough time has passed based on the value of tid
+    if (currentTime - lastUpdate >= tid_backAndForthNoSmoothLengthedDot) {
+        lastUpdate = currentTime;  // Update the last update time
+
         // Turn off all LEDs
         fill_solid(leds, NUM_LEDS, CRGB::Black);
 
-        // Light up the current position
+        // Light up the current position for the given length
         for (int i = posBackAndForthLengthed; i < posBackAndForthLengthed + length_backAndForthNoSmoothLengthedDot; i++) {
-            leds[i] = CRGB(r, g, b);  // Red color for the dot 
+            if (i >= 0 && i < NUM_LEDS) {
+                leds[i] = CRGB(r, g, b);
+            }
         }
         FastLED.show();
+
         // Update the position
         posBackAndForthLengthed += directionBackAndForthLengthed;
 
         // Reverse direction at the ends
-        if (posBackAndForthLengthed == 0 || posBackAndForthLengthed == NUM_LEDS - 1) {
+        if (posBackAndForthLengthed <= 0 || posBackAndForthLengthed + length_backAndForthNoSmoothLengthedDot >= NUM_LEDS) {
             directionBackAndForthLengthed = -directionBackAndForthLengthed;
         }
     }
 }
 
 void FastLedEffects::hueFading(int tid_hueFading, CRGB leds[]) {
+    static unsigned long lastUpdate = 0;
+    static uint8_t hue = 0;  // Start with an initial hue value
+
+    // Get the current time
+    unsigned long currentTime = millis();
+
+    // Check if enough time has passed based on the value of tid
+    if (currentTime - lastUpdate >= tid_hueFading) {
+        lastUpdate = currentTime;  // Update the last update time
+
+        // Increment the hue value
+        hue++;
+    }
+
+    // Fill the LEDs with the current hue
     for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = CHSV(hue, 255, 255);
     }
-    EVERY_N_MILLISECONDS(tid_hueFading) {
-        hue++;
-    }
+
+    // Display the updated LEDs
     FastLED.show();
 }
 
 void FastLedEffects::hueWhiteWave(uint8_t hueInsert_hueWhiteWave, int tid_hueWhiteWave, CRGB leds[]) {
-    EVERY_N_MILLISECONDS(tid_hueWhiteWave) {
+    static unsigned long lastUpdate = 0;
+    unsigned long currentTime = millis();
+
+    if(currentTime - lastUpdate >= tid_hueWhiteWave) {
         leds[0] = CHSV(hueInsert_hueWhiteWave, random8(), random8(100, 255));
 
         for (int i = NUM_LEDS - 1; i > 0; i--) {
@@ -249,17 +285,22 @@ void FastLedEffects::hueWhiteWave(uint8_t hueInsert_hueWhiteWave, int tid_hueWhi
     }
 }
 
+
 void FastLedEffects::displayPaletteLinear(CRGBPalette16 palette, CRGB leds[]) {
     fill_palette(leds, NUM_LEDS, 0, 255/NUM_LEDS, palette, 100, LINEARBLEND);
     FastLED.show();
 }
 
 void FastLedEffects::movingPaletteLinear(CRGBPalette16 palette, int tid_movingPaletteLinear, CRGB leds[]) {
-    fill_palette(leds, NUM_LEDS, paletteIndex, 255/NUM_LEDS, palette, 100, LINEARBLEND);
-    EVERY_N_MILLISECONDS(tid_movingPaletteLinear) {
-        paletteIndex++;
+    static unsigned long lastUpdate = 0;
+    unsigned long currentTime = millis();
+
+    if(currentTime - lastUpdate >= tid_movingPaletteLinear) {
+      lastUpdate = currentTime;
+      paletteIndex++;
     }
-    FastLED.show();
+      fill_palette(leds, NUM_LEDS, paletteIndex, 255/NUM_LEDS, palette, 100, LINEARBLEND);
+      FastLED.show();
 }
 
 // Link: https://www.youtube.com/watch?v=Ukq0tH2Tnkc&list=PLgXkGn3BBAGi5dTOCuEwrLuFtfz0kGFTC&index=3
