@@ -390,17 +390,17 @@ void FastLedEffects::funkyRainbowSinBeat8(int fade_funkyRainbowSinBeat8, CRGB le
     FastLED.show();
 }
 
-void FastLedEffects::funkyRangeSinBeat8(int fade_funkyRangeSinBeat8, CRGB color, CRGB leds[]) {
-    // Waves for led position
-    uint8_t posBeat = beatsin8(30, 0, NUM_LEDS - 1, 0, 0);
+void FastLedEffects::funkyRangeSinBeat8(int fade_funkyRangeSinBeat8, int r, int g, int b, CRGB leds[]) {
+   uint8_t posBeat = beatsin8(30, 0, NUM_LEDS - 1, 0, 0);
     uint8_t posBeat2 = beatsin8(60, 0, NUM_LEDS - 1, 0, 0);
     // Wave for LED color
-    uint32_t convertedColor = FastLedEffects::CRGBToInt(color);
+    uint32_t convertedColor = FastLedEffects::CRGBToInt(FastLedEffects::fromRGBtoHex(r, g, b));
     uint8_t colBeat = FastLedEffects::getBeatSinColor(convertedColor);
     leds[(posBeat + posBeat2) / 2] = CHSV(colBeat, 255, 255);
     fadeToBlackBy(leds, NUM_LEDS, fade_funkyRangeSinBeat8);
     FastLED.show();
-}
+}   // Waves for led position
+  
 
 void FastLedEffects::funkyRainbowSinBeat8Two(int fade_funkyRainbowSinBeat8Two, CRGB leds[]) {
     uint8_t posBeat = beatsin8(30, 0, NUM_LEDS - 1, 0, 0);
@@ -1896,4 +1896,12 @@ void FastLedEffects::drawFractionalBar( int pos16, int width, uint8_t hue, uint8
     i++;
     if( i == NUM_LEDS) i = 0; // wrap around
   }
+}
+
+uint32_t FastLedEffects::fromRGBtoHex(int r, int g, int b) {
+    if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0) {
+        return static_cast<uint32_t>(-1);
+    }
+    uint32_t hex = (r << 16) | (g << 8) | b;
+    return hex;
 }

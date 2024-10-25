@@ -72,8 +72,8 @@ void OutSideNetworking::setup() {
         Serial.println(getFunctionNumber(effect.c_str()));
         // unsigned long startTime = millis();
         parser->setEffectNumber(getFunctionNumber(effect.c_str()));
+        this->stripe_controller->setEffect(getFunctionNumber(effect.c_str()));
         // unsigned long endTime = millis();
-        // Serial.print("Time taken to set effect: ");
         // Serial.println(endTime - startTime);
         // Set the effect here
         // Handle the effect change logic here
@@ -146,16 +146,16 @@ void OutSideNetworking::setup() {
 
         // Iterate through all the effects up until there is the end
         for (int j = 0; j < sizeof(collections[i].effect) / sizeof(Effect); ++j) {
-            if (collections[i].effect[j].name == nullptr) break; // Stop at the end marker
+            if (collections[i].effect[j]->name == nullptr) break; // Stop at the end marker
             // Then create new Object
             JsonObject effect = effectsArray.createNestedObject();
-            effect["name"] = collections[i].effect[j].name;
-            effect["effects"] = collections[i].effect[j].effect;
+            effect["name"] = collections[i].effect[j]->name;
+            effect["effects"] = collections[i].effect[j]->effect;
             JsonArray settingsArray = effect.createNestedArray("settings");
 
-            for (int k = 0; k < sizeof(collections[i].effect[j].settingNames) / sizeof(int); ++k) {
-            if (collections[i].effect[j].settingNames[k] == 0) break; // Stop at the end marker
-            settingsArray.add(collections[i].effect[j].settingNames[k]);
+            for (int k = 0; k < sizeof(collections[i].effect[j]->settingNames) / sizeof(int); ++k) {
+            if (collections[i].effect[j]->settingNames[k] == 0) break; // Stop at the end marker
+            settingsArray.add(collections[i].effect[j]->settingNames[k]);
             }
         }
         }
@@ -188,16 +188,16 @@ void OutSideNetworking::setup() {
 
                     // Iterate through all the effects up until there is the end
                     for (int j = 0; j < sizeof(collections[i].effect) / sizeof(Effect); ++j) {
-                        if (collections[i].effect[j].name == nullptr) break; // Stop at the end marker
+                        if (collections[i].effect[j]->name == nullptr) break; // Stop at the end marker
                         // Then create new Object
                         JsonObject effect = effectsArray.createNestedObject();
-                        effect["name"] = collections[i].effect[j].name;
-                        effect["effects"] = collections[i].effect[j].effect;
+                        effect["name"] = collections[i].effect[j]->name;
+                        effect["effects"] = collections[i].effect[j]->effect;
                         JsonArray settingsArray = effect.createNestedArray("settings");
 
-                        for (int k = 0; k < sizeof(collections[i].effect[j].settingNames) / sizeof(int); ++k) {
-                        if (collections[i].effect[j].settingNames[k] == 0) break; // Stop at the end marker
-                        settingsArray.add(collections[i].effect[j].settingNames[k]);
+                        for (int k = 0; k < sizeof(collections[i].effect[j]->settingNames) / sizeof(int); ++k) {
+                        if (collections[i].effect[j]->settingNames[k] == 0) break; // Stop at the end marker
+                        settingsArray.add(collections[i].effect[j]->settingNames[k]);
                         }
                     }
                 }

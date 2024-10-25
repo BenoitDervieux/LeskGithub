@@ -66,25 +66,19 @@ void StripesFA::setEffect(int effect) {
     // in the listeffects.h file
     switch(effect) {
     case 1:
-        // Serial.println("Pt 444: Color 1: R: " + String(Settings::getR()) + " G: " + String(Settings::getG()) + " B: " + String(Settings::getB()));
         FastLedEffects::fill(Settings::getR(), Settings::getG(), Settings::getB(), leds);
-        // FastLedEffects::fill(this->color1.r,this->color1.g, this->color1.b, leds);
         effect = 1;
         effectClassLvl = effect-1;
-        // Serial.println("Point 859: Effect number: " + String(effect));
         break;
     case 2:
-        // Serial.println("Point : 654 - Dans le cas 2");
         FastLedEffects::blink(Settings::getR(), Settings::getG(), Settings::getB(), leds, Settings::getTidBlink());
         effect = 2;
         effectClassLvl = effect-1;
-        // Serial.println("Point 860: Effect number: " + String(effect));
         break;
-    /*case 3:
+    case 3:
         FastLedEffects::rainbowStatic(leds);
         effect = 3;
         effectClassLvl = effect-1;
-        // Serial.println("Point 861: Effect number: " + String(effect));
         break;
     case 4:
         FastLedEffects::fillGradientTwoColors(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(), leds);
@@ -161,15 +155,17 @@ void StripesFA::setEffect(int effect) {
         effect = 18;
         effectClassLvl = effect-1;
         break;
-    /*case 19:
-        FastLedEffects::funkyRainbowSinBeat8(fade, leds);
-        this->effect = 18;
+    case 19:
+        FastLedEffects::funkyRainbowSinBeat8(Settings::getFade_sinBeat8(), leds);
+        effect = 19;
+        effectClassLvl = effect-1;
         break;
     case 20:
-        FastLedEffects::funkyRangeSinBeat8(fade, color, leds);
-        this->effect = 19;
+        FastLedEffects::funkyRangeSinBeat8(Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        effect = 20;
+        effectClassLvl = effect-1;
         break;
-    case 21:
+    /*case 21:
         FastLedEffects::funkyRainbowSinBeat8Two(fade, leds);
         this->effect = 20;
         break;

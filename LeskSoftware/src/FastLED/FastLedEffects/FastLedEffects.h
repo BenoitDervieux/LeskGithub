@@ -27,7 +27,7 @@ class FastLedEffects {
         /*  17 */ static void threeSinBeat8(int r, int g, int b, int r2, int g2, int b2, int r3, int g3, int b3, int fade_threeSinBeat8, uint8_t bpm_threeSinBeat8, CRGB leds[]);
         /*  18 */ static void brightnessSinBeat8Palette(CRGBPalette16 palette, uint8_t bpm_brightnessSinBeat8Palette, int tid_brightnessSinBeat8Palette, CRGB leds[]);
         /*  19 */ static void funkyRainbowSinBeat8(int fade_funkyRainbowSinBeat8, CRGB leds[]);
-        /*  20 */ static void funkyRangeSinBeat8(int fade_funkyRangeSinBeat8, CRGB color, CRGB leds[]);
+        /*  20 */ static void funkyRangeSinBeat8(int fade_funkyRangeSinBeat8, int r, int g, int b, CRGB leds[]);
         /*  21 */ static void funkyRainbowSinBeat8Two(int fade_funkyRainbowSinBeat8Two, CRGB leds[]);
         /*  22 */ static void funkyRangeSinBeat8Two(int fade_funkyRangeSinBeat8Two, CRGB color, CRGB leds[]);
         /*  23 */ static void movingFunkyPalette(CRGBPalette16 palette, uint8_t bpm1_movingFunkyPalette, uint8_t bpm2_movingFunkyPalette, CRGB leds[]);
@@ -100,6 +100,7 @@ class FastLedEffects {
         static int sumPulse(int time_shift);
         static uint8_t pulseWave8(uint32_t ms, uint16_t cycleLength, uint16_t pulseLength);
         static void drawFractionalBar( int pos16, int width, uint8_t hue, uint8_t fadeRate, CRGB leds[]);
+        static uint32_t fromRGBtoHex(int r, int g, int b);
     
     private:
         int red;

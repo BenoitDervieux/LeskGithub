@@ -3,98 +3,108 @@
 
 #include "defineeffects.h"
 #include "Settings.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <functional>
 
 
 // The idea of this structure is to get the parameters of the effect as well as it's name
 // For instance, let's take the effects "blink"
 // The effect can have a first paramater which will be the time of blinking, then the time of pause
 // This is just a test and we'll see later what happens
+
+
+
+// struct Effect {
+//     const char* name;
+//     int effect;
+//     std::function<int()> settings[11];
+//     const char* settingNames[11];
+//     int minValues[11];
+//     int maxValues[11];
+//     const char* realNames[11];
+//     int numSettings;
+// };
+
 struct Effect {
-    const char* name;
+    std::string name;  // Dynamic string storage for effect name
     int effect;
-    std::function<int()>* settings;      // Dynamically allocated array of std::function
-    const char** settingNames;           // Dynamically allocated array of const char* for setting names
-    int* minValues;                      // Dynamically allocated array for min values
-    int* maxValues;                      // Dynamically allocated array for max values
-    const char** realNames;              // Dynamically allocated array of const char* for real names
-    int numSettings;
 
-    // Constructor to allocate memory
-    Effect(const char* effectName, int effectId, int numSettings)
-        : name(effectName), effect(effectId), numSettings(numSettings)
-    {
-        settings = new std::function<int()>[numSettings];
-        settingNames = new const char*[numSettings];
-        minValues = new int[numSettings];
-        maxValues = new int[numSettings];
-        realNames = new const char*[numSettings];
+    std::vector<std::function<int()>> settings; // Store settings as a vector of functions
+    std::vector<std::string> settingNames;       // Store setting names as a vector of strings
+    std::vector<int> minValues;                   // Store min values as a vector
+    std::vector<int> maxValues;                   // Store max values as a vector
+    std::vector<std::string> realNames;           // Store real names as a vector
+
+    // Full constructor to initialize all members
+    Effect(const std::string& effectName, int effectCode,
+           const std::vector<std::function<int()>>& settingsList,
+           const std::vector<std::string>& names,
+           const std::vector<int>& mins,
+           const std::vector<int>& maxs,
+           const std::vector<std::string>& realNams)
+        : name(effectName), effect(effectCode),
+          settings(settingsList), settingNames(names),
+          minValues(mins), maxValues(maxs), realNames(realNams) {}
+};
+
+static Effect _fillEffect = {
+    "Fill", 1,  // Effect name and effect code
+    {            // Settings as lambda functions
+        []() { return Settings::getR(); },
+        []() { return Settings::getG(); },
+        []() { return Settings::getB(); }
+    }, 
+    {            // Setting names
+        "Red", "Green", "Blue"
+    }, 
+    {            // Min values
+        0, 0, 0
+    }, 
+    {            // Max values
+        255, 255, 255
+    }, 
+    {            // Real names
+        "r", "g", "b"
     }
+};
+// static Effect _blink = {
+//     "Blink", FX_MODE_BLINK, 
+//     {[]() { return Settings::getR(); }, []() { return Settings::getG(); }, []() { return Settings::getB(); }, []() { return Settings::getTidBlink(); }}, 
+//     {"Red", "Green", "Blue", "Time"}, 
+//     {0, 0, 0, 30}, 
+//     {255, 255, 255, 1000}, 
+//     {"r", "g", "b", "tid_blink"}, 
+//     4
+// }; 
 
-    // Destructor to free allocated memory
-    ~Effect() {
-        delete[] settings;
-        delete[] settingNames;
-        delete[] minValues;
-        delete[] maxValues;
-        delete[] realNames;
+static Effect _blink(
+    "Blink", // Effect name
+    FX_MODE_BLINK, // Assuming FX_MODE_BLINK is defined as 1
+    { // Settings as lambda functions
+        []() { return Settings::getR(); },
+        []() { return Settings::getG(); },
+        []() { return Settings::getB(); },
+        []() { return Settings::getTidBlink(); }
+    },
+    { // Setting names
+        "Red", "Green", "Blue", "Time"
+    },
+    { // Min values
+        0, 0, 0, 30
+    },
+    { // Max values
+        255, 255, 255, 1000
+    },
+    { // Real names
+        "r", "g", "b", "tid_blink"
     }
-};
-
-static Effect _fillEffect("Fill", FX_MODE_FILL, 3);
-void initFillEffect() {
-    _fillEffect.settings[0] = []() { return Settings::getR(); };
-    _fillEffect.settings[1] = []() { return Settings::getG(); };
-    _fillEffect.settings[2] = []() { return Settings::getB(); };
-    _fillEffect.settingNames[0] = "Red";
-    _fillEffect.settingNames[1] = "Green";
-    _fillEffect.settingNames[2] = "Blue";
-    _fillEffect.minValues[0] = 0;
-    _fillEffect.minValues[1] = 0;
-    _fillEffect.minValues[2] = 0;
-    _fillEffect.maxValues[0] = 255;
-    _fillEffect.maxValues[1] = 255;
-    _fillEffect.maxValues[2] = 255;
-    _fillEffect.realNames[0] = "r";
-    _fillEffect.realNames[1] = "g";
-    _fillEffect.realNames[2] = "b";
-}
-
-static Effect _blink("Blink", FX_MODE_BLINK, 4);
-void initBlink() {
-    _blink.settings[0] = []() { return Settings::getR(); };
-    _blink.settings[1] = []() { return Settings::getG(); };
-    _blink.settings[2] = []() { return Settings::getB(); };
-    _blink.settingNames[0] = "Red";
-    _blink.settingNames[1] = "Green";
-    _blink.settingNames[2] = "Blue";
-    _blink.settingNames[3] = "Time";
-    _blink.minValues[0] = 0;
-    _blink.minValues[1] = 0;
-    _blink.minValues[2] = 0;
-    _blink.maxValues[0] = 255;
-    _blink.maxValues[1] = 255;
-    _blink.maxValues[2] = 255;
-    _blink.maxValues[3] = 1000;
-    _blink.realNames[0] = "r";
-    _blink.realNames[1] = "g";
-    _blink.realNames[2] = "b";
-    _blink.realNames[3] = "tid_blink";
-
-};
+);
 
 
-/*struct Effect {
-    const char* name;
-    int effect;
-    std::function<int()> settings[11];
-    const char* settingNames[11];
-    int minValues[11];
-    int maxValues[11];
-    const char* realNames[11];
-    int numSettings;
-};
 
-static Effect _fill_effect = {
+/*static Effect _fillEffect = {
     "Fill", FX_MODE_FILL, 
     {[]() { return Settings::getR(); }, []() { return Settings::getG(); }, []() { return Settings::getB(); }}, 
     {"Red", "Green", "Blue"}, 
@@ -265,18 +275,48 @@ static Effect _brightnessSinBeat8Palette {
     {128, 500},
     {"bpm_sinBeat8", "tid_brightnessSinBeat8Palette"},
     2
-};*/
+};
+
+static Effect _funkyRainbowSinBeat8 {
+    "Funky Rainbow Sin Beat 8", FX_MODE_FUNKY_RAINBOW_SIN_BEAT_8,
+    {[]() {return Settings::getFade_sinBeat8();}},
+    {"Fade"},
+    {0},
+    {128},
+    {"fade_sinBeat8"},
+    1
+};
+
+static Effect _funkyRangeSinBeat8 {
+    "Funky Range Sin Beat 8",FX_MODE_FUNKY_RANGES_SIN_BEAT_8,
+    {[](){return Settings::getFade_sinBeat8();}, [](){return Settings::getR();}, [](){return Settings::getG();}, [](){return Settings::getB();}},
+    {"Fade", "Red", "Green", "Blue"},
+    {0,0,0,0},
+    {128, 255, 255, 255},
+    {"fade_sinBeat8", "r", "g", "b"},
+    4
+};
     
 
 
 
 static Effect _end_effect = {nullptr, -1, {0}}; // End marker for effects array
 
-// static Effect effects[] = {_fill_effect, _blink, _rainbowStatic, _fillGradientTwoColors, _fillGradientThreeColors,
-//                             _BackAndForthNoSmoothOneDot, _backAndForthNoSmoothLengthedDot, _hueFading, _hueWhiteWave, 
-//                             _displayPaletteLinear, _movingPaletteLinear, _spotlightingPalette, _sinBeat8, _sinBeat8PhaseOffset, 
-//                             _sinBeat8TimeOff, _twoSinBeat8, _threeSinBeat8,  _brightnessSinBeat8Palette, _end_effect};
-
+static Effect effects[] = {_fillEffect, _blink, _rainbowStatic, _fillGradientTwoColors, _fillGradientThreeColors,
+                            _BackAndForthNoSmoothOneDot, _backAndForthNoSmoothLengthedDot, _hueFading, _hueWhiteWave, 
+                            _displayPaletteLinear, _movingPaletteLinear, _spotlightingPalette, _sinBeat8, _sinBeat8PhaseOffset, 
+                            _sinBeat8TimeOff, _twoSinBeat8, _threeSinBeat8,  _brightnessSinBeat8Palette, 
+                            _funkyRainbowSinBeat8, _funkyRangeSinBeat8, _end_effect};
+*/
+static Effect _end_effect(
+    "",         // Empty name to indicate it's an end marker
+    -1,        // Invalid effect code
+    {},        // Empty settings vector
+    {},        // Empty setting names vector
+    {},        // Empty min values vector
+    {},        // Empty max values vector
+    {}         // Empty real names vector
+);
 static Effect effects[] = {_fillEffect, _blink, _end_effect};
 
 
