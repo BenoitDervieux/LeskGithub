@@ -30,12 +30,14 @@ class Settings {
         static uint8_t          hueInsert_hueWhiteWave;
         static int              tid_hueWhiteWave;
         static CRGBPalette16    palette1;
-        static int              tid_movingPaletteLinear; 
-
+        static int              tid_movingPaletteLinear;
+        static int              tid_spotlightingPalette;
+        static int              fade_spotlightingPalette;
+        static int              fade_sinBeat8;
         static uint8_t          bpm_sinBeat8;
-        static uint8_t          bpm_sinBeat8PhaseOff;
-        static uint8_t          phaseOffset_sinBeat8PhaseOff;
-        static uint8_t          bpm_sinBeat8TimeOff;
+        static uint8_t          sinBeat8PhaseOff_phaseOffset;
+        static int              tid_sinBeat8TimeOff;
+        static int              tid_brightnessSinBeat8Palette;
     public:
         //color
         static CRGB getColor() {return color;};
@@ -106,22 +108,29 @@ class Settings {
         // tid_movingPaletteLinear
         static int getTidMovingPaletteLinear() {return tid_movingPaletteLinear;};
         static void setTidMovingPaletteLinear(int newTidMovingPaletteLinear) {tid_movingPaletteLinear = newTidMovingPaletteLinear;};
-
-
-
-
-        //bpm_sinBeat8
+        // tid_spotlightingPalette;
+        static int getTidSpotlightingPalette() {return tid_spotlightingPalette;};
+        static void setTidSpotlightingPalette(int newTidSpotlightingPalette) {tid_spotlightingPalette = newTidSpotlightingPalette;};
+        // fade_spotlightingPalette;
+        static int getFade_spotlightingPalette() {return fade_spotlightingPalette;};
+        static void setFade_spotlightingPalette(int newFade_spotlightingPalette) {fade_spotlightingPalette = newFade_spotlightingPalette;};
+        // fade_sinBeat8;
+        static int getFade_sinBeat8() {return fade_sinBeat8;};
+        static void setFade_sinBeat8(int newFade_sinBeat8) {fade_sinBeat8 = newFade_sinBeat8;};
+        // bpm_sinBeat8
         static uint8_t getBpmSinBeat8() {return bpm_sinBeat8;};
         static void setBpmSinBeat8(uint8_t newBpmSinBeat8) {bpm_sinBeat8 = newBpmSinBeat8;};
-        //bpm_sinBeat8PhaseOff
-        static uint8_t getBpmSinBeat8PhaseOff() {return bpm_sinBeat8PhaseOff;};
-        static void setBpmSinBeat8PhaseOff(uint8_t newBpmSinBeat8PhaseOff) {bpm_sinBeat8PhaseOff = newBpmSinBeat8PhaseOff;};
-        //phaseOffset_sinBeat8PhaseOff
-        static uint8_t getPhaseOffset_sinBeat8PhaseOff() {return phaseOffset_sinBeat8PhaseOff;};
-        static void setPhaseOffset_sinBeat8PhaseOff(uint8_t newPhaseOffset_sinBeat8PhaseOff) {phaseOffset_sinBeat8PhaseOff = newPhaseOffset_sinBeat8PhaseOff;};
-        //bpm_sinBeat8TimeOff
-        static uint8_t getBpmSinBeat8TimeOff() {return bpm_sinBeat8TimeOff;};
-        static void setBpmSinBeat8TimeOff(uint8_t newBpmSinBeat8TimeOff) {bpm_sinBeat8TimeOff = newBpmSinBeat8TimeOff;};
+        // sinBeat8PhaseOff_phaseOffset;
+        static uint8_t getSinBeat8PhaseOff_phaseOffset() {return sinBeat8PhaseOff_phaseOffset;};
+        static void setSinBeat8PhaseOff_phaseOffset(uint8_t newSinBeat8PhaseOff_phaseOffset) {sinBeat8PhaseOff_phaseOffset = newSinBeat8PhaseOff_phaseOffset;};
+        // tid_sinBeat8TimeOff
+        static int getTidSinBeat8TimeOff() {return tid_sinBeat8TimeOff;};
+        static void setTidSinBeat8TimeOff(int newTidSinBeat8TimeOff) {tid_sinBeat8TimeOff = newTidSinBeat8TimeOff;};
+        // tid_brightnessSinBeat8Palette
+        static int getTidBrightnessSinBeat8Palette() {return tid_brightnessSinBeat8Palette;};
+        static void setTidBrightnessSinBeat8Palette(int newTidBrightnessSinBeat8Palette) {tid_brightnessSinBeat8Palette = newTidBrightnessSinBeat8Palette;};
+
+
 };
 
 #endif

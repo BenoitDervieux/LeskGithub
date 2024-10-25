@@ -297,7 +297,7 @@ void FastLedEffects::movingPaletteLinear(CRGBPalette16 palette, int tid_movingPa
 
     if(currentTime - lastUpdate >= tid_movingPaletteLinear) {
       lastUpdate = currentTime;
-      paletteIndex++;
+      paletteIndex += 75;
     }
       fill_palette(leds, NUM_LEDS, paletteIndex, 255/NUM_LEDS, palette, 100, LINEARBLEND);
       FastLED.show();
@@ -305,9 +305,14 @@ void FastLedEffects::movingPaletteLinear(CRGBPalette16 palette, int tid_movingPa
 
 // Link: https://www.youtube.com/watch?v=Ukq0tH2Tnkc&list=PLgXkGn3BBAGi5dTOCuEwrLuFtfz0kGFTC&index=3
 void FastLedEffects::spotlightingPalette(CRGBPalette16 palette, int tid_spotlightingPalette, int fade_spotlightingPalette, CRGB leds[]) {
-    EVERY_N_MILLISECONDS(tid_spotlightingPalette) {
-        leds[random(0, NUM_LEDS - 1)] = ColorFromPalette(palette, random8(), 255, LINEARBLEND);
+    static unsigned long lastUpdate = 0;
+    unsigned long currentTime = millis();
+
+    if(currentTime - lastUpdate >= tid_spotlightingPalette) {
+      lastUpdate = currentTime;
+      leds[random(0, NUM_LEDS - 1)] = ColorFromPalette(palette, random8(), 255, LINEARBLEND);
     }
+
     fadeToBlackBy(leds, NUM_LEDS, fade_spotlightingPalette);
     FastLED.show();
 }

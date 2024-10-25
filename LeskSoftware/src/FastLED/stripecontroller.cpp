@@ -250,12 +250,12 @@ void  StripeController::Update(const std::string& message) {
     // printf("%s\n", prefix);
     // printf("%s\n", suffixe);
 
-    switch(getSettingsNumber(prefix)) {
-    case 1:
-        this->setEffect(atoi(suffixe));
-        break;
-    default:
-        // code block
-        std::cout<< "Error" << std::endl;
-    }
+    // switch(getSettingsNumber(prefix)) {
+    // case 1:
+    //     this->setEffect(atoi(suffixe));
+    //     break;
+    // default:
+    //     // code block
+    //     std::cout<< "Error" << std::endl;
+    // }
 }

@@ -2,7 +2,6 @@
 #define LISTEFFECTS_H
 
 #include "defineeffects.h"
-#include "defineeffectsettings.h"
 #include "Settings.h"
 
 
@@ -13,11 +12,85 @@
 struct Effect {
     const char* name;
     int effect;
-    std::function<int()> settings[10];
-    const char* settingNames[10];
-    int minValues[10];
-    int maxValues[10];
-    const char* realNames[10];
+    std::function<int()>* settings;      // Dynamically allocated array of std::function
+    const char** settingNames;           // Dynamically allocated array of const char* for setting names
+    int* minValues;                      // Dynamically allocated array for min values
+    int* maxValues;                      // Dynamically allocated array for max values
+    const char** realNames;              // Dynamically allocated array of const char* for real names
+    int numSettings;
+
+    // Constructor to allocate memory
+    Effect(const char* effectName, int effectId, int numSettings)
+        : name(effectName), effect(effectId), numSettings(numSettings)
+    {
+        settings = new std::function<int()>[numSettings];
+        settingNames = new const char*[numSettings];
+        minValues = new int[numSettings];
+        maxValues = new int[numSettings];
+        realNames = new const char*[numSettings];
+    }
+
+    // Destructor to free allocated memory
+    ~Effect() {
+        delete[] settings;
+        delete[] settingNames;
+        delete[] minValues;
+        delete[] maxValues;
+        delete[] realNames;
+    }
+};
+
+static Effect _fillEffect("Fill", FX_MODE_FILL, 3);
+void initFillEffect() {
+    _fillEffect.settings[0] = []() { return Settings::getR(); };
+    _fillEffect.settings[1] = []() { return Settings::getG(); };
+    _fillEffect.settings[2] = []() { return Settings::getB(); };
+    _fillEffect.settingNames[0] = "Red";
+    _fillEffect.settingNames[1] = "Green";
+    _fillEffect.settingNames[2] = "Blue";
+    _fillEffect.minValues[0] = 0;
+    _fillEffect.minValues[1] = 0;
+    _fillEffect.minValues[2] = 0;
+    _fillEffect.maxValues[0] = 255;
+    _fillEffect.maxValues[1] = 255;
+    _fillEffect.maxValues[2] = 255;
+    _fillEffect.realNames[0] = "r";
+    _fillEffect.realNames[1] = "g";
+    _fillEffect.realNames[2] = "b";
+}
+
+static Effect _blink("Blink", FX_MODE_BLINK, 4);
+void initBlink() {
+    _blink.settings[0] = []() { return Settings::getR(); };
+    _blink.settings[1] = []() { return Settings::getG(); };
+    _blink.settings[2] = []() { return Settings::getB(); };
+    _blink.settingNames[0] = "Red";
+    _blink.settingNames[1] = "Green";
+    _blink.settingNames[2] = "Blue";
+    _blink.settingNames[3] = "Time";
+    _blink.minValues[0] = 0;
+    _blink.minValues[1] = 0;
+    _blink.minValues[2] = 0;
+    _blink.maxValues[0] = 255;
+    _blink.maxValues[1] = 255;
+    _blink.maxValues[2] = 255;
+    _blink.maxValues[3] = 1000;
+    _blink.realNames[0] = "r";
+    _blink.realNames[1] = "g";
+    _blink.realNames[2] = "b";
+    _blink.realNames[3] = "tid_blink";
+
+};
+
+
+/*struct Effect {
+    const char* name;
+    int effect;
+    std::function<int()> settings[11];
+    const char* settingNames[11];
+    int minValues[11];
+    int maxValues[11];
+    const char* realNames[11];
     int numSettings;
 };
 
@@ -124,12 +197,87 @@ static Effect _movingPaletteLinear {
     1
 };
 
+static Effect _spotlightingPalette {
+    "Spotlighting Palette", FX_MODE_SPOTLIGHTING_PALETTE,
+    {[]() {return Settings::getTidSpotlightingPalette();}, []() {return Settings::getFade_spotlightingPalette();}},
+    {"Time", "Fade"},
+    {1,0},
+    {200, 128},
+    {"tid_spotlightingPalette", "fade_spotlightingPalette"},
+    2
+};
+
+static Effect _sinBeat8 {
+    "Sin Beat 8", FX_MODE_SIN_BEAT_8,
+    {[]() {return Settings::getR();}, []() {return Settings::getG();}, []() {return Settings::getB();}, []() {return Settings::getFade_sinBeat8();}, []() {return Settings::getBpmSinBeat8();}},
+    {"Red", "Green", "Blue", "Fade", "BPM"},
+    {0,0,0,0,0},
+    {255, 255, 255, 128, 128},
+    {"r", "g", "b", "fade_sinBeat8", "bpm_sinBeat8"},
+    5
+};
+
+static Effect _sinBeat8PhaseOffset {
+    "Sin Beat 8 Phase Off", FX_MODE_SIN_BEAT_8_PHASE_OFF,
+    {[]() {return Settings::getR();}, []() {return Settings::getG();}, []() {return Settings::getB();}, []() {return Settings::getFade_sinBeat8();}, []() {return Settings::getBpmSinBeat8();}, []() {return Settings::getSinBeat8PhaseOff_phaseOffset();}},
+    {"Red", "Green", "Blue", "Fade", "BPM", "Phase Offset"},
+    {0,0,0,0,0,0},
+    {255, 255, 255, 128, 128, 128},
+    {"r", "g", "b", "fade_sinBeat8", "bpm_sinBeat8", "sinBeat8PhaseOff_phaseOffset"},
+    6
+};
+
+static Effect _sinBeat8TimeOff {
+    "Sin Beat 8 Time Off", FX_MODE_SIN_BEAT_8_TIME_OFF,
+    {[]() {return Settings::getR();}, []() {return Settings::getG();}, []() {return Settings::getB();}, []() {return Settings::getFade_sinBeat8();}, []() {return Settings::getBpmSinBeat8();}, [](){return Settings::getTidSinBeat8TimeOff();}},
+    {"Red", "Green", "Blue", "Fade", "BPM", "Time"},
+    {0,0,0,0,0,0},
+    {255, 255, 255, 128, 128, 500},
+    {"r", "g", "b", "fade_sinBeat8", "bpm_sinBeat8", "tid_sinBeat8TimeOff"},
+    6
+};
+
+static Effect _twoSinBeat8 {
+    "Two Sin Beat 8", FX_MODE_TWO_SIN_BEAT_8,
+    {[]() { return Settings::getR(); }, []() { return Settings::getG(); }, []() { return Settings::getB(); }, []() { return Settings::getR2(); }, []() { return Settings::getG2(); }, []() { return Settings::getB2();}, []() {return Settings::getFade_sinBeat8();}, []() {return Settings::getBpmSinBeat8();}},
+    {"Red", "Green", "Blue", "Red 2", "Green 2", "Blue 2", "Fade", "BPM"},
+    {0,0,0,0,0,0,0,0},
+    {255, 255, 255, 255, 255, 255, 128, 128},
+    {"r", "g", "b", "r2", "g2", "b2","fade_sinBeat8", "bpm_sinBeat8"},
+    8
+};
+
+static Effect _threeSinBeat8 {
+    "Three Sin Beat 8", FX_MODE_THREE_SIN_BEAT_8, 
+    {[]() { return Settings::getR(); }, []() { return Settings::getG(); }, []() { return Settings::getB(); }, []() { return Settings::getR2(); }, []() { return Settings::getG2(); }, []() { return Settings::getB2();}, []() { return Settings::getR3(); }, []() { return Settings::getG3(); }, []() { return Settings::getB3(); }, []() {return Settings::getFade_sinBeat8();}, []() {return Settings::getBpmSinBeat8();}},
+    {"Red", "Green", "Blue", "Red 2", "Green 2", "Blue 2","Red 3", "Green 3", "Blue 3", "Fade", "BPM"},
+    {0,0,0,0,0,0,0,0,0,0,0},
+    {255, 255, 255, 255, 255, 255, 255, 255, 255,128, 128},
+    {"r", "g", "b", "r2", "g2", "b2","r3", "g3", "b3","fade_sinBeat8", "bpm_sinBeat8"},
+    11
+};
+
+static Effect _brightnessSinBeat8Palette {
+    "Brightness Sin Beat 8 Palette", FX_MODE_BRIGHTNESS_SIN_BEAT_PALETTE,
+    {[](){return Settings::getBpmSinBeat8();}, [](){return Settings::getTidBrightnessSinBeat8Palette();}},
+    {"BPM", "Time"},
+    {0,0},
+    {128, 500},
+    {"bpm_sinBeat8", "tid_brightnessSinBeat8Palette"},
+    2
+};*/
+    
+
+
 
 static Effect _end_effect = {nullptr, -1, {0}}; // End marker for effects array
 
-static Effect effects[] = {_fill_effect, _blink, _rainbowStatic, _fillGradientTwoColors, _fillGradientThreeColors,
-                            _BackAndForthNoSmoothOneDot, _backAndForthNoSmoothLengthedDot, _hueFading, _hueWhiteWave, 
-                            _displayPaletteLinear, _movingPaletteLinear, _end_effect};
+// static Effect effects[] = {_fill_effect, _blink, _rainbowStatic, _fillGradientTwoColors, _fillGradientThreeColors,
+//                             _BackAndForthNoSmoothOneDot, _backAndForthNoSmoothLengthedDot, _hueFading, _hueWhiteWave, 
+//                             _displayPaletteLinear, _movingPaletteLinear, _spotlightingPalette, _sinBeat8, _sinBeat8PhaseOffset, 
+//                             _sinBeat8TimeOff, _twoSinBeat8, _threeSinBeat8,  _brightnessSinBeat8Palette, _end_effect};
+
+static Effect effects[] = {_fillEffect, _blink, _end_effect};
 
 
 

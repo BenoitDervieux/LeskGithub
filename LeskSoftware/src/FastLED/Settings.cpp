@@ -24,10 +24,10 @@ uint8_t             Settings::hueInsert_hueWhiteWave                    = 0;
 int                 Settings::tid_hueWhiteWave                          = 100;
 CRGBPalette16       Settings::palette1                                  = lavaPalette;
 int                 Settings::tid_movingPaletteLinear                   = 100;  
-
-
-
+int                 Settings::tid_spotlightingPalette                   = 100;
+int                 Settings::fade_spotlightingPalette                  = 32;
 uint8_t             Settings::bpm_sinBeat8                              = 30;
-uint8_t             Settings::bpm_sinBeat8PhaseOff                      = 30;
-uint8_t             Settings::phaseOffset_sinBeat8PhaseOff              = 30;
-uint8_t             Settings::bpm_sinBeat8TimeOff                       = 30;
+int                 Settings::fade_sinBeat8                             = 32;
+uint8_t             Settings::sinBeat8PhaseOff_phaseOffset              = 0;
+int                 Settings::tid_sinBeat8TimeOff                       = 100;
+int                 Settings::tid_brightnessSinBeat8Palette             = 100;

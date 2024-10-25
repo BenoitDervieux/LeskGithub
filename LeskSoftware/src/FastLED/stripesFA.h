@@ -7,7 +7,6 @@
 #include <FastLED.h>
 #include "./FastLedEffects/FastLedEffects.h"
 #include "color_functions.h"
-#include "defineeffectsettings.h"
 #include "Settings.h"
 
 

@@ -80,7 +80,7 @@ void StripesFA::setEffect(int effect) {
         effectClassLvl = effect-1;
         // Serial.println("Point 860: Effect number: " + String(effect));
         break;
-    case 3:
+    /*case 3:
         FastLedEffects::rainbowStatic(leds);
         effect = 3;
         effectClassLvl = effect-1;
@@ -126,35 +126,42 @@ void StripesFA::setEffect(int effect) {
         effect = 11;
         effectClassLvl = effect-1;
         break;
-    /*case 12:
-        FastLedEffects::spotlightingPalette(palette, milliseconds, fade, leds);
-        this->effect = 11;
+    case 12:
+        FastLedEffects::spotlightingPalette(Settings::getPalette1(), Settings::getTidSpotlightingPalette(), Settings::getFade_spotlightingPalette(), leds);
+        effect = 12;
+        effectClassLvl = effect-1;
         break;
     case 13:
-        FastLedEffects::sinBeat8(r1, r2, r3, fade, bpm, leds);
-        this->effect = 12;
+        FastLedEffects::sinBeat8(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), leds);
+        effect = 13;
+        effectClassLvl = effect-1;
         break;
     case 14:
-        FastLedEffects::sinBeat8PhaseOff(r1, r2, r3, fade, bpm, phaseOffset, leds);
-        this->effect = 13;
+        FastLedEffects::sinBeat8PhaseOff(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), Settings::getSinBeat8PhaseOff_phaseOffset(), leds);
+        effect = 14;
+        effectClassLvl = effect-1;
         break;
     case 15:
-        FastLedEffects::sinBeat8TimeOff(r1, r2, r3, fade, bpm, tid, leds);
-        this->effect = 14;
+        FastLedEffects::sinBeat8TimeOff(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), Settings::getTidSinBeat8TimeOff(), leds);
+        effect = 15;
+        effectClassLvl = effect-1;
         break;
     case 16:
-        FastLedEffects::twoSinBeat8(r1, g1, b1, r2, g2, b2, fade, bpm, leds);
-        this->effect = 15;
+        FastLedEffects::twoSinBeat8(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), leds);
+        effect = 16;
+        effectClassLvl = effect-1;
         break;
     case 17:
-        FastLedEffects::threeSinBeat8(r1, g1, b1, r2, g2, b2, r3, g3, b3, fade, bpm, leds);
-        this->effect = 16;
+        FastLedEffects::threeSinBeat8(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(),Settings::getR3(), Settings::getG3(), Settings::getB3(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), leds);
+        effect = 17;
+        effectClassLvl = effect-1;
         break;
     case 18:
-        FastLedEffects::brightnessSinBeat8Palette(palette, bpm, milliseconds, leds);
-        this->effect = 17;
+        FastLedEffects::brightnessSinBeat8Palette(Settings::getPalette1(), Settings::getBpmSinBeat8(), Settings::getTidBrightnessSinBeat8Palette(), leds);
+        effect = 18;
+        effectClassLvl = effect-1;
         break;
-    case 19:
+    /*case 19:
         FastLedEffects::funkyRainbowSinBeat8(fade, leds);
         this->effect = 18;
         break;

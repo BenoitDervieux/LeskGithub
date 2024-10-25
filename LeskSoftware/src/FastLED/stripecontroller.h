@@ -6,8 +6,6 @@
 #include "stripesFA.h"
 #include "XMLParser.h"
 #include "subscriberInterface.h"
-#include "mappingsettings.h"
-#include "defineeffectsettings.h"
 #include "color_functions.h"
 #include "Settings.h"
 

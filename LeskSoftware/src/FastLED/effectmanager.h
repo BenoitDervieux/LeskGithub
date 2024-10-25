@@ -35,6 +35,13 @@ class EffectManager {
         settingMap["hueInsert_hueWhiteWave"] = Settings::setHueInsert_hueWhiteWave;
         settingMap["tid_hueWhiteWave"] = Settings::setTidHueWhiteWave;
         settingMap["tid_movingPaletteLinear"] = Settings::setTidMovingPaletteLinear;
+        settingMap["tid_spotlightingPalette"] =  Settings::setTidSpotlightingPalette;
+        settingMap["fade_spotlightingPalette"] = Settings::setFade_spotlightingPalette;
+        settingMap["bpm_sinBeat8"] = Settings::setBpmSinBeat8;
+        settingMap["fade_sinBeat8"] = Settings::setFade_sinBeat8;
+        settingMap["sinBeat8PhaseOff_phaseOffset"] = Settings::setSinBeat8PhaseOff_phaseOffset;
+        settingMap["tid_sinBeat8TimeOff"] = Settings::setTidSinBeat8TimeOff;
+        settingMap["tid_brightnessSinBeat8Palette"] = Settings::setTidBrightnessSinBeat8Palette;
     }
 
     void setSetting(const String& settingName, int value);
