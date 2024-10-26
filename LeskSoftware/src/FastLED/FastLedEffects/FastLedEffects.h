@@ -5,6 +5,7 @@
 #include <sys/time.h>
 #include "bounce.h"
 #include "fire.h"
+#include <iostream>
 
 class FastLedEffects {
     public:
@@ -29,12 +30,12 @@ class FastLedEffects {
         /*  19 */ static void funkyRainbowSinBeat8(int fade_funkyRainbowSinBeat8, CRGB leds[]);
         /*  20 */ static void funkyRangeSinBeat8(int fade_funkyRangeSinBeat8, int r, int g, int b, CRGB leds[]);
         /*  21 */ static void funkyRainbowSinBeat8Two(int fade_funkyRainbowSinBeat8Two, CRGB leds[]);
-        /*  22 */ static void funkyRangeSinBeat8Two(int fade_funkyRangeSinBeat8Two, CRGB color, CRGB leds[]);
+        /*  22 */ static void funkyRangeSinBeat8Two(int fade_funkyRangeSinBeat8Two, int r, int g, int b, CRGB leds[]);
         /*  23 */ static void movingFunkyPalette(CRGBPalette16 palette, uint8_t bpm1_movingFunkyPalette, uint8_t bpm2_movingFunkyPalette, CRGB leds[]);
         /*  24 */ static void rainbowWave(uint8_t bpm_rainbowWave, int tid_rainbowWave, int fade_rainbowWave, CRGB leds[]);
-        /*  25 */ static void choosenWave(int tid_choosenWave, int fade_choosenWave, CRGB color, CRGB leds[]);
+        /*  25 */ static void choosenWave(int tid_choosenWave, int bpm, int fade_choosenWave, int r, int g, int b, CRGB leds[]);
         /*  26 */ static void firstNoiseRainbow(uint8_t bpm_firstNoiseRainbow, CRGB leds[]);
-        /*  27 */ static void firstNoiseColor(CRGB color, uint8_t bpm_firstNoiseColor, CRGB leds[]);
+        /*  27 */ static void firstNoiseColor(int r, int g, int b, uint8_t bpm_firstNoiseColor, CRGB leds[]);
         /*  28 */ static void noisePalette(CRGBPalette16 palette, int scale_noisePalette, CRGB leds[]);
         /*  29 */ static void runFire(CRGBPalette16 palette, CRGB leds[]);
         /*  30 */ static void secondNoise(CRGBPalette16 palette, CRGB leds[]);
@@ -100,7 +101,7 @@ class FastLedEffects {
         static int sumPulse(int time_shift);
         static uint8_t pulseWave8(uint32_t ms, uint16_t cycleLength, uint16_t pulseLength);
         static void drawFractionalBar( int pos16, int width, uint8_t hue, uint8_t fadeRate, CRGB leds[]);
-        static uint32_t fromRGBtoHex(int r, int g, int b);
+        static uint32_t fromRGBtoHex(uint8_t r, uint8_t g, uint8_t b);
     
     private:
         int red;

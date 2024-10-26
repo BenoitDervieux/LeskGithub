@@ -165,75 +165,92 @@ void StripesFA::setEffect(int effect) {
         effect = 20;
         effectClassLvl = effect-1;
         break;
-    /*case 21:
-        FastLedEffects::funkyRainbowSinBeat8Two(fade, leds);
-        this->effect = 20;
+    case 21:
+        FastLedEffects::funkyRainbowSinBeat8Two(Settings::getFade_sinBeat8(), leds);
+        effect = 21;
+        effectClassLvl = effect-1;
         break;
     case 22:
-        FastLedEffects::funkyRangeSinBeat8Two(fade, color, leds);
-        this->effect = 21;
+        FastLedEffects::funkyRangeSinBeat8Two(Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        effect = 22;
+        effectClassLvl = effect-1;
         break;
     case 23:
-        FastLedEffects::movingFunkyPalette(palette, bpm1, bpm2, leds);
-        this->effect = 22;
+        FastLedEffects::movingFunkyPalette(Settings::getPalette1(), Settings::getBpmSinBeat8(), Settings::getBpm2SinBeat8(), leds);
+        effect = 23;
+        effectClassLvl = effect-1;
         break;
     case 24:
-        FastLedEffects::rainbowWave(beat, milliseconds, fade, leds);
-        this->effect = 23;
+        FastLedEffects::rainbowWave(Settings::getBpmSinBeat8(), Settings::getTidRainbowWave(), Settings::getFade_sinBeat8(), leds);
+        effect = 24;
+        effectClassLvl = effect-1;
         break;
     case 25:
-        FastLedEffects::choosenWave(milliseconds, fade, color, leds);
-        this->effect = 24;
+        FastLedEffects::choosenWave(Settings::getTidChoosenWave(), Settings::getBpmSinBeat8(), Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        effect = 25;
+        effectClassLvl = effect-1;
         break;
     case 26:
-        FastLedEffects::firstNoiseRainbow(bpm, leds);
-        this->effect = 25;
+        FastLedEffects::firstNoiseRainbow(Settings::getBpmSinBeat8(), leds);
+        effect = 26;
+        effectClassLvl = effect-1;
         break;
     case 27:
-        FastLedEffects::firstNoiseColor(color, bpm, leds);
-        this->effect = 26;
+        FastLedEffects::firstNoiseColor(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getBpmSinBeat8(), leds);
+        effect = 27;
+        effectClassLvl = effect-1;
         break;
     case 28:
-        FastLedEffects::noisePalette(palette, scale, leds);
-        this->effect = 27;
+        FastLedEffects::noisePalette(Settings::getPalette1(), Settings::getScaleNoisePalette(), leds);
+        effect = 28;
+        effectClassLvl = effect-1;
         break;
     case 29:
-        FastLedEffects::runFire(palette, leds);
-        this->effect = 28;
+        FastLedEffects::runFire(Settings::getPalette1(), leds);
+        effect = 29;
+        effectClassLvl = effect-1;
         break;
     case 30:
-        FastLedEffects::secondNoise(palette, leds);
-        this->effect = 29;
+        FastLedEffects::secondNoise(Settings::getPalette1(), leds);
+        effect = 30;
+        effectClassLvl = effect-1;
         break;
     case 31:
         FastLedEffects::fillNoise16(leds);
-        this->effect = 30;
+        effect = 31;
+        effectClassLvl = effect-1;
         break;
     case 32:
-        FastLedEffects::rainbowDave(density, delta, leds);
-        this->effect = 31;
+        FastLedEffects::rainbowDave(Settings::getDensityRainbowDave(), Settings::getDeltaRainbowDave(), Settings::getTidBlink(), leds);
+        effect = 32;
+        effectClassLvl = effect-1;
         break;
     case 33:
-        FastLedEffects::marqueeDave(inter, hueChanging, length, leds);
-        this->effect = 32;
+        FastLedEffects::marqueeDave(Settings::getTidBlink(), Settings::getDensityRainbowDave(), Settings::getLengthBackAndForthNoSmoothLengthedDot(), leds);
+        effect = 33;
+        effectClassLvl = effect-1;
         break;
     case 34:
-        FastLedEffects::twinkleOld(inter, leds);
-        this->effect = 33;
+        FastLedEffects::twinkleOld(Settings::getTidBlink(), leds);
+        effect = 34;
+        effectClassLvl = effect-1;
         break;
     case 35:
-        FastLedEffects::twinkle(inter, leds);
-        this->effect = 34;
+        FastLedEffects::twinkle(Settings::getTidBlink(), leds);
+        effect = 35;
+        effectClassLvl = effect-1;
         break;
     case 36:
-        FastLedEffects::comet(inter, fade, cometSize, delathue, leds);
-        this->effect = 35;
+        FastLedEffects::comet(Settings::getTidBlink(), Settings::getFade_sinBeat8(), Settings::getLengthBackAndForthNoSmoothLengthedDot(), Settings::getDeltaRainbowDave(), leds);
+        effect = 36;
+        effectClassLvl = effect-1;
         break;
     case 37:
-        FastLedEffects::cometOnce(inter, fade, cometsize, delathue, cometspeed, leds);
-        this->effect = 36;
+        FastLedEffects::cometOnce(Settings::getTidBlink(), Settings::getFade_sinBeat8(), Settings::getLengthBackAndForthNoSmoothLengthedDot(), Settings::getDeltaRainbowDave(), Settings::getSpeedCometOnce(), leds);
+        effect = 37;
+        effectClassLvl = effect-1;
         break;
-    case 38:
+    /*case 38:
         FastLedEffects::bounce(leds, balls, fade, mirror);
         this->effect = 37;
         break;

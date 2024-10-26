@@ -42,6 +42,14 @@ class EffectManager {
         settingMap["sinBeat8PhaseOff_phaseOffset"] = Settings::setSinBeat8PhaseOff_phaseOffset;
         settingMap["tid_sinBeat8TimeOff"] = Settings::setTidSinBeat8TimeOff;
         settingMap["tid_brightnessSinBeat8Palette"] = Settings::setTidBrightnessSinBeat8Palette;
+        settingMap["bpm2_sinBeat8"] = Settings::setBpm2SinBeat8;
+        settingMap["tid_rainbowWave"] = Settings::setTidRainbowWave;
+        settingMap["tid_choosenWave"] = Settings::setTidChoosenWave;
+        settingMap["scale_noisePalette"] = Settings::setScaleNoisePalette;
+        settingMap["density_rainbowDave"] = Settings::setDensityRainbowDave;
+        settingMap["delta_rainbowDave"] = Settings::setDeltaRainbowDave;
+        settingMap["speed_cometOnce"] = Settings::setSpeedCometOnce;
+
     }
 
     void setSetting(const String& settingName, int value);

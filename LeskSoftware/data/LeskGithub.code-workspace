@@ -94,7 +94,9 @@
 			"cinttypes": "cpp",
 			"bitset": "cpp",
 			"regex": "cpp",
-			"stack": "cpp"
+			"stack": "cpp",
+			"condition_variable": "cpp",
+			"memory_resource": "cpp"
 		}
 	}
 }

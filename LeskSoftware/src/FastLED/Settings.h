@@ -38,6 +38,13 @@ class Settings {
         static uint8_t          sinBeat8PhaseOff_phaseOffset;
         static int              tid_sinBeat8TimeOff;
         static int              tid_brightnessSinBeat8Palette;
+        static uint8_t          bpm2_sinBeat8;
+        static int              tid_rainbowWave;
+        static int              tid_choosenWave;
+        static int              scale_noisePalette;
+        static int              density_rainbowDave;
+        static int              delta_rainbowDave;
+        static double           speed_cometOnce;
     public:
         //color
         static CRGB getColor() {return color;};
@@ -129,6 +136,27 @@ class Settings {
         // tid_brightnessSinBeat8Palette
         static int getTidBrightnessSinBeat8Palette() {return tid_brightnessSinBeat8Palette;};
         static void setTidBrightnessSinBeat8Palette(int newTidBrightnessSinBeat8Palette) {tid_brightnessSinBeat8Palette = newTidBrightnessSinBeat8Palette;};
+        // bpm2_sinBeat8
+        static uint8_t getBpm2SinBeat8() {return bpm2_sinBeat8;};
+        static void setBpm2SinBeat8(uint8_t newBpm2SinBeat8) {bpm2_sinBeat8 = newBpm2SinBeat8;};
+        // tid_rainbowWave
+        static int getTidRainbowWave() {return tid_rainbowWave;};
+        static void setTidRainbowWave(int newTidRainbowWave) {tid_rainbowWave = newTidRainbowWave;};
+        // tid_choosenWave
+        static int getTidChoosenWave() {return tid_choosenWave;};
+        static void setTidChoosenWave(int newTidChoosenWave) {tid_choosenWave = newTidChoosenWave;};
+        // scale_noisePalette
+        static int getScaleNoisePalette() {return scale_noisePalette;};
+        static void setScaleNoisePalette(int newScaleNoisePalette) {scale_noisePalette = newScaleNoisePalette;};
+        // density_rainbowDave;
+        static int getDensityRainbowDave() {return density_rainbowDave;};
+        static void setDensityRainbowDave(int newDensityRainbowDave) {density_rainbowDave = newDensityRainbowDave;};
+        // delta_rainbowDave;
+        static int getDeltaRainbowDave() {return delta_rainbowDave;};
+        static void setDeltaRainbowDave(int newDeltaRainbowDave) {delta_rainbowDave = newDeltaRainbowDave;};
+        // speed_cometOnce;
+        static int getSpeedCometOnce() {return speed_cometOnce;};
+        static void setSpeedCometOnce(int newSpeedCometOnce) {speed_cometOnce = newSpeedCometOnce;};
 
 
 };

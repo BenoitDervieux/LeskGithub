@@ -394,8 +394,7 @@ void FastLedEffects::funkyRangeSinBeat8(int fade_funkyRangeSinBeat8, int r, int 
    uint8_t posBeat = beatsin8(30, 0, NUM_LEDS - 1, 0, 0);
     uint8_t posBeat2 = beatsin8(60, 0, NUM_LEDS - 1, 0, 0);
     // Wave for LED color
-    uint32_t convertedColor = FastLedEffects::CRGBToInt(FastLedEffects::fromRGBtoHex(r, g, b));
-    uint8_t colBeat = FastLedEffects::getBeatSinColor(convertedColor);
+    uint8_t colBeat = FastLedEffects::getBeatSinColor(FastLedEffects::fromRGBtoHex(r, g, b));
     leds[(posBeat + posBeat2) / 2] = CHSV(colBeat, 255, 255);
     fadeToBlackBy(leds, NUM_LEDS, fade_funkyRangeSinBeat8);
     FastLED.show();
@@ -415,13 +414,13 @@ void FastLedEffects::funkyRainbowSinBeat8Two(int fade_funkyRainbowSinBeat8Two, C
     FastLED.show();
 }
 
-void FastLedEffects::funkyRangeSinBeat8Two(int fade_funkyRangeSinBeat8Two, CRGB color, CRGB leds[]) {
+void FastLedEffects::funkyRangeSinBeat8Two(int fade_funkyRangeSinBeat8Two, int r, int g, int b, CRGB leds[]) {
     uint8_t posBeat = beatsin8(30, 0, NUM_LEDS - 1, 0, 0);
     uint8_t posBeat2 = beatsin8(60, 0, NUM_LEDS - 1, 0, 0);
     uint8_t posBeat3 = beatsin8(30, 0, NUM_LEDS - 1, 0, 127);
     uint8_t posBeat4 = beatsin8(60, 0, NUM_LEDS - 1, 0, 127);
 
-    uint32_t convertedColor = FastLedEffects::CRGBToInt(color);
+    uint32_t convertedColor = FastLedEffects::CRGBToInt(FastLedEffects::fromRGBtoHex(r, g, b));
     uint8_t colBeat = FastLedEffects::getBeatSinColor(convertedColor);
     leds[(posBeat + posBeat2) / 2] = CHSV(colBeat, 255, 255);
     leds[(posBeat3 + posBeat4) / 2] = CHSV(colBeat, 255, 255);
@@ -438,23 +437,30 @@ void FastLedEffects::movingFunkyPalette(CRGBPalette16 palette, uint8_t bpm1_movi
 }
 
 void FastLedEffects::rainbowWave(uint8_t bpm_rainbowWave, int tid_rainbowWave, int fade_rainbowWave, CRGB leds[]) {
+    
+    static unsigned long lastUpdate = 0;
+    unsigned long currentTime = millis();
     uint8_t pos = map(beat8(bpm_rainbowWave, 0), 0, 255, 0, NUM_LEDS - 1);
     leds[pos] = CHSV(hue, 200, 255);
     fadeToBlackBy(leds, NUM_LEDS, fade_rainbowWave);
-    EVERY_N_MILLISECONDS(tid_rainbowWave) {
+     if(currentTime - lastUpdate >= tid_rainbowWave) {
+        lastUpdate = currentTime;
         hue++;
-    }
+      }
     FastLED.show();
 }
 
-void FastLedEffects::choosenWave(int tid_choosenWave, int fade_choosenWave, CRGB color, CRGB leds[]) {
-    uint8_t pos = map(beat8(40, 0), 0, 255, 0, NUM_LEDS - 1);
-    std::vector<uint8_t> colors = FastLedEffects::getArrayRangeValue(FastLedEffects::CRGBToInt(color));
+void FastLedEffects::choosenWave(int tid_choosenWave, int bpm, int fade_choosenWave, int r, int g, int b, CRGB leds[]) {
+    static unsigned long lastUpdate = 0;
+    unsigned long currentTime = millis();
+    uint8_t pos = map(beat8(bpm, 0), 0, 255, 0, NUM_LEDS - 1);
+    std::vector<uint8_t> colors = FastLedEffects::getArrayRangeValue(FastLedEffects::fromRGBtoHex(r, g,b));
     leds[pos] = CHSV(map(hue, 0, 255, colors[0], colors[1]), 200, 255);
     fadeToBlackBy(leds, NUM_LEDS, fade_choosenWave);
-    EVERY_N_MILLISECONDS(tid_choosenWave) {
+    if(currentTime - lastUpdate >= tid_choosenWave) {
+        lastUpdate = currentTime;
         hue++;
-    }
+      }
     FastLED.show();
 }
 
@@ -470,16 +476,17 @@ void FastLedEffects::firstNoiseRainbow(uint8_t bpm_firstNoiseRainbow, CRGB leds[
     FastLED.show();
 }
 
-void FastLedEffects::firstNoiseColor(CRGB color, uint8_t bpm_firstNoiseColor, CRGB leds[]) {
+void FastLedEffects::firstNoiseColor(int r, int g, int b, uint8_t bpm_firstNoiseColor, CRGB leds[]) {
     x = 0;
     scale = beatsin8(bpm_firstNoiseColor, 10, 30); // bpm
     t = millis() / 5;
-    std::vector<uint8_t> colors = FastLedEffects::getArrayRangeValue(FastLedEffects::CRGBToInt(color));
+    std::vector<uint8_t> colors = FastLedEffects::getArrayRangeValue(FastLedEffects::fromRGBtoHex(r, g,b));
     for (int i = 0; i < NUM_LEDS; i++) {
         uint8_t noise = inoise8(i * scale + x, t);
         uint8_t huetest = map(noise, 50, 190, colors[0], colors[1]); // Color type of hue
         leds[i] = CHSV(huetest, 255, 255);
     }
+    
     FastLED.show();
 }
 
@@ -528,9 +535,12 @@ void FastLedEffects::fillNoise16(CRGB leds[]) {
 // Link : https://www.youtube.com/watch?v=r6vMdnqUjTk&list=PLF2KJ6Gy3cZ7ynsp8s4tnqEFmY15CKhmH&index=12
 void FastLedEffects::rainbowDave(int density_rainbowDave, int delta_rainbowDave, int tid_rainbowDave, CRGB leds[]) {
     // Here the density is the speed of the animation
-    EVERY_N_MILLISECONDS(tid_rainbowDave) {
-      fill_rainbow(leds, NUM_LEDS, initialHue += density_rainbowDave, delta_rainbowDave);
-    }
+    static unsigned long lastUpdate = 0;
+    unsigned long currentTime = millis();
+    if(currentTime - lastUpdate >= tid_rainbowDave) {
+        lastUpdate = currentTime;
+        fill_rainbow(leds, NUM_LEDS, initialHue += density_rainbowDave, delta_rainbowDave);
+      }
   
     FastLED.show();
 }
@@ -1752,7 +1762,7 @@ std::vector<uint8_t> FastLedEffects::getArrayRangeValue(uint32_t Color) {
             arrayOfRanges = {112, 144};
             break;
         default:
-            arrayOfRanges = {0, 255};
+            arrayOfRanges = {0, 16};
             break;
     }
     return arrayOfRanges;
@@ -1898,10 +1908,6 @@ void FastLedEffects::drawFractionalBar( int pos16, int width, uint8_t hue, uint8
   }
 }
 
-uint32_t FastLedEffects::fromRGBtoHex(int r, int g, int b) {
-    if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0) {
-        return static_cast<uint32_t>(-1);
-    }
-    uint32_t hex = (r << 16) | (g << 8) | b;
-    return hex;
+uint32_t FastLedEffects::fromRGBtoHex(uint8_t r, uint8_t g, uint8_t b) {
+    return (static_cast<uint32_t>(r) << 16) | (static_cast<uint32_t>(g) << 8) | static_cast<uint32_t>(b);
 }
