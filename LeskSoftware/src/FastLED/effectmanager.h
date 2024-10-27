@@ -49,6 +49,21 @@ class EffectManager {
         settingMap["density_rainbowDave"] = Settings::setDensityRainbowDave;
         settingMap["delta_rainbowDave"] = Settings::setDeltaRainbowDave;
         settingMap["speed_cometOnce"] = Settings::setSpeedCometOnce;
+        settingMap["balls_bounce"] = Settings::setBallsBounce; 
+        settingMap["mirror_bounce"] = Settings::setMirrorBounce;
+        settingMap["cooling_fire"] = Settings::setCoolingFire;
+        settingMap["sparking_fire"] = Settings::setSparkingFire;
+        settingMap["sparks_fire"] = Settings::setSparksFire;
+        settingMap["sparkHeight_fire"] = Settings::setSparkHeightFire;
+        settingMap["breversed_fire"] = Settings::setReversedFire;
+        settingMap["chance_storm"] = Settings::setChanceStorm;
+        settingMap["cluster_storm"] = Settings::setClusterStorm;
+        settingMap["speed"] = Settings::setSpeed;
+        settingMap["ledstart_lighting"] = Settings::setLedstartLighting;
+        settingMap["ledlen_lighting"] = Settings::setLedlenLighting;
+        settingMap["flashes_lighting"] = Settings::setFlashesLighting;
+        settingMap["dimmer_lighting"] = Settings::setDimmerLighting;
+        settingMap["frequency_lighting"] = Settings::setFrequencyLighting;
 
     }
 

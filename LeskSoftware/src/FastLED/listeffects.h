@@ -387,6 +387,96 @@ static Effect _cometOnce {
     {"tid_blink", "fade_sinBeat8", "length_backAndForthNoSmoothLengthedDot", "delta_rainbowDave", "speed"},
     5
 };
+
+static Effect _bounce {
+    "Bounce", FX_MODE_BOUNCE,
+    {[]() { return  Settings::getBallsBounce();}, []() { return  Settings::getFade_sinBeat8();}},
+    {"Balls", "Fade"},
+    {0,0},
+    {5, 128},
+    {"balls_bounce", "fade_sinBeat8"},
+    2
+};
+
+static Effect _fire {
+    "Fire", FX_MODE_FIRE,
+    {[]() { return  Settings::getLengthBackAndForthNoSmoothLengthedDot();}, []() { return  Settings::getCoolingFire();}, []() { return  Settings::getSparkingFire();}, []() { return  Settings::getSparksFire();}, []() { return  Settings::getSparkHeightFire();},},
+    {"Length", "Cooling", "Sparking", "Sparks", "SparkHeight"},
+    {0,0,0,0,0},
+    {10, 160, 100, 10, 10},
+    {"length_backAndForthNoSmoothLengthedDot", "cooling_fire", "sparking_fire", "sparks_fire", "sparkHeight_fire"},
+    5
+};
+
+static Effect _storm {
+    "Storm", FX_MODE_STORM,
+    {[]() { return  Settings::getChanceStorm();}, []() { return  Settings::getClusterStorm();}, []() { return  Settings::getSpeedCometOnce();}, []() { return  Settings::getFade_sinBeat8();}},
+    {"Chance", "Cluster", "Speed", "Fade"},
+    {0,0,0,0},
+    {5, 128, 500, 128},
+    {"chance_storm", "cluster_storm", "speed", "fade_sinBeat8"},
+    4
+};
+
+static Effect _stormColored {
+    "Storm Colored", FX_MODE_STORM_COLORED,
+    {[]() { return  Settings::getChanceStorm();}, []() { return  Settings::getClusterStorm();}, []() { return  Settings::getSpeedCometOnce();}, []() { return  Settings::getFade_sinBeat8();}, [](){return Settings::getR();}, [](){return Settings::getG();}, [](){return Settings::getB();}},
+    {"Chance", "Cluster", "Speed", "Fade", "Red", "Green", "Blue"},
+    {0,0,0,0,0,0,0},
+    {5, 128, 500, 128, 255, 255, 255},
+    {"chance_storm", "cluster_storm", "speed", "fade_sinBeat8", "r", "g", "b"},
+    7
+};
+
+static Effect _stormPalette {
+    "Storm Palette", FX_MODE_STORM_PALETTE,
+    {[]() { return  Settings::getChanceStorm();}, []() { return  Settings::getClusterStorm();}, []() { return  Settings::getSpeedCometOnce();}, []() { return  Settings::getFade_sinBeat8();}},
+    {"Chance", "Cluster", "Speed", "Fade"},
+    {0,0,0,0},
+    {5, 128, 500, 128},
+    {"chance_storm", "cluster_storm", "speed", "fade_sinBeat8"},
+    4
+};
+
+static Effect _lighting {
+    "Lighting", FX_MODE_LIGHTING,
+    {[]() {return Settings::getLedstartLighting();}, []() {return Settings::getLedlenLighting();}, []() {return Settings::getFlashesLighting();}, []() {return Settings::getDimmerLighting();}, []() {return Settings::getFrequencyLighting();}},
+    {"Start", "Length", "Flashes", "Dimmer", "Frequency"},
+    {0,0,0,0,0},
+    {5, 10, 10, 128, 1000},
+    {"ledstart_lighting", "ledlen_lighting", "flashes_lighting", "dimmer_lighting", "frequency_lighting"},
+    5
+};
+
+static Effect _lightingColored {
+    "Lighting Colored", FX_MODE_LIGHTING_COLORED,
+    {[]() {return Settings::getLedstartLighting();}, []() {return Settings::getLedlenLighting();}, []() {return Settings::getFlashesLighting();}, []() {return Settings::getDimmerLighting();}, []() {return Settings::getFrequencyLighting();}, [](){return Settings::getR();}, [](){return Settings::getG();}, [](){return Settings::getB();}},
+    {"Start", "Length", "Flashes", "Dimmer", "Frequency", "Red", "Green", "Blue"},
+    {0,0,0,0,0,0,0,0},
+    {5, 10, 10, 128, 1000, 255, 255, 255},
+    {"ledstart_lighting", "ledlen_lighting", "flashes_lighting", "dimmer_lighting", "frequency_lighting", "r", "g", "b"},
+    8
+};
+
+static Effect _lightingPalette {
+    "Lighting Palette", FX_MODE_LIGHTING_PALETTE,
+    {[]() {return Settings::getLedstartLighting();}, []() {return Settings::getLedlenLighting();}, []() {return Settings::getFlashesLighting();}, []() {return Settings::getDimmerLighting();}, []() {return Settings::getFrequencyLighting();}},
+    {"Start", "Length", "Flashes", "Dimmer", "Frequency"},
+    {0,0,0,0,0},
+    {5, 10, 10, 128, 1000},
+    {"ledstart_lighting", "ledlen_lighting", "flashes_lighting", "dimmer_lighting", "frequency_lighting"},
+    5
+};
+
+static Effect _beat8_tail {
+    "Beat 8 Tail", FX_MODE_BEAT_8_TAIL,
+    {[]() {return Settings::getBpmSinBeat8();}, []() {return Settings::getFade_sinBeat8();}, []() { return Settings::getTidBlink();}},
+    {"BPM", "Fade", "Time"},
+    {1,0, 0},
+    {12, 128, 1000},
+    {"bpm_sinBeat8", "fade_sinBeat8", "tid_blink"},
+    3
+};
     
 
 
@@ -400,7 +490,8 @@ static Effect effects[] = {_fillEffect, _blink, _rainbowStatic, _fillGradientTwo
                             _funkyRainbowSinBeat8, _funkyRangeSinBeat8, _funkyRainbowSinBeat8Two, _funkyRangeSinBeat8Two, 
                             _movingFunkyPalette, _rainbowWave, _choosenWave, _firstNoiseRainbow, _firstNoiseColor, 
                             _noisePalette, _runFire, _secondNoise, _fillNoise16,_rainbowDave, _marqueeDave, 
-                            _twinkleOld, _twinkle, _comet, _cometOnce, _end_effect};
+                            _twinkleOld, _twinkle, _comet, _cometOnce, _bounce, _fire, _storm, _stormColored, _stormPalette,
+                            _lighting, _lightingColored, _lightingPalette, _beat8_tail, _end_effect};
 
 // static Effect _end_effect(
 //     "",         // Empty name to indicate it's an end marker

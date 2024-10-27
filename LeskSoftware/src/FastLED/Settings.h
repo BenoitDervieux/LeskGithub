@@ -45,6 +45,21 @@ class Settings {
         static int              density_rainbowDave;
         static int              delta_rainbowDave;
         static double           speed_cometOnce;
+        static int              balls_bounce;
+        static bool             mirror_bounce;
+        static int              cooling_fire;
+        static int              sparking_fire;
+        static int              sparks_fire;
+        static int              sparkHeight_fire;
+        static bool             breversed_fire;
+        static int              chance_storm;
+        static int              cluster_storm;
+        static int              ledstart_lighting;
+        static int              ledlen_lighting;
+        static int              flashes_lighting;
+        static int              dimmer_lighting;
+        static int              frequency_lighting;
+
     public:
         //color
         static CRGB getColor() {return color;};
@@ -157,8 +172,50 @@ class Settings {
         // speed_cometOnce;
         static int getSpeedCometOnce() {return speed_cometOnce;};
         static void setSpeedCometOnce(int newSpeedCometOnce) {speed_cometOnce = newSpeedCometOnce;};
-
-
+        // balls_bounce
+        static int getBallsBounce() {return balls_bounce;};
+        static void setBallsBounce(int newBallsBounce) {balls_bounce = newBallsBounce;};
+        // mirror_bounce
+        static bool getMirrorBounce() {return mirror_bounce;};
+        static void setMirrorBounce(bool newMirrorBounce) {mirror_bounce = newMirrorBounce;};
+        // cooling_fire;
+        static int getCoolingFire() {return cooling_fire;};
+        static void setCoolingFire(int newCoolingFire) {cooling_fire = newCoolingFire;};
+        // sparking_fire;
+        static int getSparkingFire() {return sparking_fire;};
+        static void setSparkingFire(int newSparkingFire) {sparking_fire = newSparkingFire;};
+        // sparks_fire;
+        static int getSparksFire() {return sparks_fire;};
+        static void setSparksFire(int newSparksFire) {sparks_fire = newSparksFire;};
+        // sparkHeight_fire;
+        static int getSparkHeightFire() {return sparkHeight_fire;};
+        static void setSparkHeightFire(int newSparkHeightFire) {sparkHeight_fire = newSparkHeightFire;};
+        // breversed_fire;
+        static bool getReversedFire() {return breversed_fire;};
+        static void setReversedFire(bool newReversedFire) {breversed_fire = newReversedFire;};
+        // chance_storm;
+        static int getChanceStorm() {return chance_storm;};
+        static void setChanceStorm(int newChanceStorm) {chance_storm = newChanceStorm;};
+        // cluster_storm;
+        static int getClusterStorm() {return cluster_storm;};
+        static void setClusterStorm(int newClusterStorm) {cluster_storm = newClusterStorm;};
+        // ledstart_lighting
+        static int getLedstartLighting() {return ledstart_lighting;};
+        static void setLedstartLighting(int newLedstartLighting) {ledstart_lighting = newLedstartLighting;};
+        // ledlen_lighting
+        static int getLedlenLighting() {return ledlen_lighting;};
+        static void setLedlenLighting(int newLedlenLighting) {ledlen_lighting = newLedlenLighting;};
+        // flashes_lighting
+        static int getFlashesLighting() {return flashes_lighting;};
+        static void setFlashesLighting(int newFlashesLighting) {flashes_lighting = newFlashesLighting;};
+        // dimmer_lighting
+        static int getDimmerLighting() {return dimmer_lighting;};
+        static void setDimmerLighting(int newDimmerLighting) {dimmer_lighting = newDimmerLighting;};
+        // frequency_lighting
+        static int getFrequencyLighting() {return frequency_lighting;};
+        static void setFrequencyLighting(int newFrequencyLighting) {frequency_lighting = newFrequencyLighting;};
 };
+
+
 
 #endif

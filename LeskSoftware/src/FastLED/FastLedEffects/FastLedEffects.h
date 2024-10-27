@@ -53,18 +53,18 @@ class FastLedEffects {
 
         // Here optimization to make for the colors and the delay
         /*  40 */ static void storm(int chance_storm, int length_storm, int tid_storm, int fade_storm, CRGB leds[]); // Need to improve the use of delay !!!!
-        /*  41 */ static void stormColored(int chance_stormColored, int length_stormColored, int tid_stormColored, int fade_stormColored, CRGB color, CRGB leds[]); // Need to improve the use of delay !!!!
+        /*  41 */ static void stormColored(int chance_stormColored, int length_stormColored, int tid_stormColored, int fade_stormColored, int r, int g, int b, CRGB leds[]); // Need to improve the use of delay !!!!
         /*  42 */ static void stormPalette(int chance_stormPalette, int length_stormPalette, int tid_stormPalette, int fade_stormPalette, CRGBPalette16 palette, CRGB leds[]); // Need to improve the use of delay !!!!
 
         // Here optimization to make for the colors and the delay
         /*  43 */ static void lighting(int ledstart_lighting, int length_lighting, int flashes_lighting, int dimmer_lighting, int frequency_lighting, CRGB leds[]);
-        /*  44 */ static void lightingColored(int ledstart_lightingColored, int length_lightingColored, int flashes_lightingColored, int dimmer_lightingColored, int frequency_lightingColored, CRGB color, CRGB leds[]);
+        /*  44 */ static void lightingColored(int ledstart_lightingColored, int length_lightingColored, int flashes_lightingColored, int dimmer_lightingColored, int frequency_lightingColored, int r, int g, int b, CRGB leds[]);
         /*  45 */ static void lightingPalette(int ledstart_lightingPalette, int length_lightingPalette, int flashes_lightingPalette, int dimmer_lightingPalette, int frequency_lightingPalette, CRGBPalette16 palette, CRGB leds[]);
 
         // Links to find new effects
         // This one : https://www.reddit.com/r/FastLED/comments/pytqrm/party_lighting_for_the_garage_club_delta/
 
-        /*  46 */ static void beat8_tail(uint8_t bpm_beat8_tail, int fade_beat8_tail, CRGB leds[]);
+        /*  46 */ static void beat8_tail(uint8_t bpm_beat8_tail, int fade_beat8_tail, int tid_beat8_tail, CRGB leds[]);
         /*  47 */ static void blendIntoRainbow(int tid_blendIntoRainbow, int tid2_blendIntoRainbow, CRGB leds[]);
         /*  48 */ static void breatheV2(float pulseSp_breatheV2, CRGB leds[]); // --> Need to add a color option here
         /*  49 */ static void chaseTargetTalesVarA(int tid_chaseTargetTalesVarA, CRGB leds[]);

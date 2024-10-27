@@ -373,7 +373,12 @@ void FastLedEffects::brightnessSinBeat8Palette(CRGBPalette16 palette, uint8_t bp
     for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = ColorFromPalette(palette, (255/NUM_LEDS * i + more) % 255, sinBeat);
     }
-    EVERY_N_MILLISECONDS(tid_brightnessSinBeat8Palette) {
+
+    static unsigned long lastUpdate = 0;
+    unsigned long currentTime = millis();
+
+    if(currentTime - lastUpdate >= tid_brightnessSinBeat8Palette) {
+      lastUpdate = currentTime;
         more++;
     }
     FastLED.show();
@@ -739,8 +744,8 @@ void FastLedEffects::storm(int chance_storm, int length_storm, int tid_storm, in
   fadeToBlackBy(leds, NUM_LEDS, fade_storm);
 }
 
-void FastLedEffects::stormColored(int chance_stormColored, int length_stormColored, int tid_stormColored, int fade_stormColored, CRGB color, CRGB leds[]) {
-    uint32_t convertedColor = FastLedEffects::CRGBToInt(color);
+void FastLedEffects::stormColored(int chance_stormColored, int length_stormColored, int tid_stormColored, int fade_stormColored, int r, int g, int b, CRGB leds[]) {
+    uint32_t convertedColor = FastLedEffects::fromRGBtoHex(r,g,b);
     uint8_t colBeat = FastLedEffects::getBeatSinColor(convertedColor);
     // clusters of leds, souce of
   if (random(0, chance_stormColored) == 0) {
@@ -775,35 +780,42 @@ void FastLedEffects::stormPalette(int chance_stormPalette, int length_stormPalet
 // Link : https://github.com/netmindz/arduino/blob/master/Deevstock/CloudsV3/CloudsV3.ino
 void FastLedEffects::lighting(int ledstart_lighting, int length_lighting, int flashes_lighting, int dimmer_lighting, int frequency_lighting, CRGB leds[]) {
         ledstart_lighting = random8(NUM_LEDS);                               // Determine starting location of flash
-        length_lighting = random8(NUM_LEDS - ledstart_lighting);                      // Determine length of flash (not to go beyond NUM_LEDS-1)
+        length_lighting = random8(NUM_LEDS - ledstart_lighting); 
+        
+        
+        static unsigned long lastUpdate = 0;
+        unsigned long currentTime = millis();
+        if(currentTime - lastUpdate >= 1000 / frequency_lighting) {
+            lastUpdate = currentTime;
+                        for (int flashCounter = 0; flashCounter < random8(3, flashes_lighting); flashCounter++) {
+                    if (flashCounter == 0) dimmer_lighting = 5;                        // the brightness of the leader is scaled down by a factor of 5
+                    else dimmer_lighting = random8(1, 3);                              // return strokes are brighter than the leader
 
-        EVERY_N_MILLISECONDS(1000 / frequency_lighting) {
-            for (int flashCounter = 0; flashCounter < random8(3, flashes_lighting); flashCounter++) {
-                if (flashCounter == 0) dimmer_lighting = 5;                        // the brightness of the leader is scaled down by a factor of 5
-                else dimmer_lighting = random8(1, 3);                              // return strokes are brighter than the leader
+                    fill_solid(leds + ledstart_lighting, length_lighting, CHSV(255, 0, 255 / dimmer_lighting));
+                    FastLED.show();                                           // Show a section of LED's
+                    delay(random8(4, 10));                                    // each flash only lasts 4-10 milliseconds
+                    fill_solid(leds + ledstart_lighting, length_lighting, CHSV(255, 0, 0));     // Clear the section of LED's
+                    FastLED.show();
 
-                fill_solid(leds + ledstart_lighting, length_lighting, CHSV(255, 0, 255 / dimmer_lighting));
-                FastLED.show();                                           // Show a section of LED's
-                delay(random8(4, 10));                                    // each flash only lasts 4-10 milliseconds
-                fill_solid(leds + ledstart_lighting, length_lighting, CHSV(255, 0, 0));     // Clear the section of LED's
-                FastLED.show();
+                    if (flashCounter == 0) delay (150);                       // longer delay until next flash after the leader
 
-                if (flashCounter == 0) delay (150);                       // longer delay until next flash after the leader
-
-                delay(50 + random8(100));                                 // shorter delay between strokes
-            }
-        }
+                    delay(50 + random8(100));                                 // shorter delay between strokes
+                }
+          }                     // Determine length of flash (not to go beyond NUM_LEDS-1)
 }
 
-void FastLedEffects::lightingColored(int ledstart_lightingColored, int length_lightingColored, int flashes_lightingColored, int dimmer_lightingColored, int frequency_lightingColored, CRGB color, CRGB leds[]) {
+void FastLedEffects::lightingColored(int ledstart_lightingColored, int length_lightingColored, int flashes_lightingColored, int dimmer_lightingColored, int frequency_lightingColored, int r, int g, int b, CRGB leds[]) {
 
-        uint32_t convertedColor = FastLedEffects::CRGBToInt(color);
+        uint32_t convertedColor = FastLedEffects::fromRGBtoHex(r,g,b);
         uint8_t colBeat = FastLedEffects::getBeatSinColor(convertedColor);
 
         ledstart_lightingColored = random8(NUM_LEDS);                               // Determine starting location of flash
         length_lightingColored = random8(NUM_LEDS - ledstart_lightingColored);                      // Determine length of flash (not to go beyond NUM_LEDS-1)
 
-        EVERY_N_MILLISECONDS(1000 / frequency_lightingColored) {
+        static unsigned long lastUpdate = 0;
+        unsigned long currentTime = millis();
+        if(currentTime - lastUpdate >= 1000 / frequency_lightingColored) {
+          lastUpdate = currentTime;
             for (int flashCounter = 0; flashCounter < random8(3, flashes_lightingColored); flashCounter++) {
                 if (flashCounter == 0) dimmer_lightingColored = 5;                        // the brightness of the leader is scaled down by a factor of 5
                 else dimmer_lightingColored = random8(1, 3);                              // return strokes are brighter than the leader
@@ -825,7 +837,10 @@ void FastLedEffects::lightingPalette(int ledstart_lightingPalette, int length_li
         ledstart_lightingPalette = random8(NUM_LEDS);                               // Determine starting location of flash
         length_lightingPalette = random8(NUM_LEDS - ledstart_lightingPalette);                      // Determine length of flash (not to go beyond NUM_LEDS-1)
 
-        EVERY_N_MILLISECONDS(1000 / frequency_lightingPalette) {
+        static unsigned long lastUpdate = 0;
+        unsigned long currentTime = millis();
+        if(currentTime - lastUpdate >= 1000 / frequency_lightingPalette) {
+          lastUpdate = currentTime;
             for (int flashCounter = 0; flashCounter < random8(3, flashes_lightingPalette); flashCounter++) {
                 if (flashCounter == 0) dimmer_lightingPalette = 5;                        // the brightness of the leader is scaled down by a factor of 5
                 else dimmer_lightingPalette = random8(1, 3);                              // return strokes are brighter than the leader
@@ -844,18 +859,33 @@ void FastLedEffects::lightingPalette(int ledstart_lightingPalette, int length_li
 }
 
 // Link: https://github.com/marmilicious/FastLED_examples/blob/master/beat8.ino
-void FastLedEffects::beat8_tail(uint8_t bpm_beat8_tail, int fade_beat8_tail, CRGB leds[]) {
+void FastLedEffects::beat8_tail(uint8_t bpm_beat8_tail, int fade_beat8_tail, int tid_beat8_tail, CRGB leds[]) {
     static uint8_t hueBeat = 0;
-    EVERY_N_MILLISECONDS( 50 ) { hueBeat++; }
+    static unsigned long lastUpdateHue = 0;
+    static unsigned long lastUpdateFade = 0;
 
-    EVERY_N_MILLISECONDS( 5 ) {
-    fadeToBlackBy( leds, NUM_LEDS, fade_beat8_tail);  // Fade out pixels.
+    unsigned long currentTime = millis();
+
+    // Update hue based on bpm
+    if (currentTime - lastUpdateHue >= tid_beat8_tail) {
+        lastUpdateHue = currentTime;  // Update the last update time
+        hueBeat++; 
+        if (hueBeat >= 255) { // Prevent overflow
+            hueBeat = 0;
+        }
     }
+
+    // Fade out pixels based on fade rate
+    if (currentTime - lastUpdateFade >= 5) {
+        lastUpdateFade = currentTime;  // Update the last update time
+        fadeToBlackBy(leds, NUM_LEDS, fade_beat8_tail);
+    }
+
+    // Calculate position based on beat
     uint16_t pos = beat8(bpm_beat8_tail) % NUM_LEDS;  // modulo the position to be within NUM_LEDS
-    leds[pos] = CHSV( hueBeat, 200, 255);
+    leds[pos] = CHSV(hueBeat, 200, 255); // Set the LED at the calculated position
 
     FastLED.show();
-
 }
 
 

@@ -250,43 +250,52 @@ void StripesFA::setEffect(int effect) {
         effect = 37;
         effectClassLvl = effect-1;
         break;
-    /*case 38:
-        FastLedEffects::bounce(leds, balls, fade, mirror);
-        this->effect = 37;
+    case 38:
+        FastLedEffects::bounce(leds, Settings::getBallsBounce(), Settings::getFade_sinBeat8(), Settings::getMirrorBounce());
+        effect = 38;
+        effectClassLvl = effect-1;
         break;
     case 39:
-        FastLedEffects::fire(size, cooling, sparking, sparks, sparkHeight, breversed, bmirrored);
-        this->effect = 38;
+        FastLedEffects::fire(Settings::getLengthBackAndForthNoSmoothLengthedDot(), Settings::getCoolingFire(), Settings::getSparkingFire(),  Settings::getSparksFire(), Settings::getSparkHeightFire(),  Settings::getReversedFire(), Settings::getMirrorBounce());
+        effect = 39;
+        effectClassLvl = effect-1;
         break;
     case 40:
-        FastLedEffects::storm(CHANCE, CLUSTER, speeda, FADE, leds);
-        this->effect = 39;
+        FastLedEffects::storm(Settings::getChanceStorm(), Settings::getClusterStorm(), Settings::getSpeedCometOnce(), Settings::getFade_sinBeat8(), leds);
+        effect = 40;
+        effectClassLvl = effect-1;
         break;
     case 41:
-        FastLedEffects::stormColored(CHANCE, CLUSTER, SPEED, FADE, color, leds);
-        this->effect = 40;
+        FastLedEffects::stormColored(Settings::getChanceStorm(), Settings::getClusterStorm(), Settings::getSpeedCometOnce(), Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        effect = 41;
+        effectClassLvl = effect-1;
         break;
     case 42:
-        FastLedEffects::stormPalette(CHANCE, CLUSTER, SPEED, FADE, palette, leds);
-        this->effect = 41;
+        FastLedEffects::stormPalette(Settings::getChanceStorm(), Settings::getClusterStorm(), Settings::getSpeedCometOnce(), Settings::getFade_sinBeat8(), Settings::getPalette1(), leds);
+        effect = 42;
+        effectClassLvl = effect-1;
         break;
     case 43:
-        FastLedEffects::lighting(ledstart, ledlen, flashes, dimmer, frequency, leds);
-        this->effect = 42;
+        FastLedEffects::lighting(Settings::getLedstartLighting(), Settings::getLedlenLighting(), Settings::getFlashesLighting(), Settings::getDimmerLighting(), Settings::getFrequencyLighting(), leds);
+        effect = 43;
+        effectClassLvl = effect-1;
         break;
     case 44:
-        FastLedEffects::lightingColored(ledstart, ledlen, flashes, dimmer, frequency, color, leds);
-        this->effect = 43;
+        FastLedEffects::lightingColored(Settings::getLedstartLighting(), Settings::getLedlenLighting(), Settings::getFlashesLighting(), Settings::getDimmerLighting(), Settings::getFrequencyLighting(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        effect = 44;
+        effectClassLvl = effect-1;
         break;
     case 45:
-        FastLedEffects::lightingPalette(ledstart, ledlen, flashes, dimmer, frequency, palette, leds);
-        this->effect = 44;
+        FastLedEffects::lightingPalette(Settings::getLedstartLighting(), Settings::getLedlenLighting(), Settings::getFlashesLighting(), Settings::getDimmerLighting(), Settings::getFrequencyLighting(), Settings::getPalette1(), leds);
+        effect = 45;
+        effectClassLvl = effect-1;
         break;
     case 46:
-        FastLedEffects::beat8_tail(moveSpeed, fade, leds);
-        this->effect = 45;
+        FastLedEffects::beat8_tail(Settings::getBpmSinBeat8(), Settings::getFade_sinBeat8(), Settings::getTidBlink(), leds);
+        effect = 45;
+        effectClassLvl = effect-1;
         break;
-    case 47:
+    /*case 47:
         FastLedEffects::blendIntoRainbow(waitTime, colorTime, leds);
         this->effect = 46;
         break;
