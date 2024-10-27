@@ -59,6 +59,10 @@ class Settings {
         static int              flashes_lighting;
         static int              dimmer_lighting;
         static int              frequency_lighting;
+        static uint8_t          blendAmount;
+        static uint8_t          initialHue;
+        static int              tid_blendIntoRainbow;
+        static float            pulseSp_breathe;
 
     public:
         //color
@@ -214,6 +218,19 @@ class Settings {
         // frequency_lighting
         static int getFrequencyLighting() {return frequency_lighting;};
         static void setFrequencyLighting(int newFrequencyLighting) {frequency_lighting = newFrequencyLighting;};
+        // blendAmount
+        static int getBlendAmount() {return blendAmount;};
+        static void setBlendAmount(int newBlendAmount) {blendAmount = newBlendAmount;};
+        // initialHue
+        static int getInitialHue() {return initialHue;};
+        static void setInitialHue(int newInitialHue) {initialHue = newInitialHue;};
+        // tid_blendIntoRainbow
+        static int getTidBlendIntoRainbow() {return tid_blendIntoRainbow;};
+        static void setTidBlendIntoRainbow(int newTidBlendIntoRainbow) {tid_blendIntoRainbow = newTidBlendIntoRainbow;};
+        // pulseSp_breathe
+        static int getPulseSpBreathe() {return pulseSp_breathe;};
+        static void setPulseSpBreathe(int newPulseSpBreathe) {pulseSp_breathe = newPulseSpBreathe;};
+
 };
 
 

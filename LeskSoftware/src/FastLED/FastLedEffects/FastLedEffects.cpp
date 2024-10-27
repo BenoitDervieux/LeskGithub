@@ -889,37 +889,50 @@ void FastLedEffects::beat8_tail(uint8_t bpm_beat8_tail, int fade_beat8_tail, int
 }
 
 
-void FastLedEffects::blendIntoRainbow(int tid_blendIntoRainbow, int tid2_blendIntoRainbow, CRGB leds[]) {
+void FastLedEffects::blendIntoRainbow(int tid, int tid2, uint8_t initialHue, uint8_t blendAmount, CRGB leds[]) {
+    static uint8_t hue = initialHue;    // Initialize hue with a dynamic parameter
+    static uint8_t pos = 0;              // Static position to keep track of the LED index
+    static unsigned long lastHueUpdate = 0; // Last time hue was updated
+    static unsigned long lastPosUpdate = 0; // Last time position was updated
+    static unsigned long lastHue2Update = 0; // Last time hue2 was updated
 
-    EVERY_N_MILLISECONDS(tid_blendIntoRainbow){
-        hue++;  //used to cycle through the rainbow
+    unsigned long currentTime = millis(); // Get the current time
+
+    // Update hue based on tid
+    if (currentTime - lastHueUpdate >= tid) {
+        hue++; // Cycle through the rainbow
+        lastHueUpdate = currentTime; // Update the last hue update time
     }
 
-    EVERY_N_MILLISECONDS(tid_blendIntoRainbow + 30) {
+    // Update position based on tid + 30
+    if (currentTime - lastPosUpdate >= tid + 30) {
         pos++;
-        if (pos == NUM_LEDS) { pos = 0; }  //reset to begining
+        if (pos == NUM_LEDS) { pos = 0; }  // Reset to beginning
+        lastPosUpdate = currentTime; // Update the last position update time
     }
 
-    EVERY_N_MILLISECONDS(tid2_blendIntoRainbow){
-        hue2 = hue2 - 1;  //used to change the moving color
+    // Update hue2 based on tid2
+    if (currentTime - lastHue2Update >= tid2) {
+        hue2 = hue2 - 1;  // Change the moving color
+        lastHue2Update = currentTime; // Update the last hue2 update time
     }
-    CRGB blendThisIn  = CHSV(hue2, 170, 255);  //color to blend into the background
-    CRGB blendThisIn2 = CHSV(hue2, 200, 225);  //color to blend into the background
-    CRGB blendThisIn3 = CHSV(hue2, 230, 200);  //color to blend into the background
-    CRGB blendThisIn4 = CHSV(hue2, 255, 180);  //color to blend into the background
 
-    static uint8_t blendAmount = 240;  //amount of blend  [range: 0-255]
+    // Colors to blend into the background
+    CRGB blendThisIn  = CHSV(hue2, 170, 255);
+    CRGB blendThisIn2 = CHSV(hue2, 200, 225);
+    CRGB blendThisIn3 = CHSV(hue2, 230, 200);
+    CRGB blendThisIn4 = CHSV(hue2, 255, 180);
 
-    nblend(leds[pos],                  blendThisIn4, blendAmount/3);
-    nblend(leds[mod8(pos+1,NUM_LEDS)], blendThisIn3, blendAmount/2);
-    nblend(leds[mod8(pos+2,NUM_LEDS)], blendThisIn2, blendAmount);
-    nblend(leds[mod8(pos+3,NUM_LEDS)], blendThisIn,  blendAmount);
-    nblend(leds[mod8(pos+4,NUM_LEDS)], blendThisIn2, blendAmount);
-    nblend(leds[mod8(pos+5,NUM_LEDS)], blendThisIn3, blendAmount/2);
-    nblend(leds[mod8(pos+6,NUM_LEDS)], blendThisIn4, blendAmount/3);
+    // Blend colors based on the given blendAmount
+    nblend(leds[pos],                  blendThisIn4, blendAmount / 3);
+    nblend(leds[mod8(pos + 1, NUM_LEDS)], blendThisIn3, blendAmount / 2);
+    nblend(leds[mod8(pos + 2, NUM_LEDS)], blendThisIn2, blendAmount);
+    nblend(leds[mod8(pos + 3, NUM_LEDS)], blendThisIn,  blendAmount);
+    nblend(leds[mod8(pos + 4, NUM_LEDS)], blendThisIn2, blendAmount);
+    nblend(leds[mod8(pos + 5, NUM_LEDS)], blendThisIn3, blendAmount / 2);
+    nblend(leds[mod8(pos + 6, NUM_LEDS)], blendThisIn4, blendAmount / 3);
 
-    FastLED.show();  //update the display
-
+    FastLED.show();  // Update the display
 }
 
 void FastLedEffects::breatheV2(float pulseSp_breatheV2, CRGB leds[]) {

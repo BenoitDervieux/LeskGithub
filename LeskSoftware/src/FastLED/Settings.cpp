@@ -52,3 +52,7 @@ int                 Settings::ledlen_lighting                           = 0;
 int                 Settings::flashes_lighting                          = 15;
 int                 Settings::dimmer_lighting                           = 2;
 int                 Settings::frequency_lighting                        = 100;
+uint8_t             Settings::blendAmount                               = 240;
+uint8_t             Settings::initialHue                                = 0;
+int                 Settings::tid_blendIntoRainbow                      = 100;
+float               Settings::pulseSp_breathe                           = 0.1f;

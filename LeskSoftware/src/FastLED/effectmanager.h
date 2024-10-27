@@ -64,6 +64,10 @@ class EffectManager {
         settingMap["flashes_lighting"] = Settings::setFlashesLighting;
         settingMap["dimmer_lighting"] = Settings::setDimmerLighting;
         settingMap["frequency_lighting"] = Settings::setFrequencyLighting;
+        settingMap["blendAmount"] = Settings::setBlendAmount;
+        settingMap["initialHue"] = Settings::setInitialHue;
+        settingMap["tid_blendIntoRainbow"] = Settings::setTidBlendIntoRainbow;
+        settingMap["pulseSp_breathe"] = Settings::setPulseSpBreathe;
 
     }
 

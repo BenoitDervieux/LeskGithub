@@ -292,18 +292,20 @@ void StripesFA::setEffect(int effect) {
         break;
     case 46:
         FastLedEffects::beat8_tail(Settings::getBpmSinBeat8(), Settings::getFade_sinBeat8(), Settings::getTidBlink(), leds);
-        effect = 45;
+        effect = 46;
         effectClassLvl = effect-1;
         break;
-    /*case 47:
-        FastLedEffects::blendIntoRainbow(waitTime, colorTime, leds);
-        this->effect = 46;
+    case 47:
+        FastLedEffects::blendIntoRainbow(Settings::getTidBlink(), Settings::getTidBlendIntoRainbow(), Settings::getInitialHue(), Settings::getBlendAmount(), leds);
+        effect = 47;
+        effectClassLvl = effect-1;
         break;
     case 48:
-        FastLedEffects::breatheV2(pulseSp, leds);
-        this->effect = 47;
+        FastLedEffects::breatheV2(Settings::getPulseSpBreathe(), leds);
+        effect = 48;
+        effectClassLvl = effect-1;
         break;
-    case 49:
+    /*case 49:
         FastLedEffects::chaseTargetTalesVarA(tid, leds);
         this->effect = 48;
         break;

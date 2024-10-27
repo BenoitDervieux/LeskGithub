@@ -15,8 +15,42 @@
 // This is just a test and we'll see later what happens
 
 
-
 struct Effect {
+    const char* name;                       // Effect name
+    int effect;                              // Effect identifier
+    std::function<int()> settings[11];      // Function pointers for settings
+    const char** settingNames;               // Pointer to array of setting names
+    int* minValues;                          // Pointer to array of minimum values
+    int* maxValues;                          // Pointer to array of maximum values
+    const char** realNames;                  // Pointer to array of real names
+    int numSettings;                         // Number of settings
+
+    // Constructor to initialize with dynamic arrays
+    Effect(const char** settingNamesArray, int* minValuesArray, int* maxValuesArray, const char** realNamesArray, int num)
+        : settingNames(settingNamesArray), minValues(minValuesArray), maxValues(maxValuesArray), realNames(realNamesArray), numSettings(num) {}
+};
+
+static Effect _fillEffect = {
+    "Fill", FX_MODE_FILL, 
+    {[]() { return Settings::getR(); }, []() { return Settings::getG(); }, []() { return Settings::getB(); }}, 
+    {"Red", "Green", "Blue"}, 
+    {0, 0, 0}, 
+    {255, 255, 255}, 
+    {"r", "g", "b"}, 
+    3
+};
+static Effect _blink = {
+    "Blink", FX_MODE_BLINK, 
+    {[]() { return Settings::getR(); }, []() { return Settings::getG(); }, []() { return Settings::getB(); }, []() { return Settings::getTidBlink(); }}, 
+    {"Red", "Green", "Blue", "Time"}, 
+    {0, 0, 0, 30}, 
+    {255, 255, 255, 1000}, 
+    {"r", "g", "b", "tid_blink"}, 
+    4
+}; 
+
+
+/*struct Effect {
     const char* name;
     int effect;
     std::function<int()> settings[11];
@@ -477,7 +511,27 @@ static Effect _beat8_tail {
     {"bpm_sinBeat8", "fade_sinBeat8", "tid_blink"},
     3
 };
-    
+
+static Effect _blendIntoRainbow {
+    "Blend Into Rainbow", FX_MODE_BLEND_INTO_RAINBOW,
+    {[]() { return Settings::getTidBlink();}, []() { return Settings::getTidBlendIntoRainbow();}, []() { return Settings::getInitialHue();}, []() { return Settings::getBlendAmount();}},
+    {"Time", "Time 2", "Hue", "Blend"},
+    {0,0,0,0},
+    {1000, 1000, 255, 255},
+    {"tid_blink", "tid_blendIntoRainbow", "initial_hue", "blend_amount"},
+    4
+};
+
+// static Effect _breatheV2 {
+//     "Breathe V2", FX_MODE_BREATHE_V2,
+//     {[](){return Settings::getPulseSpBreathe();}},
+//     {"Pulse"},
+//     {0},
+//     {255},
+//     {"pulseSp_breathe"},
+//     1
+// };
+
 
 
 
@@ -491,20 +545,12 @@ static Effect effects[] = {_fillEffect, _blink, _rainbowStatic, _fillGradientTwo
                             _movingFunkyPalette, _rainbowWave, _choosenWave, _firstNoiseRainbow, _firstNoiseColor, 
                             _noisePalette, _runFire, _secondNoise, _fillNoise16,_rainbowDave, _marqueeDave, 
                             _twinkleOld, _twinkle, _comet, _cometOnce, _bounce, _fire, _storm, _stormColored, _stormPalette,
-                            _lighting, _lightingColored, _lightingPalette, _beat8_tail, _end_effect};
+                            _lighting, _lightingColored, _lightingPalette, _beat8_tail, _blendIntoRainbow, 
+                            _end_effect};
+*/
 
-// static Effect _end_effect(
-//     "",         // Empty name to indicate it's an end marker
-//     -1,        // Invalid effect code
-//     {},        // Empty settings vector
-//     {},        // Empty setting names vector
-//     {},        // Empty min values vector
-//     {},        // Empty max values vector
-//     {}         // Empty real names vector
-// );
-// static Effect effects[] = {_fillEffect, _blink, _end_effect};
+static Effect _end_effect = {nullptr, -1, {0}}; // End marker for effects array
 
-
-
+static Effect effects[] = {_fillEffect, _blink, _end_effect};
 
 #endif
