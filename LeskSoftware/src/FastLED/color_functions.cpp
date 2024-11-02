@@ -66,3 +66,11 @@ std::vector<uint8_t> ColorFunctions::extractRGB(CRGB color) {
         rgb[2] = color.b; // Blue component
         return rgb;
 }
+
+uint32_t ColorFunctions::hexToUint32(const char* hexColor) {
+    return static_cast<uint32_t>(strtoul(hexColor, nullptr, 16));
+}
+
+uint32_t ColorFunctions::CRGBToUint32(const CRGB& color) {
+    return ((uint32_t)color.r << 16) | ((uint32_t)color.g << 8) | (uint32_t)color.b;
+}

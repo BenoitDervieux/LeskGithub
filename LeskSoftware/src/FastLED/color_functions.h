@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 #include <FastLED.h>
+#include <cstdint>
+#include <cstdlib>
 
 
 class ColorFunctions {
@@ -16,6 +18,8 @@ class ColorFunctions {
         static std::vector<uint8_t> extractRGB(uint32_t color);
         static String CRGBToString(const CRGB& color);
         static std::vector<uint8_t> extractRGB(CRGB color);
+        static uint32_t hexToUint32(const char* hexColor);
+        static uint32_t CRGBToUint32(const CRGB& color);
     
 };
 

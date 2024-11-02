@@ -16,9 +16,9 @@ int XMLParser::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* 
         Serial.println("Failed to open file");
         return 0;
     }
-
+    
     size_t filesize = filep.size();
-    // Serial.println("File size: " + String(filesize));
+    Serial.println("File size: " + String(filesize));
     char* buffer = (char*) malloc(sizeof(char) * filesize + 1);
 
     // Problem when the size is 629 or 630
@@ -45,9 +45,10 @@ int XMLParser::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* 
     XMLNode* current_node = doc->root;
     XMLNodeList* node_list = list;
     XMLNodeList_init(node_list);
+    // XMLNodeList_init(list);
 
     size = 1;
-    Serial.println("Oui je teste");
+    // Serial.println("Oui je teste");
     while (filep.available()) {
         // Serial.print("Size: "); Serial.println(size);
         c = filep.read();
@@ -89,6 +90,7 @@ int XMLParser::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* 
                     current_node->degree = degree;
                     // Add it to the list
                     XMLNodeList_add(node_list, current_node);
+
                 }
 
                 // Decrease the degree if we encounter a closing tag
@@ -153,6 +155,7 @@ int XMLParser::loadXMLDocument(XMLDocument* doc, const char* path, XMLNodeList* 
         }
         size++;
     }
+    
     
     filep.close();
     free(buffer);

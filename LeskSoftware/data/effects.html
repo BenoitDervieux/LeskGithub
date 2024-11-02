@@ -16,7 +16,34 @@
     <div class="containerArrow">
       <div class="arr top"><img src="img/right-arrow.png" id="arrow" onclick="moveSheet()"></div>
     </div>
-    <!-- <div class="grid-container">
+    <div class="container_color_wheel_and_palettes">
+      <div id="colorWheel" class="colorWheel"></div>
+      <div id="palettes" class="palettes">
+        <div class="palette_first_line pres_pal">
+          <!-- <div class="square squ1_1"></div>
+          <div class="square squ1_2"></div>
+          <div class="square squ1_3"></div>
+          <div class="square squ1_4"></div>
+          <div class="square squ1_5"></div>
+        </div>
+        <div class="palette_second_line pres_pal">
+          <div class="square squ2_1"></div>
+          <div class="square squ2_2"></div>
+          <div class="square squ2_3"></div>
+          <div class="square squ2_4"></div>
+          <div class="square squ2_5"></div>
+        </div>
+        <div class="palette_third_line pres_pal">
+          <div class="square squ3_1"></div>
+          <div class="square squ3_2"></div>
+          <div class="square squ3_3"></div>
+          <div class="square squ2_4"></div>
+          <div class="square squ2_5"></div>
+        </div> -->
+      </div>
+    </div>
+    <!-- <p>Selected Color: <span id="colorValue">#ffffff</span></p>
+    <div class="grid-container">
     </div> -->
         <!-- <div class="setting_item_left">
           <label class="brightness setting_name" for="brightness">Brightness</label>
@@ -37,8 +64,60 @@
 
     </div>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5.5.1/dist/iro.min.js"></script>
   <script>
+     // Create a new color wheel instance
+     let colorWheel = new iro.ColorPicker("#colorWheel", {
+        width: 150, // Size of the color wheel
+        color: "#ffffff" // Initial color
+    });
+
+    // Update the displayed color value when it changes
+    colorWheel.on('color:change', function(color) {
+        console.log("La couleur elle a changé" + color.hexString);
+        changeColor(color.hexString);
+    });
+    // Select the container that includes both the color wheel and squares
+    const elements = document.querySelectorAll('.square, #colorWheel'); // Adjust selector as needed
+    elements.forEach(element => {
+      element.addEventListener('click', () => {
+        // Remove 'selected' from all elements to ensure only one is selected
+        elements.forEach(el => el.classList.remove('selected'));
+        let wheels = document.querySelectorAll('.IroWheelHue'); // Use '.' if it's a class, no dot if it's a tag
+        // Loop through each element and add the 'selected' class
+        wheels.forEach(wheel => {
+            wheel.classList.remove('selected');
+            wheel.classList.remove('rotate90deg');
+        });
+
+        // Add the 'selected' class to the clicked element
+        element.classList.add('selected');
+
+
+        // Check for IroWheelHue elements and add 'selected' class if any are found
+        // let wheels = document.getElementsByClassName('IroWheelHue');
+        const elem = document.getElementById('colorWheel');
+        // console.log("La class list zeubi " + elem.classList[1]);
+        // console.log("Ca contient selected ? " + elem.classList.contains('selected'));
+        let wheel = document.querySelectorAll('.colorWheel');
+        console.log("La class list zeubi " + wheel.classList);
+        
+        
+          if (elem.classList.contains('selected')) {
+            console.log('IroWheelHue is selected');
+            elem.classList.remove('selected');
+            // Select all elements with the class or tag `IroWheelHue`
+            let wheels = document.querySelectorAll('.IroWheelHue'); // Use '.' if it's a class, no dot if it's a tag
+            // Loop through each element and add the 'selected' class
+            wheels.forEach(wheel => {
+                wheel.classList.add('selected');
+                wheel.classList.add('rotate90deg');
+            });
+        }    
+      });
+    });
+
+   
     fetcheffets();
     updateSettings();
     function fetcheffets() {
@@ -74,6 +153,26 @@
       .catch(error => console.error('Error fetching collection details:', error));
     }
 
+
+    function changeColor(colorName) {
+      fetch('/color', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'color=' + encodeURIComponent(colorName)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
+      .then(data => {
+        console.log(data);  // For debugging
+      })
+      .catch(error => console.error('Error:', error));
+    }
      
 
     
@@ -260,9 +359,37 @@
       sliderValueMicInput.textContent = tempSliderValue;
       
       const progress = (tempSliderValue / sliderMic.max) * 100;
-    })
+    }); </script>
+
+    <script type="module" src="palettes.js"></script>
+    <script type="module">
+    import palettes from './palettes.js';
+
+    const renderPalettes = (palettes) => {
+        const palettesContainer = document.getElementById("palettes");
+
+        for (const [paletteName, colors] of Object.entries(palettes)) {
+            const paletteDiv = document.createElement("div");
+            paletteDiv.className = `palette ${paletteName}`;
+
+            // Loop through colors and create squares
+            colors.forEach((color, index) => {
+                const squareDiv = document.createElement("div");
+                squareDiv.className = "square";
+                squareDiv.style.background = color;
+                paletteDiv.appendChild(squareDiv);
+            });
+
+            // Add the palette to the main container
+            palettesContainer.appendChild(paletteDiv);
+        }
+    };
+
+    // Run the function to render the palettes
+    renderPalettes(palettes);
+    </script>
   
 
-  </script>
+  
 </body>
 </html>

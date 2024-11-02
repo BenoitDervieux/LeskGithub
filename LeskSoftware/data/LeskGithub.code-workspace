@@ -96,7 +96,9 @@
 			"regex": "cpp",
 			"stack": "cpp",
 			"condition_variable": "cpp",
-			"memory_resource": "cpp"
+			"memory_resource": "cpp",
+			"csignal": "cpp",
+			"set": "cpp"
 		}
 	}
 }

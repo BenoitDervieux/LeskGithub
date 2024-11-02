@@ -1,6 +1,7 @@
 #include "outsidenetworking.h"
 #include "listcollections.h"
 #include "../../.variables/variables.h"
+#include <string>
 
 
 String ledState;   // Define the variable
@@ -39,6 +40,9 @@ void OutSideNetworking::setup() {
     server->on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request){
       request->send(SPIFFS, "/style.css", "text/css");
     });
+    server->on("/palettes.js", HTTP_GET, [](AsyncWebServerRequest *request){
+      request->send(SPIFFS, "/palettes.js", "text/javascript");
+    });
 
     // Here it prints a special collection
     server->on("/collection", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -59,6 +63,22 @@ void OutSideNetworking::setup() {
         }
       }
       request->send(SPIFFS, "/effects.html", "text/html");
+    });
+
+    server->on("/color", HTTP_POST, [this](AsyncWebServerRequest *request){
+
+      // Here we will implement the logic for the subscriber pattern
+      if (request->hasParam("color", true)) {
+        String color = request->getParam("color", true)->value();
+        Settings::setColorU32(strtoul(color.c_str() + 1, nullptr, 16));
+        Settings::color1.setIsColor();
+        Serial.println("Point 698745: Print the color");
+        Serial.println(color);
+        // Handle the color change logic here
+        request->send(200, "text/plain", "Effect changed to " + color);
+      } else {
+        request->send(400, "text/plain", "Bad Request");
+      }
     });
 
     server->on("/effects", HTTP_POST, [this](AsyncWebServerRequest *request){

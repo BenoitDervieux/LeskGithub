@@ -3,6 +3,8 @@
 #include <iostream>
 #include <FastLED.h>
 
+
+
 // Here I have hard time to fetch a value from .xml and to make it a constant
 // So I will leave it like this and we'll see what happens
 // It breaks the idea of fetching information from a .xml file
@@ -64,14 +66,15 @@ void StripesFA::setEffect(int effect) {
     // This system of switching effect seems good for now
     // I just need to get a lot of function and to define them
     // in the listeffects.h file
+    
     switch(effect) {
     case 1:
-        FastLedEffects::fill(Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        FastLedEffects::fill(Settings::getColor(), leds);
         effect = 1;
         effectClassLvl = effect-1;
         break;
     case 2:
-        FastLedEffects::blink(Settings::getR(), Settings::getG(), Settings::getB(), leds, Settings::getTidBlink());
+        FastLedEffects::blink(Settings::getColor(), leds, Settings::getVar0to1000_1());
         effect = 2;
         effectClassLvl = effect-1;
         break;
@@ -81,137 +84,137 @@ void StripesFA::setEffect(int effect) {
         effectClassLvl = effect-1;
         break;
     case 4:
-        FastLedEffects::fillGradientTwoColors(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(), leds);
+        FastLedEffects::fillGradientTwoColors(Settings::getColor(), Settings::getColor2(), leds);
         effect = 4;
         effectClassLvl = effect-1;
         break;
     case 5:
-        FastLedEffects::fillGradientThreeColors(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(),  Settings::getR3(), Settings::getG3(), Settings::getB3(), leds);
+        FastLedEffects::fillGradientThreeColors(Settings::getColor(), Settings::getColor2(),  Settings::getColor3(), leds);
         effect = 5;
         effectClassLvl = effect-1;
         break;
     case 6:
-        FastLedEffects::backAndForthNoSmoothOneDot(Settings::getR(), Settings::getG(), Settings::getB(), leds, Settings::getTidBackAndForthNoSmoothOneDot());
+        FastLedEffects::backAndForthNoSmoothOneDot(Settings::getColor(), leds, Settings::getVar0to500_1());
         effect = 6;
         effectClassLvl = effect-1;
         break;
     case 7:
-        FastLedEffects::backAndForthNoSmoothLengthedDot(Settings::getR(), Settings::getG(), Settings::getB(), leds, Settings::getTidBackAndForthNoSmoothLengthedDot(), Settings::getLengthBackAndForthNoSmoothLengthedDot());
+        FastLedEffects::backAndForthNoSmoothLengthedDot(Settings::getColor(), leds, Settings::getVar0to500_1(), Settings::getVar0to10_1());
         effect = 7;
         effectClassLvl = effect-1;
         break;
     case 8:
-        FastLedEffects::hueFading(Settings::getTidHueFading(), leds);
+        FastLedEffects::hueFading(Settings::getVar0to500_1(), leds);
         effect = 8;
         effectClassLvl = effect-1;
         break;
     case 9:
-        FastLedEffects::hueWhiteWave(Settings::getHueInsert_hueWhiteWave(), Settings::getTidHueWhiteWave(), leds);
+        FastLedEffects::hueWhiteWave(Settings::getVar0to255_1(), Settings::getVar0to500_1(), leds);
         effect = 9;
         effectClassLvl = effect-1;
         break;
     case 10:
-        FastLedEffects::displayPaletteLinear(Settings::getPalette1(), leds);
+        FastLedEffects::displayPaletteLinear(Settings::getColor(), leds);
         effect = 10;
         effectClassLvl = effect-1;
         break;
     case 11:
-        FastLedEffects::movingPaletteLinear(Settings::getPalette1(), Settings::getTidMovingPaletteLinear(), leds);
+        FastLedEffects::movingPaletteLinear(Settings::getColor(), Settings::getVar0to200_1(), leds);
         effect = 11;
         effectClassLvl = effect-1;
         break;
     case 12:
-        FastLedEffects::spotlightingPalette(Settings::getPalette1(), Settings::getTidSpotlightingPalette(), Settings::getFade_spotlightingPalette(), leds);
+        FastLedEffects::spotlightingPalette(Settings::getColor(), Settings::getVar0to200_1(), Settings::getVar0to128_1(), leds);
         effect = 12;
         effectClassLvl = effect-1;
         break;
     case 13:
-        FastLedEffects::sinBeat8(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), leds);
+        FastLedEffects::sinBeat8(Settings::getColor(), Settings::getVar0to128_1(), Settings::getVar0to140_1(), leds);
         effect = 13;
         effectClassLvl = effect-1;
         break;
     case 14:
-        FastLedEffects::sinBeat8PhaseOff(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), Settings::getSinBeat8PhaseOff_phaseOffset(), leds);
+        FastLedEffects::sinBeat8PhaseOff(Settings::getColor(), Settings::getVar0to128_1(), Settings::getVar0to140_1(), Settings::getVar0to128_2(), leds);
         effect = 14;
         effectClassLvl = effect-1;
         break;
     case 15:
-        FastLedEffects::sinBeat8TimeOff(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), Settings::getTidSinBeat8TimeOff(), leds);
+        FastLedEffects::sinBeat8TimeOff(Settings::getColor(), Settings::getVar0to128_1(), Settings::getVar0to140_1(), Settings::getVar0to500_1(), leds);
         effect = 15;
         effectClassLvl = effect-1;
         break;
     case 16:
-        FastLedEffects::twoSinBeat8(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), leds);
+        FastLedEffects::twoSinBeat8(Settings::getColor(), Settings::getColor2(), Settings::getVar0to128_1(), Settings::getVar0to140_1(), leds);
         effect = 16;
         effectClassLvl = effect-1;
         break;
     case 17:
-        FastLedEffects::threeSinBeat8(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getR2(), Settings::getG2(), Settings::getB2(),Settings::getR3(), Settings::getG3(), Settings::getB3(), Settings::getFade_sinBeat8(), Settings::getBpmSinBeat8(), leds);
+        FastLedEffects::threeSinBeat8(Settings::getColor(), Settings::getColor2(), Settings::getColor3(), Settings::getVar0to128_1(), Settings::getVar0to140_1(), leds);
         effect = 17;
         effectClassLvl = effect-1;
         break;
     case 18:
-        FastLedEffects::brightnessSinBeat8Palette(Settings::getPalette1(), Settings::getBpmSinBeat8(), Settings::getTidBrightnessSinBeat8Palette(), leds);
+        FastLedEffects::brightnessSinBeat8Palette(Settings::getColor(), Settings::getVar0to140_1(), Settings::getVar0to500_1(), leds);
         effect = 18;
         effectClassLvl = effect-1;
         break;
     case 19:
-        FastLedEffects::funkyRainbowSinBeat8(Settings::getFade_sinBeat8(), leds);
+        FastLedEffects::funkyRainbowSinBeat8(Settings::getVar0to128_1(), leds);
         effect = 19;
         effectClassLvl = effect-1;
         break;
     case 20:
-        FastLedEffects::funkyRangeSinBeat8(Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        FastLedEffects::funkyRangeSinBeat8(Settings::getVar0to128_1(), Settings::getColor(), leds);
         effect = 20;
         effectClassLvl = effect-1;
         break;
     case 21:
-        FastLedEffects::funkyRainbowSinBeat8Two(Settings::getFade_sinBeat8(), leds);
+        FastLedEffects::funkyRainbowSinBeat8Two(Settings::getVar0to128_1(), leds);
         effect = 21;
         effectClassLvl = effect-1;
         break;
     case 22:
-        FastLedEffects::funkyRangeSinBeat8Two(Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        FastLedEffects::funkyRangeSinBeat8Two(Settings::getVar0to128_1(), Settings::getColor(), leds);
         effect = 22;
         effectClassLvl = effect-1;
         break;
     case 23:
-        FastLedEffects::movingFunkyPalette(Settings::getPalette1(), Settings::getBpmSinBeat8(), Settings::getBpm2SinBeat8(), leds);
+        FastLedEffects::movingFunkyPalette(Settings::getColor(), Settings::getVar0to140_1(), Settings::getVar0to140_2(), leds);
         effect = 23;
         effectClassLvl = effect-1;
         break;
     case 24:
-        FastLedEffects::rainbowWave(Settings::getBpmSinBeat8(), Settings::getTidRainbowWave(), Settings::getFade_sinBeat8(), leds);
+        FastLedEffects::rainbowWave(Settings::getVar0to140_1(), Settings::getVar0to500_1(), Settings::getVar0to128_1(), leds);
         effect = 24;
         effectClassLvl = effect-1;
         break;
     case 25:
-        FastLedEffects::choosenWave(Settings::getTidChoosenWave(), Settings::getBpmSinBeat8(), Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        FastLedEffects::choosenWave(Settings::getVar0to500_1(), Settings::getVar0to140_1(), Settings::getVar0to128_1(), Settings::getColor(), leds);
         effect = 25;
         effectClassLvl = effect-1;
         break;
     case 26:
-        FastLedEffects::firstNoiseRainbow(Settings::getBpmSinBeat8(), leds);
+        FastLedEffects::firstNoiseRainbow(Settings::getVar0to140_1(), leds);
         effect = 26;
         effectClassLvl = effect-1;
         break;
     case 27:
-        FastLedEffects::firstNoiseColor(Settings::getR(), Settings::getG(), Settings::getB(), Settings::getBpmSinBeat8(), leds);
+        FastLedEffects::firstNoiseColor(Settings::getColor(), Settings::getVar0to140_1(), leds);
         effect = 27;
         effectClassLvl = effect-1;
         break;
     case 28:
-        FastLedEffects::noisePalette(Settings::getPalette1(), Settings::getScaleNoisePalette(), leds);
+        FastLedEffects::noisePalette(Settings::getColor(), Settings::getVar0to140_1(), leds);
         effect = 28;
         effectClassLvl = effect-1;
         break;
     case 29:
-        FastLedEffects::runFire(Settings::getPalette1(), leds);
+        FastLedEffects::runFire(Settings::getColor(), leds);
         effect = 29;
         effectClassLvl = effect-1;
         break;
     case 30:
-        FastLedEffects::secondNoise(Settings::getPalette1(), leds);
+        FastLedEffects::secondNoise(Settings::getColor(), leds);
         effect = 30;
         effectClassLvl = effect-1;
         break;
@@ -221,82 +224,82 @@ void StripesFA::setEffect(int effect) {
         effectClassLvl = effect-1;
         break;
     case 32:
-        FastLedEffects::rainbowDave(Settings::getDensityRainbowDave(), Settings::getDeltaRainbowDave(), Settings::getTidBlink(), leds);
+        FastLedEffects::rainbowDave(Settings::getVar0to128_1(), Settings::getVar0to128_2(), Settings::getVar0to500_1(), leds);
         effect = 32;
         effectClassLvl = effect-1;
         break;
     case 33:
-        FastLedEffects::marqueeDave(Settings::getTidBlink(), Settings::getDensityRainbowDave(), Settings::getLengthBackAndForthNoSmoothLengthedDot(), leds);
+        FastLedEffects::marqueeDave(Settings::getVar0to500_1(), Settings::getVar0to128_1(), Settings::getVar0to10_1(), leds);
         effect = 33;
         effectClassLvl = effect-1;
         break;
     case 34:
-        FastLedEffects::twinkleOld(Settings::getTidBlink(), leds);
+        FastLedEffects::twinkleOld(Settings::getVar0to500_1(), leds);
         effect = 34;
         effectClassLvl = effect-1;
         break;
     case 35:
-        FastLedEffects::twinkle(Settings::getTidBlink(), leds);
+        FastLedEffects::twinkle(Settings::getVar0to500_1(), leds);
         effect = 35;
         effectClassLvl = effect-1;
         break;
     case 36:
-        FastLedEffects::comet(Settings::getTidBlink(), Settings::getFade_sinBeat8(), Settings::getLengthBackAndForthNoSmoothLengthedDot(), Settings::getDeltaRainbowDave(), leds);
+        FastLedEffects::comet(Settings::getVar0to500_1(), Settings::getVar0to128_1(), Settings::getVar0to10_1(), Settings::getVar0to128_2(), leds);
         effect = 36;
         effectClassLvl = effect-1;
         break;
     case 37:
-        FastLedEffects::cometOnce(Settings::getTidBlink(), Settings::getFade_sinBeat8(), Settings::getLengthBackAndForthNoSmoothLengthedDot(), Settings::getDeltaRainbowDave(), Settings::getSpeedCometOnce(), leds);
+        FastLedEffects::cometOnce(Settings::getVar0to500_1(), Settings::getVar0to128_1(), Settings::getVar0to10_1(), Settings::getVar0to128_2(), Settings::getVar0to500_2(), leds);
         effect = 37;
         effectClassLvl = effect-1;
         break;
     case 38:
-        FastLedEffects::bounce(leds, Settings::getBallsBounce(), Settings::getFade_sinBeat8(), Settings::getMirrorBounce());
+        FastLedEffects::bounce(leds, Settings::getVar0to5_1(), Settings::getVar0to128_1(), Settings::getMirrorBounce());
         effect = 38;
         effectClassLvl = effect-1;
         break;
     case 39:
-        FastLedEffects::fire(Settings::getLengthBackAndForthNoSmoothLengthedDot(), Settings::getCoolingFire(), Settings::getSparkingFire(),  Settings::getSparksFire(), Settings::getSparkHeightFire(),  Settings::getReversedFire(), Settings::getMirrorBounce());
+        FastLedEffects::fire(Settings::getVar0to10_1(), Settings::getVar0to200_1(), Settings::getVar0to128_1(),  Settings::getVar0to10_2(), Settings::getVar0to10_3(),  Settings::getReversedFire(), Settings::getMirrorBounce());
         effect = 39;
         effectClassLvl = effect-1;
         break;
     case 40:
-        FastLedEffects::storm(Settings::getChanceStorm(), Settings::getClusterStorm(), Settings::getSpeedCometOnce(), Settings::getFade_sinBeat8(), leds);
+        FastLedEffects::storm(Settings::getVar0to5_1(), Settings::getVar0to128_1(), Settings::getVar0to500_1(), Settings::getVar0to128_2(), leds);
         effect = 40;
         effectClassLvl = effect-1;
         break;
     case 41:
-        FastLedEffects::stormColored(Settings::getChanceStorm(), Settings::getClusterStorm(), Settings::getSpeedCometOnce(), Settings::getFade_sinBeat8(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        FastLedEffects::stormColored(Settings::getVar0to5_1(), Settings::getVar0to128_1(), Settings::getVar0to500_1(), Settings::getVar0to128_2(), Settings::getColor(), leds);
         effect = 41;
         effectClassLvl = effect-1;
         break;
     case 42:
-        FastLedEffects::stormPalette(Settings::getChanceStorm(), Settings::getClusterStorm(), Settings::getSpeedCometOnce(), Settings::getFade_sinBeat8(), Settings::getPalette1(), leds);
+        FastLedEffects::stormPalette(Settings::getVar0to5_1(), Settings::getVar0to128_1(), Settings::getVar0to500_1(), Settings::getVar0to128_2(), Settings::getColor(), leds);
         effect = 42;
         effectClassLvl = effect-1;
         break;
     case 43:
-        FastLedEffects::lighting(Settings::getLedstartLighting(), Settings::getLedlenLighting(), Settings::getFlashesLighting(), Settings::getDimmerLighting(), Settings::getFrequencyLighting(), leds);
+        FastLedEffects::lighting(Settings::getVar0to5_1(), Settings::getVar0to10_1(), Settings::getVar0to10_2(), Settings::getVar0to128_1(), Settings::getVar0to1000_1(), leds);
         effect = 43;
         effectClassLvl = effect-1;
         break;
     case 44:
-        FastLedEffects::lightingColored(Settings::getLedstartLighting(), Settings::getLedlenLighting(), Settings::getFlashesLighting(), Settings::getDimmerLighting(), Settings::getFrequencyLighting(), Settings::getR(), Settings::getG(), Settings::getB(), leds);
+        FastLedEffects::lightingColored(Settings::getVar0to5_1(), Settings::getVar0to10_1(), Settings::getVar0to10_2(), Settings::getVar0to128_1(), Settings::getVar0to1000_1(), Settings::getColor(), leds);
         effect = 44;
         effectClassLvl = effect-1;
         break;
     case 45:
-        FastLedEffects::lightingPalette(Settings::getLedstartLighting(), Settings::getLedlenLighting(), Settings::getFlashesLighting(), Settings::getDimmerLighting(), Settings::getFrequencyLighting(), Settings::getPalette1(), leds);
+        FastLedEffects::lightingPalette(Settings::getVar0to5_1(), Settings::getVar0to10_1(), Settings::getVar0to10_2(), Settings::getVar0to128_1(), Settings::getVar0to1000_1(), Settings::getColor(), leds);
         effect = 45;
         effectClassLvl = effect-1;
         break;
     case 46:
-        FastLedEffects::beat8_tail(Settings::getBpmSinBeat8(), Settings::getFade_sinBeat8(), Settings::getTidBlink(), leds);
+        FastLedEffects::beat8_tail(Settings::getVar0to10_1(), Settings::getVar0to128_1(), Settings::getVar0to1000_1(), leds);
         effect = 46;
         effectClassLvl = effect-1;
         break;
     case 47:
-        FastLedEffects::blendIntoRainbow(Settings::getTidBlink(), Settings::getTidBlendIntoRainbow(), Settings::getInitialHue(), Settings::getBlendAmount(), leds);
+        FastLedEffects::blendIntoRainbow(Settings::getVar0to1000_1(), Settings::getVar0to1000_2(), Settings::getVar0to255_1(), Settings::getVar0to255_2(), leds);
         effect = 47;
         effectClassLvl = effect-1;
         break;
@@ -305,90 +308,111 @@ void StripesFA::setEffect(int effect) {
         effect = 48;
         effectClassLvl = effect-1;
         break;
-    /*case 49:
-        FastLedEffects::chaseTargetTalesVarA(tid, leds);
-        this->effect = 48;
+    case 49:
+        FastLedEffects::chaseTargetTalesVarA(Settings::getVar0to500_1(), leds);
+        effect = 49;
+        effectClassLvl = effect-1;
         break;
     case 50:
-        FastLedEffects::chaseTargetTalesVarB(tid, leds);
-        this->effect = 49;
+        FastLedEffects::chaseTargetTalesVarB(Settings::getVar0to500_1(), leds);
+        effect = 50;
+        effectClassLvl = effect-1;
         break;
     case 51:
-        FastLedEffects::chaseTargetTalesVarC(boilingTime, smoothFading, fade, leds);
-        this->effect = 50;
+        FastLedEffects::chaseTargetTalesVarC(Settings::getVar0to500_1(), Settings::getVar0to128_1(), Settings::getVar0to128_2(), leds);
+        effect = 51;
+        effectClassLvl = effect-1;
         break;
     case 52:
-        FastLedEffects::everyNTimerVariables(timerA, timerB, leds);
-        this->effect = 51;
+        FastLedEffects::everyNTimerVariables(Settings::getVar0to500_1(), Settings::getVar0to500_2(), leds);
+        effect = 52;
+        effectClassLvl = effect-1;
         break;
     case 53:
         FastLedEffects::fillUpStrip(leds);
-        this->effect = 52;
+        effect = 53;
+        effectClassLvl = effect-1;
         break;
     case 54:
-        FastLedEffects::heartBeat2(beat_speed, dub_offset, leds);
-        this->effect = 53;
+        FastLedEffects::heartBeat2(Settings::getVar0to3000_1(), Settings::getVar0to255_1(), leds);
+        effect = 54;
+        effectClassLvl = effect-1;
         break;
     case 55:
-        FastLedEffects::heartBeat3(rainbow, leds);
-        this->effect = 54;
+        FastLedEffects::heartBeat3(Settings::getRainbowHeartBeat3(), leds);
+        effect = 55;
+        effectClassLvl = effect-1;
         break;
     case 56:
         FastLedEffects::heartPulseBloodFlowing(leds);
-        this->effect = 55;
+        effect = 56;
+        effectClassLvl = effect-1;
         break;
     case 57:
-        FastLedEffects::lighthouseBeaconV2(width, tid, fadeRate, leds);
-        this->effect = 56;
+        FastLedEffects::lighthouseBeaconV2(Settings::getVar0to10_1(), Settings::getVar0to500_1(), Settings::getVar0to128_1(), leds);
+        effect = 57;
+        effectClassLvl = effect-1;
         break;
     case 58:
-        FastLedEffects::matchingGlitter1(leds);
-        this->effect = 57;
+        FastLedEffects::matchingGlitter1(Settings::getVar0to500_1(), Settings::getVar0to500_2(), leds);
+        effect = 58;
+        effectClassLvl = effect-1;
         break;
     case 59:
-        FastLedEffects::matchingGlitter2(leds);
-        this->effect = 58;
+        FastLedEffects::matchingGlitter2(Settings::getVar0to500_1(), Settings::getVar0to500_2(), leds);
+        effect = 59;
+        effectClassLvl = effect-1;
         break;
     case 60:
-        FastLedEffects::matchingGlitter3(second, thrid, leds);
-        this->effect = 59;
+        FastLedEffects::matchingGlitter3(Settings::getMatchingGlitterSecond(), Settings::getMatchingGlitterThird(), Settings::getVar0to500_1(), Settings::getVar0to500_2(), leds);
+        effect = 60;
+        effectClassLvl = effect-1;
         break;
     case 61:
-        FastLedEffects::matchingGlitter4(more, leds);
-        this->effect = 60;
+        FastLedEffects::matchingGlitter4(Settings::getMoreMatchingGlitter4(), Settings::getVar0to500_1(), Settings::getVar0to500_2(), leds);
+        effect = 61;
+        effectClassLvl = effect-1;
         break;
     case 62:
-        FastLedEffects::mirrorFadeEnds(fade, leds);
-        this->effect = 61;
+        FastLedEffects::mirrorFadeEnds(Settings::getVar0to10_1(), leds);
+        effect = 62;
+        effectClassLvl = effect-1;
         break;
     case 63:
-        FastLedEffects::Fire2012(tid, cooling, sparking, leds);
-        this->effect = 62;
+        FastLedEffects::Fire2012(Settings::getVar0to500_1(), Settings::getVar0to200_1(), Settings::getVar0to128_1(), leds);
+        effect = 63;
+        effectClassLvl = effect-1;
         break;
     case 64:
-        FastLedEffects::Fire2012_halfStrip(tid, cooling, sparking, gReverseDirection, leds);
-        this->effect = 63;
+        FastLedEffects::Fire2012_halfStrip(Settings::getVar0to500_1(), Settings::getVar0to200_1(), Settings::getVar0to128_1(), true, leds);
+        effect = 64;
+        effectClassLvl = effect-1;
         break;
     case 65:
-        FastLedEffects::movingColoredBar(palette, leds, colorBarLength, frameDelay);
-        this->effect = 64;
+        FastLedEffects::movingColoredBar(Settings::getColor(), leds, Settings::getVar0to10_1(), Settings::getVar0to140_1());
+        effect = 65;
+        effectClassLvl = effect-1;
         break;
     case 66:
-        FastLedEffects::repeatingPattern(time1, time2, fade, leds);
-        this->effect = 65;
+        FastLedEffects::repeatingPattern(Settings::getVar0to128_1(), Settings::getVar0to3000_1(), Settings::getVar0to128_2(), leds);
+        effect = 66;
+        effectClassLvl = effect-1;
         break;
     case 67:
-        FastLedEffects::savedPixel(tid, leds);
-        this->effect = 66;
+        FastLedEffects::savedPixel(Settings::getVar0to10_1(), Settings::getVar0to1000_1(), leds);
+        effect = 67;
+        effectClassLvl = effect-1;
         break;
     case 68:
         FastLedEffects::sinCosLinear(leds);
-        this->effect = 67;
+        effect = 68;
+        effectClassLvl = effect-1;
         break;
     case 69:
-        FastLedEffects::sparkles(leds, sparkel_duration, sparkel_amount, sparkel_spread);
-        this->effect = 68;
-        break;*/
+        FastLedEffects::sparkles(leds, Settings::getVar0to1000_1(), Settings::getVar0to1000_2(), Settings::getVar0to3000_1());
+        effect = 69;
+        effectClassLvl = effect-1;
+        break;
     default:
         break;
     

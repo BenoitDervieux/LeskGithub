@@ -6,6 +6,7 @@
 #include "const.h"
 #include "SPIFFS.h"
 
+
 int StripeController::_unique_subscribers = 0;
 
 StripeController::StripeController() {
@@ -24,23 +25,22 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     int nb_stripes, data_pins;
     int led_ports[2];
 
+    Serial.println("Point 98788: To check");
+    Serial.println(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
+    Serial.println("Point 98789: To check2");
     // 1st function to retrieve the number of the function at start
     int function_number = getFunctionNumber(XMLParser::XMLNode_getWord(this->XMLlist, "function_at_start"));
+    
     Settings::setEffect(function_number);
     Serial.println("Function number: " + String(function_number));
     // Here we'll get the colors
-    CRGB color_1 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color1"));
-    CRGB color_2 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color2"));
-    CRGB color_3 = getColorCRGB(XMLParser::XMLNode_getWord(this->XMLlist, "color3"));
-    Settings::setColor(color_1);
-    Settings::setColor2(color_2);
-    Settings::setColor3(color_3);
+    Settings::color1.setColor(ColorFunctions::hexToUint32(XMLParser::XMLNode_getWord(this->XMLlist, "color1")));
+    Settings::color2.setColor(ColorFunctions::hexToUint32(XMLParser::XMLNode_getWord(this->XMLlist, "color2")));
+    Settings::color3.setColor(ColorFunctions::hexToUint32(XMLParser::XMLNode_getWord(this->XMLlist, "color3")));
 
-    std::vector<uint8_t> colors = ColorFunctions::extractRGB(color_1);
-    Settings::setR(colors[0]);
-    Settings::setG(colors[1]);
-    Settings::setB(colors[2]);
-    Serial.println("Pt 222: Color 1: R: " + String(Settings::getR()) + " G: " + String(Settings::getG()) + " B: " + String(Settings::getB()));
+    Settings::setR(Settings::color1.getColor()[0]);
+    Settings::setG(Settings::color1.getColor()[1]);
+    Settings::setB(Settings::color1.getColor()[2]);
 
     // Serial.println("Color 1:" + String(ColorFunctions::CRGBToString(color_1)));
     // Serial.println("Color 2:" + String(ColorFunctions::CRGBToString(color_2)));
@@ -101,7 +101,7 @@ void StripeController::setup(XMLNodeList* _XMLlist) {
     // and it resolved it. Still can't explain
 
     for (int i = 0; i < nb_stripes; i++) {
-        stripesFA.emplace_back(led_ports[i], NUM_LEDS, direction, speed, Settings::getEffect(), Settings::getColor(), Settings::getColor2(), Settings::getColor3());
+        stripesFA.emplace_back(led_ports[i], NUM_LEDS, direction, speed, Settings::getEffect(), Settings::color1.getColor(), Settings::color1.getColor(), Settings::color1.getColor());
     }
 
     Serial.println("Setup done");
@@ -112,7 +112,6 @@ void StripeController::run() {
         // std::cout << "loop" << std::endl;
         s.setEffect(Settings::effect);
     }
-
     FastLED.show();
 }
 

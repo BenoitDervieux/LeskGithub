@@ -18,7 +18,6 @@ class EffectManager {
     using SetterFunction = std::function<void(int)>;
 
     EffectManager() {
-        settingMap["tid_blink"] = Settings::setTidBlink;
         settingMap["r"] = Settings::setR;
         settingMap["g"] = Settings::setG;
         settingMap["b"] = Settings::setB;
@@ -28,46 +27,32 @@ class EffectManager {
         settingMap["r3"] = Settings::setR3;
         settingMap["g3"] = Settings::setG3;
         settingMap["b3"] = Settings::setB3;
-        settingMap["tid_backAndForthNoSmoothOneDot"] = Settings::setTidBackAndForthNoSmoothOneDot;
-        settingMap["tid_backAndForthNoSmoothLengthedDot"] = Settings::setTidBackAndForthNoSmoothLengthedDot;
-        settingMap["length_backAndForthNoSmoothLengthedDot"] = Settings::setLengthBackAndForthNoSmoothLengthedDot;
-        settingMap["tid_hueFading"] = Settings::setTidHueFading;
-        settingMap["hueInsert_hueWhiteWave"] = Settings::setHueInsert_hueWhiteWave;
-        settingMap["tid_hueWhiteWave"] = Settings::setTidHueWhiteWave;
-        settingMap["tid_movingPaletteLinear"] = Settings::setTidMovingPaletteLinear;
-        settingMap["tid_spotlightingPalette"] =  Settings::setTidSpotlightingPalette;
-        settingMap["fade_spotlightingPalette"] = Settings::setFade_spotlightingPalette;
-        settingMap["bpm_sinBeat8"] = Settings::setBpmSinBeat8;
-        settingMap["fade_sinBeat8"] = Settings::setFade_sinBeat8;
-        settingMap["sinBeat8PhaseOff_phaseOffset"] = Settings::setSinBeat8PhaseOff_phaseOffset;
-        settingMap["tid_sinBeat8TimeOff"] = Settings::setTidSinBeat8TimeOff;
-        settingMap["tid_brightnessSinBeat8Palette"] = Settings::setTidBrightnessSinBeat8Palette;
-        settingMap["bpm2_sinBeat8"] = Settings::setBpm2SinBeat8;
-        settingMap["tid_rainbowWave"] = Settings::setTidRainbowWave;
-        settingMap["tid_choosenWave"] = Settings::setTidChoosenWave;
-        settingMap["scale_noisePalette"] = Settings::setScaleNoisePalette;
-        settingMap["density_rainbowDave"] = Settings::setDensityRainbowDave;
-        settingMap["delta_rainbowDave"] = Settings::setDeltaRainbowDave;
-        settingMap["speed_cometOnce"] = Settings::setSpeedCometOnce;
-        settingMap["balls_bounce"] = Settings::setBallsBounce; 
         settingMap["mirror_bounce"] = Settings::setMirrorBounce;
-        settingMap["cooling_fire"] = Settings::setCoolingFire;
-        settingMap["sparking_fire"] = Settings::setSparkingFire;
-        settingMap["sparks_fire"] = Settings::setSparksFire;
-        settingMap["sparkHeight_fire"] = Settings::setSparkHeightFire;
         settingMap["breversed_fire"] = Settings::setReversedFire;
-        settingMap["chance_storm"] = Settings::setChanceStorm;
-        settingMap["cluster_storm"] = Settings::setClusterStorm;
         settingMap["speed"] = Settings::setSpeed;
-        settingMap["ledstart_lighting"] = Settings::setLedstartLighting;
-        settingMap["ledlen_lighting"] = Settings::setLedlenLighting;
-        settingMap["flashes_lighting"] = Settings::setFlashesLighting;
-        settingMap["dimmer_lighting"] = Settings::setDimmerLighting;
-        settingMap["frequency_lighting"] = Settings::setFrequencyLighting;
-        settingMap["blendAmount"] = Settings::setBlendAmount;
-        settingMap["initialHue"] = Settings::setInitialHue;
-        settingMap["tid_blendIntoRainbow"] = Settings::setTidBlendIntoRainbow;
         settingMap["pulseSp_breathe"] = Settings::setPulseSpBreathe;
+        settingMap["rainbow_heartBeat3"] = Settings::setRainbowHeartBeat3;
+
+        settingMap["var_0to5_1"] = Settings::setVar0to5_1;
+        settingMap["var_0to10_1"] = Settings::setVar0to10_1;
+        settingMap["var_0to10_2"] = Settings::setVar0to10_2;
+        settingMap["var_0to10_3"] = Settings::setVar0to10_3;
+        settingMap["var_0to128_1"] = Settings::setVar0to128_1;
+        settingMap["var_0to128_2"] = Settings::setVar0to128_2;
+        settingMap["var_0to140_1"] = Settings::setVar0to140_1;
+        settingMap["var_0to140_2"] = Settings::setVar0to140_2;
+        settingMap["var_0to200_1"] = Settings::setVar0to200_1;
+        settingMap["var_0to255_1"] = Settings::setVar0to255_1;
+        settingMap["var_0to255_2"] = Settings::setVar0to255_2;
+        settingMap["var_0to500_1"] = Settings::setVar0to500_1;
+        settingMap["var_0to500_2"] = Settings::setVar0to500_2;
+        settingMap["var_0to1000_1"] = Settings::setVar0to1000_1;
+        settingMap["var_0to1000_2"] = Settings::setVar0to1000_2;
+        settingMap["var_0to3000_1"] = Settings::setVar0to3000_1;
+
+        settingMap["color1"] = Settings::setColorU32;
+        settingMap["color2"] = Settings::setColor2U32;
+        settingMap["color3"] = Settings::setColor3U32;
 
     }
 
