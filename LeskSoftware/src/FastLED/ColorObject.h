@@ -3,17 +3,18 @@
 
 #include <FastLED.h>
 #include "color_functions.h"
+#include "Palettes.h"
 
 class ColorObject {
     private:
         CRGB color = CRGB::Black;               // Default to Black
-        CRGBPalette16 palette = CRGBPalette16(); // Default empty palette
+        Palette palette = Palette(); // Default empty palette
         bool isColor = true;                    // Track if `color` is active
 
     public:
         // Constructors for single color or palette
         ColorObject(const CRGB& color) : color(color), isColor(true) {}
-        ColorObject(const CRGBPalette16& palette) : palette(palette), isColor(false) {}
+        ColorObject(const Palette& palette) : palette(palette), isColor(false) {}
         ColorObject(const uint32_t hexColor) : color(CRGB(hexColor)), isColor(true) {}
 
         // Type checkers
@@ -29,7 +30,7 @@ class ColorObject {
             return ColorFunctions::CRGBToUint32(color);
         }
 
-        CRGBPalette16 getPalette() const {
+        Palette getPalette() const {
             return palette;
         }
 
@@ -48,7 +49,7 @@ class ColorObject {
             this->isColor = true;
         }
 
-        void setPalette(const CRGBPalette16& palette) {
+        void setPalette(const Palette& palette) {
             this->palette = palette;
             this->isColor = false;
         }

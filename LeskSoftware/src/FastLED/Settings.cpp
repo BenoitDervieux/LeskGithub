@@ -1,5 +1,4 @@
 #include "Settings.h"
-#include "Palettes.h"
 
 ColorObject         Settings::color1                                    = CRGB::Red;
 ColorObject         Settings::color2                                    = CRGB::Blue;
@@ -16,7 +15,7 @@ uint8_t             Settings::r3                                        = 0;
 uint8_t             Settings::g3                                        = 0;
 uint8_t             Settings::b3                                        = 0;
 
-CRGBPalette16       Settings::palette1                                  = lavaPalette;
+Palette             Settings::palette1;
 bool                Settings::mirror_bounce                             = false;
 bool                Settings::breversed_fire                            = true;   
 float               Settings::pulseSp_breathe                           = 0.1;

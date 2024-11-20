@@ -18,65 +18,140 @@
     </div>
     <div class="container_color_wheel_and_palettes">
       <div id="colorWheel" class="colorWheel"></div>
-      <div id="palettes" class="palettes">
-        <div class="palette_first_line pres_pal">
-          <!-- <div class="square squ1_1"></div>
-          <div class="square squ1_2"></div>
-          <div class="square squ1_3"></div>
-          <div class="square squ1_4"></div>
-          <div class="square squ1_5"></div>
-        </div>
-        <div class="palette_second_line pres_pal">
-          <div class="square squ2_1"></div>
-          <div class="square squ2_2"></div>
-          <div class="square squ2_3"></div>
-          <div class="square squ2_4"></div>
-          <div class="square squ2_5"></div>
-        </div>
-        <div class="palette_third_line pres_pal">
-          <div class="square squ3_1"></div>
-          <div class="square squ3_2"></div>
-          <div class="square squ3_3"></div>
-          <div class="square squ2_4"></div>
-          <div class="square squ2_5"></div>
-        </div> -->
+      <div id="palettes" class="palettes pres_pal">
       </div>
     </div>
-    <!-- <p>Selected Color: <span id="colorValue">#ffffff</span></p>
-    <div class="grid-container">
-    </div> -->
-        <!-- <div class="setting_item_left">
-          <label class="brightness setting_name" for="brightness">Brightness</label>
-            <div class="rangeAndNumber bri_range setting_range">
-            <input type="range" id="brightness_range" name="brightness" class="setting_button" min="0" max="255">
-            <div class="value_bri">0</div>
-          </div>
-        </div> -->
-        <!-- <div class="setting_item_right">
-          <label class="mic_input_title setting_name" for="mic_input_title">Mic</label>
-          <div class="rangeAndNumber mic_range setting_range">
-          <input type="range" id="mic_range" name="mic_range" class="mic_range_button setting_button" min="0" max="255">
-          <div class="value_mic_input">0</div>
-        </div>
-      </div> -->
+
       <div id="settings-details"></div>
     
 
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5.5.1/dist/iro.min.js"></script>
-  <script>
-     // Create a new color wheel instance
+  <script type="module" src="palettes.js"></script>
+    <script type="module">
+      import palettes from './palettes.js';
+//
+      //const palettes = {
+      //  purplePalette: [
+      //      "#9400D3", "#9400D3", "#9400D3", "#9400D3",
+      //      "#FF00FF", "#FF00FF", "#FAF0E6", "#FAF0E6",
+      //      "#FF00FF", "#FF00FF", "#9400D3", "#9400D3",
+      //      "#9400D3", "#9400D3", "#FAF0E6", "#FAF0E6"
+      //  ],
+      //  lavaPalette: [
+      //      "#8B0000", "#800000", "#8B0000", "#800000",
+      //      "#8B0000", "#800000", "#8B0000", "#8B0000",
+      //      "#8B0000", "#8B0000", "#FF0000", "#FFA500",
+      //      "#FFFFFF", "#FFA500", "#FF0000", "#8B0000"
+      //  ],
+      //  pacificaPalette1: [
+      //      "#000507", "#000409", "#00030B", "#00030D",
+      //      "#000210", "#000212", "#000114", "#000117",
+      //      "#000019", "#00001C", "#000026", "#000031",
+      //      "#00003B", "#000046", "#14554B", "#28AA50"
+      //  ],
+      //  sunsetPalette: [
+      //      "#FF4500", "#FF6347", "#FF7F50", "#FFA07A",
+      //      "#FFD700", "#FFDAB9", "#FFF5EE", "#FFA07A",
+      //      "#FF6347", "#FF4500", "#FFD700", "#FFA500",
+      //      "#FF8C00", "#FF4500", "#FF6347", "#FF7F50"
+      //  ],
+      //  forestPalette: [
+      //      "#013220", "#2E8B57", "#3CB371", "#006400",
+      //      "#8FBC8F", "#228B22", "#2E8B57", "#556B2F",
+      //      "#6B8E23", "#006400", "#32CD32", "#00FF7F",
+      //      "#3CB371", "#2E8B57", "#006400", "#013220"
+      //  ],
+      //  oceanPalette: [
+      //      "#000080", "#0000CD", "#1E90FF", "#4682B4",
+      //      "#5F9EA0", "#20B2AA", "#00CED1", "#40E0D0",
+      //      "#AFEEEE", "#ADD8E6", "#B0E0E6", "#5F9EA0",
+      //      "#4682B4", "#1E90FF", "#0000CD", "#000080"
+      //  ],
+      //  citrusPalette: [
+      //      "#FFA500", "#FF4500", "#FF8C00", "#FFD700",
+      //      "#FFFACD", "#FFF8DC", "#FAFAD2", "#FFE4B5",
+      //      "#FFDAB9", "#FFEFD5", "#FFE4C4", "#FFD700",
+      //      "#FFA500", "#FF8C00", "#FF4500", "#FFA07A"
+      //  ],
+      //  neonPalette: [
+      //      "#FF00FF", "#FF1493", "#FF4500", "#FF6347",
+      //      "#FF8C00", "#FFFF00", "#ADFF2F", "#7FFF00",
+      //      "#00FF00", "#00FA9A", "#00FFFF", "#1E90FF",
+      //      "#0000FF", "#8A2BE2", "#DA70D6", "#FF00FF"
+      //  ],
+      //  desertPalette: [
+      //      "#EDC9AF", "#FFE4C4", "#DEB887", "#D2B48C",
+      //      "#BC8F8F", "#F4A460", "#DAA520", "#B8860B",
+      //      "#CD853F", "#D2691E", "#8B4513", "#A0522D",
+      //      "#8B0000", "#FFD700", "#FF4500", "#EDC9AF"
+      //  ],
+      //  pastelPalette: [
+      //      "#FFB6C1", "#FFDAB9", "#FFFACD", "#E6E6FA",
+      //      "#E0FFFF", "#AFEEEE", "#D8BFD8", "#DDA0DD",
+      //      "#FFB6C1", "#FAFAD2", "#FFD700", "#FFE4E1",
+      //      "#E6E6FA", "#D8BFD8", "#AFEEEE", "#E0FFFF"
+      //  ]
+    //};
+  
+      const renderPalettes = (palettes) => {
+        const palettesContainer = document.getElementById("palettes");
+        let rowDiv = document.createElement("div");
+        rowDiv.className = "row";  // Add a CSS class to style the row if needed
+        let squaresInRow = 0; // Track how many squares are in the current row
+    
+        for (const [paletteName, colors] of Object.entries(palettes)) {
+            const paletteDiv = document.createElement("div");
+            paletteDiv.className = `palette ${paletteName}`;
+            
+            const gradientStart = colors[0];
+            const gradientMiddle1 = colors[Math.floor(colors.length / 4 * 2)];
+            const gradientMiddle2 = colors[Math.floor(colors.length / 4 * 3)];
+            const gradientEnd = colors[colors.length - 1];
+    
+            const squareDiv = document.createElement("div");
+            squareDiv.className = `square ${paletteName}`;
+            squareDiv.id = "square";
+            squareDiv.style.background = `linear-gradient(45deg, ${gradientStart}, ${gradientMiddle1}, ${gradientMiddle2}, ${gradientEnd})`;
+            
+            squareDiv.addEventListener("click", () => {
+                console.log("Supposed to change palette now: " + paletteName);
+                changePalette(paletteName);
+            });
+    
+            paletteDiv.appendChild(squareDiv);
+            rowDiv.appendChild(paletteDiv);
+            squaresInRow++;
+    
+            // Once there are 5 squares in the row, append the row to the container and reset
+            if (squaresInRow === 5) {
+                palettesContainer.appendChild(rowDiv);
+                rowDiv = document.createElement("div"); // Start a new row
+                rowDiv.className = "row";
+                squaresInRow = 0;
+            }
+        }
+    
+        // Append any remaining squares (if total wasn't a multiple of 5)
+        if (squaresInRow > 0) {
+            palettesContainer.appendChild(rowDiv);
+        }
+    };
+      // Run the function to render the palettes
+      renderPalettes(palettes);
+
+      // Create a new color wheel instance
      let colorWheel = new iro.ColorPicker("#colorWheel", {
-        width: 150, // Size of the color wheel
-        color: "#ffffff" // Initial color
-    });
+          width: 150, // Size of the color wheel
+          color: "#ffffff" // Initial color
+      });
 
     // Update the displayed color value when it changes
     colorWheel.on('color:change', function(color) {
         console.log("La couleur elle a changé" + color.hexString);
         changeColor(color.hexString);
     });
+
     // Select the container that includes both the color wheel and squares
     const elements = document.querySelectorAll('.square, #colorWheel'); // Adjust selector as needed
     elements.forEach(element => {
@@ -100,11 +175,9 @@
         // console.log("La class list zeubi " + elem.classList[1]);
         // console.log("Ca contient selected ? " + elem.classList.contains('selected'));
         let wheel = document.querySelectorAll('.colorWheel');
-        console.log("La class list zeubi " + wheel.classList);
         
         
           if (elem.classList.contains('selected')) {
-            console.log('IroWheelHue is selected');
             elem.classList.remove('selected');
             // Select all elements with the class or tag `IroWheelHue`
             let wheels = document.querySelectorAll('.IroWheelHue'); // Use '.' if it's a class, no dot if it's a tag
@@ -116,6 +189,12 @@
         }    
       });
     });
+    console.log("Rendered Selected");
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5.5.1/dist/iro.min.js"></script>
+  <script>
+     
+    
 
    
     fetcheffets();
@@ -173,7 +252,27 @@
       })
       .catch(error => console.error('Error:', error));
     }
-     
+
+    function changePalette(paletteName) {
+      fetch('/palette', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'palette=' + encodeURIComponent(paletteName)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
+      .then(data => {
+        console.log(data);  // For debugging
+      })
+      .catch(error => console.error('Error:', error));
+    }
+      
 
     
       // Function to handle the effect change
@@ -360,34 +459,6 @@
       
       const progress = (tempSliderValue / sliderMic.max) * 100;
     }); </script>
-
-    <script type="module" src="palettes.js"></script>
-    <script type="module">
-    import palettes from './palettes.js';
-
-    const renderPalettes = (palettes) => {
-        const palettesContainer = document.getElementById("palettes");
-
-        for (const [paletteName, colors] of Object.entries(palettes)) {
-            const paletteDiv = document.createElement("div");
-            paletteDiv.className = `palette ${paletteName}`;
-
-            // Loop through colors and create squares
-            colors.forEach((color, index) => {
-                const squareDiv = document.createElement("div");
-                squareDiv.className = "square";
-                squareDiv.style.background = color;
-                paletteDiv.appendChild(squareDiv);
-            });
-
-            // Add the palette to the main container
-            palettesContainer.appendChild(paletteDiv);
-        }
-    };
-
-    // Run the function to render the palettes
-    renderPalettes(palettes);
-    </script>
   
 
   

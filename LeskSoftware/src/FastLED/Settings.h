@@ -3,7 +3,7 @@
 
 #include <FastLED.h>
 #include "ColorObject.h"
-// #include <Palettes.h>
+#include "Palettes.h"
 //
 //
 // NEED TO CONTINUE THE IMPLEMENTATION ZEUBI
@@ -23,7 +23,7 @@ class Settings {
         static uint8_t          r3;
         static uint8_t          g3;
         static uint8_t          b3;
-        static CRGBPalette16    palette1;
+        static Palette          palette1;
 
         static int              var_0to5_1;
         static int              var_0to10_1;
@@ -99,8 +99,8 @@ class Settings {
         static uint8_t getB3() {return b3;};
         static void setB3(uint8_t newB) {b3 = newB;};
         // Palette 1
-        static CRGBPalette16 getPalette1() {return palette1;};
-        static void setPalette1(CRGBPalette16 newPalette1) {palette1 = newPalette1;};
+        static Palette getPalette1() {return palette1;};
+        static void setPalette1(String newPalette1) {palette1.setPalette(newPalette1);};
         // mirror_bounce
         static bool getMirrorBounce() {return mirror_bounce;};
         static void setMirrorBounce(bool newMirrorBounce) {mirror_bounce = newMirrorBounce;};

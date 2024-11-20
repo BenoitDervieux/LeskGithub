@@ -43,6 +43,9 @@ void OutSideNetworking::setup() {
     server->on("/palettes.js", HTTP_GET, [](AsyncWebServerRequest *request){
       request->send(SPIFFS, "/palettes.js", "text/javascript");
     });
+    server->on("/img/right-arrow.png", HTTP_GET, [](AsyncWebServerRequest *request){
+      request->send(SPIFFS, "/img/right-arrow.png", "image/png");
+    });
 
     // Here it prints a special collection
     server->on("/collection", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -66,7 +69,6 @@ void OutSideNetworking::setup() {
     });
 
     server->on("/color", HTTP_POST, [this](AsyncWebServerRequest *request){
-
       // Here we will implement the logic for the subscriber pattern
       if (request->hasParam("color", true)) {
         String color = request->getParam("color", true)->value();
@@ -76,6 +78,22 @@ void OutSideNetworking::setup() {
         Serial.println(color);
         // Handle the color change logic here
         request->send(200, "text/plain", "Effect changed to " + color);
+      } else {
+        request->send(400, "text/plain", "Bad Request");
+      }
+    });
+
+    server->on("/palette", HTTP_POST, [this](AsyncWebServerRequest *request){
+      // Here we will implement the logic for the subscriber pattern
+      if (request->hasParam("palette", true)) {
+        String palette = request->getParam("palette", true)->value();
+        Settings::setPalette1(palette);
+        Settings::color1.setPalette(Settings::palette1);
+        Settings::color1.setIsNotColor();
+        Serial.println("Point 698745: Print the palette");
+        Serial.println(palette);
+        // Handle the color change logic here
+        request->send(200, "text/plain", "Effect changed to " + palette);
       } else {
         request->send(400, "text/plain", "Bad Request");
       }
@@ -236,7 +254,7 @@ void OutSideNetworking::setup() {
     server->on("/api/effects", HTTP_GET, [](AsyncWebServerRequest *request){
         DynamicJsonDocument doc(2048); // Adjust size as needed
         JsonArray effectsArray = doc.createNestedArray("effects");
-
+        int checkon = 0;
         // Iterate through all the effects up until there is the end
         // I think it fetches it from the class listeffects
         for (int j = 0; j < sizeof(effects) / sizeof(Effect); ++j) {
@@ -263,6 +281,7 @@ void OutSideNetworking::setup() {
       DynamicJsonDocument doc(2048); // Adjust size as needed
       JsonArray effectsArray = doc.createNestedArray("Settings");
       int num_effect = parser->getEffectNumber() - 1;
+
 
             if (effects[num_effect].name == nullptr) return; // Stop at the end marker
             // Then create new Object

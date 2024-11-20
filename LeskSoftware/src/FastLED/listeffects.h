@@ -42,14 +42,12 @@ struct Effect {
 
 
 // Define the settings function array
-static std::function<int()> settingsFunctionFillEffect[1] = {
-    []() { return Settings::color1.getColorU32();}
-};
+static std::function<int()> settingsFunctionFillEffect[1] = {[]() { return 0; }};
 // Define setting names and values
-static const char* settingNamesArrayFillEffect[] = { "Color"};
-static int minValuesArrayFillEffect[] = {0X000000};           // Corrected to match number of settings
-static int maxValuesArrayFillEffect[] = {0XFFFFFF};     // Corrected to match number of settings
-static const char* realNamesArrayFillEffect[] = { "color1"}; // Real names for settings
+static const char* settingNamesArrayFillEffect[] = { ""};
+static int minValuesArrayFillEffect[] = {0};           // Corrected to match number of settings
+static int maxValuesArrayFillEffect[] = {0};     // Corrected to match number of settings
+static const char* realNamesArrayFillEffect[] = { ""}; // Real names for settings
 
 // Create an instance of Effect
 static Effect _fillEffect(
@@ -60,18 +58,17 @@ static Effect _fillEffect(
     minValuesArrayFillEffect,
     maxValuesArrayFillEffect,
     realNamesArrayFillEffect,
-    1 // Number of settings
+    0 // Number of settings
 );
 
-static std::function<int()> settingsFunctionBlink[2] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionBlink[1] = {
     []() { return Settings::getVar0to1000_1();}
 };
 // Define setting names and values
-static const char* settingNamesArrayBlink[] = {"Color", "Time"};
-static int minValuesArrayBlink[] = {0X000000, 30};           // Corrected to match number of settings
-static int maxValuesArrayBlink[] = {0XFFFFFF, 1000};     // Corrected to match number of settings
-static const char* realNamesArrayBlink[] = {"color1", "var_0to1000_1"}; // Real names for settings
+static const char* settingNamesArrayBlink[] = {"Time"};
+static int minValuesArrayBlink[] = {30};           // Corrected to match number of settings
+static int maxValuesArrayBlink[] = { 1000};     // Corrected to match number of settings
+static const char* realNamesArrayBlink[] = {"var_0to1000_1"}; // Real names for settings
 
 // Create an instance of Effect
 static Effect _blink(
@@ -82,7 +79,7 @@ static Effect _blink(
     minValuesArrayBlink,
     maxValuesArrayBlink,
     realNamesArrayBlink,
-    2 // Number of settings
+    1 // Number of settings
 );
 
 // static std::function<int()> settingsFunction[] =
@@ -94,31 +91,13 @@ static Effect _blink(
 
 // )
 
-static std::function<int()> emptySettingsFunction[1] = {[]() { return 0; }};
-static const char* emptySettingNamesArray[1] = {""};
-static int emptyMinValuesArray[1] = {0};
-static int emptyMaxValuesArray[1] = {0};
-static const char* emptyRealNamesArray[1] = {""};
-// Updated _rainbowStatic Effect without null pointers
-static Effect _rainbowStatic(
-    "Rainbow Static",
-    FX_MODE_RAINBOW_STATIC,
-    emptySettingsFunction,           // Replace nullptr with empty array
-    emptySettingNamesArray,          // Replace nullptr with empty array
-    emptyMinValuesArray,             // Replace nullptr with empty array
-    emptyMaxValuesArray,             // Replace nullptr with empty array
-    emptyRealNamesArray,             // Replace nullptr with empty array
-    0                                // Number of settings
-);
-
-static std::function<int()> settingsFunction_fillGradientTwoColors[2] ={
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunction_fillGradientTwoColors[1] ={
     []() { return Settings::color2.getColorU32();}
 };
-static const char* settingNamesArray_fillGradientTwoColors[] = {"Color 1", "Color 2"};
-static int minValuesArray_fillGradientTwoColors[] ={0X000000, 0X000000};
-static int maxValuesArray_fillGradientTwoColors[] = {0XFFFFFF, 0XFFFFFF};
-static const char* realNamesArray_fillGradientTwoColors[] = {"color1", "color2"};
+static const char* settingNamesArray_fillGradientTwoColors[] = {"Color 2"};
+static int minValuesArray_fillGradientTwoColors[] ={ 0X000000};
+static int maxValuesArray_fillGradientTwoColors[] = { 0XFFFFFF};
+static const char* realNamesArray_fillGradientTwoColors[] = {"color2"};
 static Effect _fillGradientTwoColors(
     "Fill Gradient 2 Colors",
     FX_MODE_FILL_GRADIENT_TWO_COLORS,
@@ -127,23 +106,22 @@ static Effect _fillGradientTwoColors(
     minValuesArray_fillGradientTwoColors,
     maxValuesArray_fillGradientTwoColors,
     realNamesArray_fillGradientTwoColors,
-    2
+    1
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionFillGradientThreeColors[3] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionFillGradientThreeColors[2] = {
     []() { return Settings::color2.getColorU32();},
     []() { return Settings::color3.getColorU32();}
 };
 
 // Define setting names and values
 static const char* settingNamesArrayFillGradientThreeColors[] = {
-    "Color 1", "Color 2", "Color 3"
+    "Color 2", "Color 3"
 };
-static int minValuesArrayFillGradientThreeColors[] = {0X000000, 0X000000, 0X000000};
-static int maxValuesArrayFillGradientThreeColors[] = {0XFFFFFF, 0XFFFFFF, 0XFFFFFF};
-static const char* realNamesArrayFillGradientThreeColors[] = {"color1", "color2", "color2" };
+static int minValuesArrayFillGradientThreeColors[] = {0X000000, 0X000000};
+static int maxValuesArrayFillGradientThreeColors[] = { 0XFFFFFF, 0XFFFFFF};
+static const char* realNamesArrayFillGradientThreeColors[] = {"color2", "color2" };
 
 // Create an instance of Effect
 static Effect _fillGradientThreeColors(
@@ -154,26 +132,25 @@ static Effect _fillGradientThreeColors(
     minValuesArrayFillGradientThreeColors,
     maxValuesArrayFillGradientThreeColors,
     realNamesArrayFillGradientThreeColors,
-    3 // Number of settings
+    2 // Number of settings
 );
 
 
 
 
 // Define function array for settings
-static std::function<int()> settingsFunctionBackAndForthNoSmoothOneDot[2] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionBackAndForthNoSmoothOneDot[1] = {
     []() { return Settings::getVar0to500_1(); }
 };
 
 // Define setting names and values
 static const char* settingNamesArrayBackAndForthNoSmoothOneDot[] = {
-    "Color", "Time"
+        "Time"
 };
-static int minValuesArrayBackAndForthNoSmoothOneDot[] = {0X000000, 1};
-static int maxValuesArrayBackAndForthNoSmoothOneDot[] = {0XFFFFFF, 500};
+static int minValuesArrayBackAndForthNoSmoothOneDot[] = {1};
+static int maxValuesArrayBackAndForthNoSmoothOneDot[] = {500};
 static const char* realNamesArrayBackAndForthNoSmoothOneDot[] = {
-    "color1", "var_0to500_1"
+    "var_0to500_1"
 };
 
 // Create an instance of Effect
@@ -185,25 +162,24 @@ static Effect _BackAndForthNoSmoothOneDot(
     minValuesArrayBackAndForthNoSmoothOneDot,
     maxValuesArrayBackAndForthNoSmoothOneDot,
     realNamesArrayBackAndForthNoSmoothOneDot,
-    2 // Number of settings
+    1 // Number of settings
 );
 
 
 // Define function array for settings
-static std::function<int()> settingsFunctionBackAndForthNoSmoothLengthedDot[3] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionBackAndForthNoSmoothLengthedDot[2] = {
     []() { return Settings::getVar0to500_1(); },
     []() { return Settings::getVar0to10_1(); }
 };
 
 // Define setting names and values
 static const char* settingNamesArrayBackAndForthNoSmoothLengthedDot[] = {
-    "Color", "Time", "Length"
+    "Time", "Length"
 };
-static int minValuesArrayBackAndForthNoSmoothLengthedDot[] = {0x0000, 1, 1};
-static int maxValuesArrayBackAndForthNoSmoothLengthedDot[] = {0XFFFFFF, 500, 8};
+static int minValuesArrayBackAndForthNoSmoothLengthedDot[] = { 1, 1};
+static int maxValuesArrayBackAndForthNoSmoothLengthedDot[] = { 500, 8};
 static const char* realNamesArrayBackAndForthNoSmoothLengthedDot[] = {
-    "color1", "var_0to500_1", "var_0to10_1"
+    "var_0to500_1", "var_0to10_1"
 };
 
 // Create an instance of Effect
@@ -215,7 +191,7 @@ static Effect _backAndForthNoSmoothLengthedDot(
     minValuesArrayBackAndForthNoSmoothLengthedDot,
     maxValuesArrayBackAndForthNoSmoothLengthedDot,
     realNamesArrayBackAndForthNoSmoothLengthedDot,
-    3 // Number of settings
+    2 // Number of settings
 );
 
 // Define function array for settings
@@ -265,27 +241,6 @@ static Effect _hueWhiteWave(
     2 // Number of settings
 );
 
-// Define empty function array for settings
-static std::function<int()> settingsFunctionDisplayPaletteLinear[0];
-
-// Define empty setting names and values
-static const char* settingNamesArrayDisplayPaletteLinear[] = {};
-static int minValuesArrayDisplayPaletteLinear[] = {};
-static int maxValuesArrayDisplayPaletteLinear[] = {};
-static const char* realNamesArrayDisplayPaletteLinear[] = {};
-
-// Create an instance of Effect
-static Effect _displayPaletteLinear(
-    "Display Palette Linear",
-    FX_MODE_DISPLAY_PALETTE_LINEAR,
-    settingsFunctionDisplayPaletteLinear,
-    settingNamesArrayDisplayPaletteLinear,
-    minValuesArrayDisplayPaletteLinear,
-    maxValuesArrayDisplayPaletteLinear,
-    realNamesArrayDisplayPaletteLinear,
-    0 // Number of settings
-);
-
 // Define function array for settings
 static std::function<int()> settingsFunctionMovingPaletteLinear[1] = {
     []() { return Settings::getVar0to200_1(); }
@@ -296,7 +251,6 @@ static const char* settingNamesArrayMovingPaletteLinear[] = {"Time"};
 static int minValuesArrayMovingPaletteLinear[] = {1};
 static int maxValuesArrayMovingPaletteLinear[] = {200};
 static const char* realNamesArrayMovingPaletteLinear[] = {"var_0to200_1"};
-
 // Create an instance of Effect
 static Effect _movingPaletteLinear(
     "Moving Palette Linear",
@@ -335,17 +289,16 @@ static Effect _spotlightingPalette(
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionSinBeat8[3] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionSinBeat8[2] = {
     []() { return Settings::getVar0to128_1(); },
     []() { return Settings::getVar0to140_1(); }
 };
 
 // Define setting names and values
-static const char* settingNamesArraySinBeat8[] = {"Color", "Fade", "BPM"};
-static int minValuesArraySinBeat8[] = {0x000000, 0, 0};
-static int maxValuesArraySinBeat8[] = {0xFFFFFF, 128, 140};
-static const char* realNamesArraySinBeat8[] = {"color1", "var_0to128_1", "var_0to140_1"};
+static const char* settingNamesArraySinBeat8[] = {"Fade", "BPM"};
+static int minValuesArraySinBeat8[] = {0, 0};
+static int maxValuesArraySinBeat8[] = {128, 140};
+static const char* realNamesArraySinBeat8[] = {"var_0to128_1", "var_0to140_1"};
 
 // Create an instance of Effect
 static Effect _sinBeat8(
@@ -356,23 +309,22 @@ static Effect _sinBeat8(
     minValuesArraySinBeat8,
     maxValuesArraySinBeat8,
     realNamesArraySinBeat8,
-    3 // Number of settings
+    2 // Number of settings
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionSinBeat8PhaseOffset[4] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionSinBeat8PhaseOffset[3] = {
     []() { return Settings::getVar0to128_1(); },
     []() { return Settings::getVar0to140_1(); },
     []() { return Settings::getVar0to128_2(); }
 };
 
 // Define setting names and values
-static const char* settingNamesArraySinBeat8PhaseOffset[] = {"Color", "Fade", "BPM", "Phase Offset"};
-static int minValuesArraySinBeat8PhaseOffset[] = {0x000000, 0, 0, 0};
-static int maxValuesArraySinBeat8PhaseOffset[] = {0xffffff, 128, 140, 128};
+static const char* settingNamesArraySinBeat8PhaseOffset[] = {"Fade", "BPM", "Phase Offset"};
+static int minValuesArraySinBeat8PhaseOffset[] = {0, 0, 0};
+static int maxValuesArraySinBeat8PhaseOffset[] = {128, 140, 128};
 static const char* realNamesArraySinBeat8PhaseOffset[] = {
-    "color1", "var_0to128_1", "var_0to140_1", "var_0to128_2"};
+    "var_0to128_1", "var_0to140_1", "var_0to128_2"};
 
 // Create an instance of Effect
 static Effect _sinBeat8PhaseOffset(
@@ -383,50 +335,22 @@ static Effect _sinBeat8PhaseOffset(
     minValuesArraySinBeat8PhaseOffset,
     maxValuesArraySinBeat8PhaseOffset,
     realNamesArraySinBeat8PhaseOffset,
-    4 // Number of settings
+    3 // Number of settings
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionSinBeat8TimeOff[4] = {
-    []() { return Settings::color1.getColorU32();},
-    []() { return Settings::getVar0to128_1(); },
-    []() { return Settings::getVar0to140_1(); },
-    []() { return Settings::getVar0to500_1(); }
-};
-
-// Define setting names and values
-static const char* settingNamesArraySinBeat8TimeOff[] = {"Color", "Fade", "BPM", "Time"};
-static int minValuesArraySinBeat8TimeOff[] = {0x000000, 0, 0, 0};
-static int maxValuesArraySinBeat8TimeOff[] = {0xffffff, 128, 140, 500};
-static const char* realNamesArraySinBeat8TimeOff[] = {
-    "color1", "var_0to128_1", "var_0to140_1", "var_0to500_1"};
-
-// Create an instance of Effect
-static Effect _sinBeat8TimeOff(
-    "Sin Beat 8 Time Off",
-    FX_MODE_SIN_BEAT_8_TIME_OFF,
-    settingsFunctionSinBeat8TimeOff,
-    settingNamesArraySinBeat8TimeOff,
-    minValuesArraySinBeat8TimeOff,
-    maxValuesArraySinBeat8TimeOff,
-    realNamesArraySinBeat8TimeOff,
-    4 // Number of settings
-);
-
-// Define function array for settings
-static std::function<int()> settingsFunctionTwoSinBeat8[4] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionTwoSinBeat8[3] = {
     []() { return Settings::color2.getColorU32();},
     []() { return Settings::getVar0to128_1(); },
     []() { return Settings::getVar0to140_1(); }
 };
 
 // Define setting names and values
-static const char* settingNamesArrayTwoSinBeat8[] = {"Color 1", "Color 2", "Fade", "BPM"};
-static int minValuesArrayTwoSinBeat8[] = {0x000000, 0x000000, 0, 0};
-static int maxValuesArrayTwoSinBeat8[] = {0xffffff, 0xffffff, 128, 140};
+static const char* settingNamesArrayTwoSinBeat8[] = {"Color 2", "Fade", "BPM"};
+static int minValuesArrayTwoSinBeat8[] = {0x000000, 0, 0};
+static int maxValuesArrayTwoSinBeat8[] = {0xffffff, 128, 140};
 static const char* realNamesArrayTwoSinBeat8[] = {
-    "color1", "color2", "var_0to128_1", "var_0to140_1"};
+    "color2", "var_0to128_1", "var_0to140_1"};
 
 // Create an instance of Effect
 static Effect _twoSinBeat8(
@@ -437,12 +361,11 @@ static Effect _twoSinBeat8(
     minValuesArrayTwoSinBeat8,
     maxValuesArrayTwoSinBeat8,
     realNamesArrayTwoSinBeat8,
-    4 // Number of settings
+    3 // Number of settings
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionThreeSinBeat8[5] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionThreeSinBeat8[4] = {
     []() { return Settings::color2.getColorU32();},
     []() { return Settings::color3.getColorU32();},
     []() { return Settings::getVar0to128_1(); },
@@ -450,12 +373,12 @@ static std::function<int()> settingsFunctionThreeSinBeat8[5] = {
 };
 
 // Define setting names and values
-static const char* settingNamesArrayThreeSinBeat8[] = {"Color 1", "Color 2", "Color 3", "Fade", "BPM"};
-static int minValuesArrayThreeSinBeat8[] = {0x000000, 0x000000, 0x000000, 0, 0};
+static const char* settingNamesArrayThreeSinBeat8[] = {"Color 2", "Color 3", "Fade", "BPM"};
+static int minValuesArrayThreeSinBeat8[] = { 0x000000, 0x000000, 0, 0};
 static int maxValuesArrayThreeSinBeat8[] = {
-    0xffffff, 0xffffff, 0xffffff, 128, 140};
+     0xffffff, 0xffffff, 128, 140};
 static const char* realNamesArrayThreeSinBeat8[] = {
-    "color1", "color2", "color3", "var_0to128_1", "var_0to140_1"};
+    "color2", "color3", "var_0to128_1", "var_0to140_1"};
 
 // Create an instance of Effect
 static Effect _threeSinBeat8(
@@ -466,7 +389,7 @@ static Effect _threeSinBeat8(
     minValuesArrayThreeSinBeat8,
     maxValuesArrayThreeSinBeat8,
     realNamesArrayThreeSinBeat8,
-    5 // Number of settings
+    4 // Number of settings
 );
 
 // Define function array for settings
@@ -518,16 +441,15 @@ static Effect _funkyRainbowSinBeat8(
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionFunkyRangeSinBeat8[2] = {
-    []() { return Settings::getVar0to128_1(); },
-    []() { return Settings::color1.getColorU32();}
+static std::function<int()> settingsFunctionFunkyRangeSinBeat8[1] = {
+    []() { return Settings::getVar0to128_1(); }
 };
 
 // Define setting names and values
-static const char* settingNamesArrayFunkyRangeSinBeat8[] = {"Fade", "Color"};
-static int minValuesArrayFunkyRangeSinBeat8[] = {0, 0x000000};
-static int maxValuesArrayFunkyRangeSinBeat8[] = {128, 0xffffff};
-static const char* realNamesArrayFunkyRangeSinBeat8[] = {"var_0to128_1", "color1"};
+static const char* settingNamesArrayFunkyRangeSinBeat8[] = {"Fade"};
+static int minValuesArrayFunkyRangeSinBeat8[] = {0};
+static int maxValuesArrayFunkyRangeSinBeat8[] = {128};
+static const char* realNamesArrayFunkyRangeSinBeat8[] = {"var_0to128_1"};
 
 // Create an instance of Effect
 static Effect _funkyRangeSinBeat8(
@@ -538,7 +460,7 @@ static Effect _funkyRangeSinBeat8(
     minValuesArrayFunkyRangeSinBeat8,
     maxValuesArrayFunkyRangeSinBeat8,
     realNamesArrayFunkyRangeSinBeat8,
-    2 // Number of settings
+    1 // Number of settings
 );
 
 // Define function array for settings
@@ -565,16 +487,15 @@ static Effect _funkyRainbowSinBeat8Two(
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionFunkyRangeSinBeat8Two[2] = {
-    []() { return Settings::getVar0to128_1(); },
-    []() { return Settings::color1.getColorU32();}
+static std::function<int()> settingsFunctionFunkyRangeSinBeat8Two[1] = {
+    []() { return Settings::getVar0to128_1(); }
 };
 
 // Define setting names and values
-static const char* settingNamesArrayFunkyRangeSinBeat8Two[] = {"Fade", "Color"};
-static int minValuesArrayFunkyRangeSinBeat8Two[] = {0, 0x000000};
-static int maxValuesArrayFunkyRangeSinBeat8Two[] = {128, 0xffffff};
-static const char* realNamesArrayFunkyRangeSinBeat8Two[] = {"var_0to128_1", "color1"};
+static const char* settingNamesArrayFunkyRangeSinBeat8Two[] = {"Fade"};
+static int minValuesArrayFunkyRangeSinBeat8Two[] = {0};
+static int maxValuesArrayFunkyRangeSinBeat8Two[] = {128};
+static const char* realNamesArrayFunkyRangeSinBeat8Two[] = {"var_0to128_1"};
 
 // Create an instance of Effect
 static Effect _funkyRangeSinBeat8Two(
@@ -585,7 +506,7 @@ static Effect _funkyRangeSinBeat8Two(
     minValuesArrayFunkyRangeSinBeat8Two,
     maxValuesArrayFunkyRangeSinBeat8Two,
     realNamesArrayFunkyRangeSinBeat8Two,
-    2 // Number of settings
+    1 // Number of settings
 );
 
 // Define function array for settings
@@ -639,19 +560,18 @@ static Effect _rainbowWave(
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionChoosenWave[6] = {
+static std::function<int()> settingsFunctionChoosenWave[3] = {
     []() { return Settings::getVar0to500_1(); },
     []() { return Settings::getVar0to140_1(); },
     []() { return Settings::getVar0to128_1(); },
-    []() { return Settings::color1.getColorU32();}
 };
 
 // Define setting names and values
-static const char* settingNamesArrayChoosenWave[] = {"Time", "BPM", "Fade", "Color"};
-static int minValuesArrayChoosenWave[] = {0, 0, 0, 0x000000};
-static int maxValuesArrayChoosenWave[] = {500, 140, 128, 0xffffff};
+static const char* settingNamesArrayChoosenWave[] = {"Time", "BPM", "Fade"};
+static int minValuesArrayChoosenWave[] = {0, 0, 0};
+static int maxValuesArrayChoosenWave[] = {500, 140, 128};
 static const char* realNamesArrayChoosenWave[] = {
-    "var_0to500_1", "var_0to140_1", "var_0to128_1", "color1"};
+    "var_0to500_1", "var_0to140_1", "var_0to128_1" };
 
 // Create an instance of Effect
 static Effect _choosenWave(
@@ -662,7 +582,7 @@ static Effect _choosenWave(
     minValuesArrayChoosenWave,
     maxValuesArrayChoosenWave,
     realNamesArrayChoosenWave,
-    4 // Number of settings
+    3 // Number of settings
 );
 
 // Define function array for settings
@@ -689,16 +609,15 @@ static Effect _firstNoiseRainbow(
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionFirstNoiseColor[2] = {
-    []() { return Settings::color1.getColorU32();},
+static std::function<int()> settingsFunctionFirstNoiseColor[1] = {
     []() { return Settings::getVar0to140_1(); }
 };
 
 // Define setting names and values
-static const char* settingNamesArrayFirstNoiseColor[] = {"Color", "BPM"};
-static int minValuesArrayFirstNoiseColor[] = {0x000000, 0};
-static int maxValuesArrayFirstNoiseColor[] = {0xffffff, 140};
-static const char* realNamesArrayFirstNoiseColor[] = {"color1", "var_0to140_1"};
+static const char* settingNamesArrayFirstNoiseColor[] = {"BPM"};
+static int minValuesArrayFirstNoiseColor[] = {0};
+static int maxValuesArrayFirstNoiseColor[] = {140};
+static const char* realNamesArrayFirstNoiseColor[] = {"var_0to140_1"};
 
 // Create an instance of Effect
 static Effect _firstNoiseColor(
@@ -709,7 +628,7 @@ static Effect _firstNoiseColor(
     minValuesArrayFirstNoiseColor,
     maxValuesArrayFirstNoiseColor,
     realNamesArrayFirstNoiseColor,
-    2 // Number of settings
+    1 // Number of settings
 );
 
 // Define function array for settings
@@ -986,26 +905,6 @@ static std::function<int()> settingsFunctionFire[5] = {
     []() { return Settings::getVar0to10_3(); }
 };
 
-// Define setting names and values
-static const char* settingNamesArrayFire[] = {"Length", "Cooling", "Sparking", "Sparks", "SparkHeight"};
-static int minValuesArrayFire[] = {0, 0, 0, 0, 0};
-static int maxValuesArrayFire[] = {10, 160, 100, 10, 10};
-static const char* realNamesArrayFire[] = {
-    "var_0to10_1", "var_0to200_1", "var_0to128_1", 
-    "var_0to10_2", "var_0to10_3"};
-
-// Create an instance of Effect
-static Effect _fire(
-    "Fire",
-    FX_MODE_FIRE,
-    settingsFunctionFire,
-    settingNamesArrayFire,
-    minValuesArrayFire,
-    maxValuesArrayFire,
-    realNamesArrayFire,
-    5 // Number of settings
-);
-
 // Define function array for settings
 static std::function<int()> settingsFunctionStorm[4] = {
     []() { return Settings::getVar0to5_1(); },
@@ -1034,32 +933,13 @@ static Effect _storm(
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionStormColored[5] = {
+static std::function<int()> settingsFunctionStormColored[4] = {
     []() { return Settings::getVar0to5_1(); },
     []() { return Settings::getVar0to128_1(); },
     []() { return Settings::getVar0to500_1(); },
-    []() { return Settings::getVar0to128_2(); },
-    []() { return Settings::color1.getColorU32();}
+    []() { return Settings::getVar0to128_2(); }
 };
 
-// Define setting names and values
-static const char* settingNamesArrayStormColored[] = {"Chance", "Cluster", "Speed", "Fade", "Color"};
-static int minValuesArrayStormColored[] = {1, 0, 0, 0, 0x000000};
-static int maxValuesArrayStormColored[] = {5, 128, 500, 128, 0xffffff};
-static const char* realNamesArrayStormColored[] = {
-    "var_0to5_1", "var_0to128_1", "var_0to500_1", "var_0to128_2", "color1"};
-
-// Create an instance of Effect
-static Effect _stormColored(
-    "Storm Colored",
-    FX_MODE_STORM_COLORED,
-    settingsFunctionStormColored,
-    settingNamesArrayStormColored,
-    minValuesArrayStormColored,
-    maxValuesArrayStormColored,
-    realNamesArrayStormColored,
-    5 // Number of settings
-);
 
 // Define function array for settings
 static std::function<int()> settingsFunctionStormPalette[4] = {
@@ -1069,24 +949,7 @@ static std::function<int()> settingsFunctionStormPalette[4] = {
     []() { return Settings::getVar0to128_2(); }
 };
 
-// Define setting names and values
-static const char* settingNamesArrayStormPalette[] = {"Chance", "Cluster", "Speed", "Fade"};
-static int minValuesArrayStormPalette[] = {1, 0, 0, 0};
-static int maxValuesArrayStormPalette[] = {5, 128, 500, 128};
-static const char* realNamesArrayStormPalette[] = {
-    "var_0to5_1", "var_0to128_1", "var_0to500_1", "var_0to128_2"};
 
-// Create an instance of Effect
-static Effect _stormPalette(
-    "Storm Palette",
-    FX_MODE_STORM_PALETTE,
-    settingsFunctionStormPalette,
-    settingNamesArrayStormPalette,
-    minValuesArrayStormPalette,
-    maxValuesArrayStormPalette,
-    realNamesArrayStormPalette,
-    4 // Number of settings
-);
 
 // Define function array for settings
 static std::function<int()> settingsFunctionLighting[5] = {
@@ -1117,21 +980,20 @@ static Effect _lighting(
 );
 
 // Define function array for settings
-static std::function<int()> settingsFunctionLightingColored[6] = {
+static std::function<int()> settingsFunctionLightingColored[5] = {
     []() { return Settings::getVar0to5_1(); },
     []() { return Settings::getVar0to10_1(); },
     []() { return Settings::getVar0to10_2(); },
     []() { return Settings::getVar0to128_1(); },
-    []() { return Settings::getVar0to1000_1(); },
-    []() { return Settings::color1.getColorU32();}
+    []() { return Settings::getVar0to1000_1(); }
 };
 
 // Define setting names and values
-static const char* settingNamesArrayLightingColored[] = {"Start", "Length", "Flashes", "Dimmer", "Frequency", "Color"};
-static int minValuesArrayLightingColored[] = {0, 0, 0, 0, 0, 0x000000};
-static int maxValuesArrayLightingColored[] = {5, 10, 10, 128, 1000, 0xffffff};
+static const char* settingNamesArrayLightingColored[] = {"Start", "Length", "Flashes", "Dimmer", "Frequency"};
+static int minValuesArrayLightingColored[] = {0, 0, 0, 0, 0};
+static int maxValuesArrayLightingColored[] = {5, 10, 10, 128, 1000};
 static const char* realNamesArrayLightingColored[] = {
-    "var_0to5_1", "var_0to10_1", "var_0to10_2", "var_0to128_1", "var_0to1000_1", "color1"};
+    "var_0to5_1", "var_0to10_1", "var_0to10_2", "var_0to128_1", "var_0to1000_1"};
 
 // Create an instance of Effect
 static Effect _lightingColored(
@@ -1142,7 +1004,7 @@ static Effect _lightingColored(
     minValuesArrayLightingColored,
     maxValuesArrayLightingColored,
     realNamesArrayLightingColored,
-    6 // Number of settings
+    5 // Number of settings
 );
 
 // Define function array for settings
@@ -1154,24 +1016,6 @@ static std::function<int()> settingsFunctionLightingPalette[5] = {
     []() { return Settings::getVar0to1000_1(); }
 };
 
-// Define setting names and values
-static const char* settingNamesArrayLightingPalette[] = {"Start", "Length", "Flashes", "Dimmer", "Frequency"};
-static int minValuesArrayLightingPalette[] = {0, 0, 0, 0, 0};
-static int maxValuesArrayLightingPalette[] = {5, 10, 10, 128, 1000};
-static const char* realNamesArrayLightingPalette[] = {
-    "var_0to5_1", "var_0to10_1", "var_0to10_2", "var_0to128_1", "var_0to1000_1"};
-
-// Create an instance of Effect
-static Effect _lightingPalette(
-    "Lighting Palette",
-    FX_MODE_LIGHTING_PALETTE,
-    settingsFunctionLightingPalette,
-    settingNamesArrayLightingPalette,
-    minValuesArrayLightingPalette,
-    maxValuesArrayLightingPalette,
-    realNamesArrayLightingPalette,
-    5 // Number of settings
-);
 
 // Define function array for settings
 static std::function<int()> settingsFunctionBeat8Tail[3] = {
@@ -1350,27 +1194,6 @@ static Effect _fillUpStrip(
     0
 );
 
-static std::function<int()> settingsFunction_heartBeat2[2] = {
-    []() { return Settings::getVar0to3000_1(); },
-    []() { return Settings::getVar0to255_1(); }
-};
-static const char* settingNamesArray_heartBeat2[] = {"Beat Speed", "Offset"};
-static int minValuesArray_heartBeat2[] = {0, 0};
-static int maxValuesArray_heartBeat2[] = {3000, 255};
-static const char* realNamesArray_heartBeat2[] = {
-    "var_0to255_1", "var_0to3000_1"};
-
-static Effect _heartBeat2(
-    "Heart Beat 2",
-    FX_MODE_HEART_BEAT_2,
-    settingsFunction_heartBeat2,
-    settingNamesArray_heartBeat2,
-    minValuesArray_heartBeat2,
-    maxValuesArray_heartBeat2,
-    realNamesArray_heartBeat2,
-    2
-);
-
 
 static std::function<int()> settingsFunction_heartBeat3[1] = {[]() { return 0; }};
 static const char* settingNamesArray_heartBeat3[1] = {""};
@@ -1454,84 +1277,84 @@ static Effect _matchingGlitter1(
     2
 );
 
-static std::function<int()> settingsFunction_matchingGlitter2[2] = {
-    []() { return Settings::getVar0to500_1(); },
-    []() { return Settings::getVar0to500_2(); }
-};
-static const char* settingNamesArray_matchingGlitter2[] = {"Time hue", "Time Stripe"};
-static int minValuesArray_matchingGlitter2[] = {1, 1};
-static int maxValuesArray_matchingGlitter2[] = {500, 500};
-static const char* realNamesArray_matchingGlitter2[] = {
-    "var_0to500_1","var_0to500_2"};
+// static std::function<int()> settingsFunction_matchingGlitter2[2] = {
+//     []() { return Settings::getVar0to500_1(); },
+//     []() { return Settings::getVar0to500_2(); }
+// };
+// static const char* settingNamesArray_matchingGlitter2[] = {"Time hue", "Time Stripe"};
+// static int minValuesArray_matchingGlitter2[] = {1, 1};
+// static int maxValuesArray_matchingGlitter2[] = {500, 500};
+// static const char* realNamesArray_matchingGlitter2[] = {
+//     "var_0to500_1","var_0to500_2"};
 
-static Effect _matchingGlitter2(
-    "Matching Glitter 2",
-    FX_MODE_MATCHING_GLITTER_2,
-    settingsFunction_matchingGlitter2,
-    settingNamesArray_matchingGlitter2,
-    minValuesArray_matchingGlitter2,
-    maxValuesArray_matchingGlitter2,
-    realNamesArray_matchingGlitter2,
-    2
-);
+// static Effect _matchingGlitter2(
+//     "Matching Glitter 2",
+//     FX_MODE_MATCHING_GLITTER_2,
+//     settingsFunction_matchingGlitter2,
+//     settingNamesArray_matchingGlitter2,
+//     minValuesArray_matchingGlitter2,
+//     maxValuesArray_matchingGlitter2,
+//     realNamesArray_matchingGlitter2,
+//     2
+// );
 
-static std::function<int()> settingsFunction_matchingGlitter3[2] = {
-    []() { return Settings::getVar0to500_1(); },
-    []() { return Settings::getVar0to500_2(); }
-};
-static const char* settingNamesArray_matchingGlitter3[] = {"Time hue", "Time Stripe"};
-static int minValuesArray_matchingGlitter3[] = {1, 1};
-static int maxValuesArray_matchingGlitter3[] = {500, 500};
-static const char* realNamesArray_matchingGlitter3[] = {
-    "var_0to500_1","var_0to500_2"};
-static Effect _matchingGlitter3(
-    "Matching Glitter 3",
-    FX_MODE_MATCHING_GLITTER_3,
-    settingsFunction_matchingGlitter3,
-    settingNamesArray_matchingGlitter3,
-    minValuesArray_matchingGlitter3,
-    maxValuesArray_matchingGlitter3,
-    realNamesArray_matchingGlitter3,
-    2
-);
+// static std::function<int()> settingsFunction_matchingGlitter3[2] = {
+//     []() { return Settings::getVar0to500_1(); },
+//     []() { return Settings::getVar0to500_2(); }
+// };
+// static const char* settingNamesArray_matchingGlitter3[] = {"Time hue", "Time Stripe"};
+// static int minValuesArray_matchingGlitter3[] = {1, 1};
+// static int maxValuesArray_matchingGlitter3[] = {500, 500};
+// static const char* realNamesArray_matchingGlitter3[] = {
+//     "var_0to500_1","var_0to500_2"};
+// static Effect _matchingGlitter3(
+//     "Matching Glitter 3",
+//     FX_MODE_MATCHING_GLITTER_3,
+//     settingsFunction_matchingGlitter3,
+//     settingNamesArray_matchingGlitter3,
+//     minValuesArray_matchingGlitter3,
+//     maxValuesArray_matchingGlitter3,
+//     realNamesArray_matchingGlitter3,
+//     2
+// );
 
-static std::function<int()> settingsFunction_matchingGlitter4[2] = {
-    []() { return Settings::getVar0to500_1(); },
-    []() { return Settings::getVar0to500_2(); }
-};
-static const char* settingNamesArray_matchingGlitter4[] = {"Time hue", "Time Stripe"};
-static int minValuesArray_matchingGlitter4[] = {1, 1};
-static int maxValuesArray_matchingGlitter4[] = {500, 500};
-static const char* realNamesArray_matchingGlitter4[] = {
-    "var_0to500_1","var_0to500_2"};
-static Effect _matchingGlitter4(
-    "Matching Glitter 4",
-    FX_MODE_MATCHING_GLITTER_4,
-    settingsFunction_matchingGlitter4,
-    settingNamesArray_matchingGlitter4,
-    minValuesArray_matchingGlitter4,
-    maxValuesArray_matchingGlitter4,
-    realNamesArray_matchingGlitter4,
-    2
-);
+// static std::function<int()> settingsFunction_matchingGlitter4[2] = {
+//     []() { return Settings::getVar0to500_1(); },
+//     []() { return Settings::getVar0to500_2(); }
+// };
+// static const char* settingNamesArray_matchingGlitter4[] = {"Time hue", "Time Stripe"};
+// static int minValuesArray_matchingGlitter4[] = {1, 1};
+// static int maxValuesArray_matchingGlitter4[] = {500, 500};
+// static const char* realNamesArray_matchingGlitter4[] = {
+//     "var_0to500_1","var_0to500_2"};
+// static Effect _matchingGlitter4(
+//     "Matching Glitter 4",
+//     FX_MODE_MATCHING_GLITTER_4,
+//     settingsFunction_matchingGlitter4,
+//     settingNamesArray_matchingGlitter4,
+//     minValuesArray_matchingGlitter4,
+//     maxValuesArray_matchingGlitter4,
+//     realNamesArray_matchingGlitter4,
+//     2
+// );
 
-static std::function<int()> settingsFunction_mirrorFadeEnds[1] = {
-    []() { return Settings::getVar0to10_1(); }
-};
-static const char* settingNamesArray_mirrorFadeEnds[] = {"Fade"};
-static int minValuesArray_mirrorFadeEnds[] = {0};
-static int maxValuesArray_mirrorFadeEnds[] = {20};
-static const char* realNamesArray_mirrorFadeEnds[] = {"var_0to10_1"};
-static Effect _mirrorFadeEnds(
-    "Mirror Fade Ends",
-    FX_MODE_MIRROR_FADE_ENDS,
-    settingsFunction_mirrorFadeEnds,
-    settingNamesArray_mirrorFadeEnds,
-    minValuesArray_mirrorFadeEnds,
-    maxValuesArray_mirrorFadeEnds,
-    realNamesArray_mirrorFadeEnds,
-    1
-);
+// static std::function<int()> settingsFunction_mirrorFadeEnds[1] = {
+//     []() { return Settings::getVar0to10_1(); }
+// };
+// static const char* settingNamesArray_mirrorFadeEnds[] = {"Fade"};
+// static int minValuesArray_mirrorFadeEnds[] = {0};
+// static int maxValuesArray_mirrorFadeEnds[] = {20};
+// static const char* realNamesArray_mirrorFadeEnds[] = {"var_0to10_1"};
+// static Effect _mirrorFadeEnds(
+//     "Mirror Fade Ends",
+//     FX_MODE_MIRROR_FADE_ENDS,
+//     settingsFunction_mirrorFadeEnds,
+//     settingNamesArray_mirrorFadeEnds,
+//     minValuesArray_mirrorFadeEnds,
+//     maxValuesArray_mirrorFadeEnds,
+//     realNamesArray_mirrorFadeEnds,
+//     1
+// );
 
 // Settings::getTidBlink(), Settings::getCoolingFire(), Settings::getSparksFire()
 static std::function<int()> settingsFunction_Fire2012[3] = {
@@ -1600,14 +1423,14 @@ static Effect _movingColoredBar(
 
 static std::function<int()> settingsFunction_repeatingPattern[3] = {
     []() { return Settings::getVar0to128_1(); },
-    []() { return Settings::getVar0to3000_1(); },
+    []() { return Settings::getVar0to1000_1(); },
     []() { return Settings::getVar0to128_2(); }
 };
 static const char* settingNamesArray_repeatingPattern[] = {"Time 1", "Time 2", "Fade"};
 static int minValuesArray_repeatingPattern[] = {1,1, 0};
-static int maxValuesArray_repeatingPattern[] = {100, 3000, 128};
+static int maxValuesArray_repeatingPattern[] = {100, 1000, 128};
 static const char* realNamesArray_repeatingPattern[] = {
-    "var_0to128_1", "var_0to3000_1", "var_0to128_2"};
+    "var_0to128_1", "var_0to1000_1", "var_0to128_2"};
 static Effect _repeatingPattern(
     "Repeating Patterns",
     FX_MODE_REPEATING_PATTERNS,
@@ -1639,44 +1462,6 @@ static Effect _savedPixel(
 );
 
 
-// static std::function<int()> settingsFunction_sinCosLinear[1] = {[]() { return 0; }};
-// static const char* settingNamesArray_sinCosLinear[1] = {""};
-// static int minValuesArray_sinCosLinear[1] = {0};
-// static int maxValuesArray_sinCosLinear[1] = {0};
-// static const char* realNamesArray_sinCosLinear[1] = {""};
-// static Effect _sinCosLinear(
-//     "Sin Cos Linear",
-//     FX_MODE_SIN_COS_LINEAR,
-//     settingsFunction_sinCosLinear,
-//     settingNamesArray_sinCosLinear,
-//     minValuesArray_sinCosLinear,
-//     maxValuesArray_sinCosLinear,
-//     realNamesArray_sinCosLinear,
-//     0
-// );
-
-
-// static std::function<int()> settingsFunction_sparkles[3] = {
-//     []() { return Settings::getVar0to1000_1(); },
-//     []() { return Settings::getVar0to1000_2(); },
-//     []() { return Settings::getVar0to3000_1(); }
-// };
-// static const char* settingNamesArray_sparkles[] = {"Duration", "Amount", "Spread"};
-// static int minValuesArray_sparkles[] = {1,1, 1};
-// static int maxValuesArray_sparkles[] = {1000, 1000, 1000};
-// static const char* realNamesArray_sparkles[] = {
-//     "var_0to1000_1", "var_0to1000_1", "var_0to3000_1"};
-// static Effect _sparkles(
-//     "Sparkles",
-//     FX_MODE_SPARKLES,
-//     settingsFunction_sparkles,
-//     settingNamesArray_sparkles,
-//     minValuesArray_sparkles,
-//     maxValuesArray_sparkles,
-//     realNamesArray_sparkles,
-//     3
-// );
-
 
 
 
@@ -1692,11 +1477,10 @@ static Effect _end_effect(
     0
 );
 
-static Effect effects[] = {_fillEffect, _blink,  _rainbowStatic, _fillGradientTwoColors, 
+static Effect effects[] = {_fillEffect, _blink,  _fillGradientTwoColors, 
                             _fillGradientThreeColors, _BackAndForthNoSmoothOneDot, _backAndForthNoSmoothLengthedDot, 
-                            _hueFading, _hueWhiteWave, _displayPaletteLinear, 
-                            _movingPaletteLinear, _spotlightingPalette, _sinBeat8, 
-                            _sinBeat8PhaseOffset, _sinBeat8TimeOff, _twoSinBeat8, 
+                            _hueFading, _hueWhiteWave, _movingPaletteLinear, _spotlightingPalette, _sinBeat8, 
+                            _sinBeat8PhaseOffset,  _twoSinBeat8, 
                             _threeSinBeat8, _brightnessSinBeat8Palette, _funkyRainbowSinBeat8, 
                             _funkyRangeSinBeat8, _funkyRainbowSinBeat8Two,  _funkyRangeSinBeat8Two, 
                             _movingFunkyPalette, _rainbowWave, _choosenWave, 
@@ -1704,17 +1488,16 @@ static Effect effects[] = {_fillEffect, _blink,  _rainbowStatic, _fillGradientTw
                             _runFire, _secondNoise, _fillNoise16, 
                             _rainbowDave, _marqueeDave, _twinkleOld, 
                             _twinkle, _comet, _cometOnce, 
-                            _bounce, _fire, _storm, 
-                            _stormColored, _stormPalette, _lighting, 
-                            _lightingColored, _lightingPalette, _beat8_tail, 
+                            _bounce,  _storm, 
+                             _lighting, 
+                            _lightingColored, _beat8_tail, 
                             _blendIntoRainbow, _breatheV2, _chaseTargetTalesVarA, 
                             _chaseTargetTalesVarB,_chaseTargetTalesVarC, 
-                            _everyNTimerVariables, _fillUpStrip, _heartBeat2, 
+                            _everyNTimerVariables, _fillUpStrip, 
                             _heartBeat3, _heartPulseBloodFlowing, _lighthouseBeaconV2, 
-                            _matchingGlitter1, _matchingGlitter2, _matchingGlitter3, 
-                            _matchingGlitter4, _mirrorFadeEnds, _Fire2012, 
+                            _matchingGlitter1, _Fire2012, 
                             _Fire2012_halfStrip, _movingColoredBar, _repeatingPattern, 
-                            /*_sinCosLinear, _sparkles,*/ _end_effect};
+                             _end_effect};
 
 
 

@@ -177,7 +177,7 @@ input[type="range"]::-webkit-slider-thumb { /* Webkit-specific styling */
   padding: 10px;
 }
 
-.pres_pal {
+.row {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
 }
@@ -247,7 +247,6 @@ input[type="range"]::-webkit-slider-thumb { /* Webkit-specific styling */
 }
 
 
-
 .palettes {
   display: flex;
   flex-wrap: wrap;
@@ -262,6 +261,6 @@ input[type="range"]::-webkit-slider-thumb { /* Webkit-specific styling */
 }
 
 .square {
-  width: 20px;
-  height: 20px;
+  width: 75px;
+  height: 75px;
 }

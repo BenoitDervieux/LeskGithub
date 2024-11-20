@@ -98,7 +98,8 @@
 			"condition_variable": "cpp",
 			"memory_resource": "cpp",
 			"csignal": "cpp",
-			"set": "cpp"
+			"set": "cpp",
+			"variant": "cpp"
 		}
 	}
 }
