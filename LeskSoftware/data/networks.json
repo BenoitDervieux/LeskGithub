@@ -1,0 +1,28 @@
+{
+    "networks": {
+        "networks0": {
+        "ssid": "ssid1",
+        "password": "password1"
+        },
+        "networks1": {
+            "ssid": "ssid2",
+            "password": "password2"
+        },
+        "networks2": {
+            "ssid": "ssid3",
+            "password": "password3"
+        },
+        "networks3": {
+            "ssid": "ssid4",
+            "password": "password4"
+        },
+        "networks4": {
+            "ssid": "ssid5",
+            "password": "password5"
+        }
+    },
+    "personal_network": {
+        "ssid": "panel_lesklights",
+        "password": "panel_lesklights"
+    }
+}

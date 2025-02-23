@@ -3,6 +3,7 @@
 #include "XMLparser.h"
 #include "outsidenetworking.h"
 #include "jsonparser.h"
+#include "insideNetworking.h"
 #define FASTLED_INTERRUPT_RETRY_COUNT 5
 #define FASTLED_ALLOW_INTERRUPTS 0
 
@@ -10,6 +11,7 @@
 StripeController stripe_controller = StripeController();
 AsyncWebServer server(80);
 JSONParser parser = JSONParser();
+InsideNetworking inside_networking = InsideNetworking();
 OutSideNetworking outside_networking = OutSideNetworking(&server, &stripe_controller, &parser);
 
 void setup() {
@@ -24,6 +26,7 @@ void setup() {
     Serial.println("Ca commence la machine3....!!!!");
     parser.setupByXML(&XMLlist);
     Serial.println("Ca commence la machine 4....!!!!");
+    inside_networking.setup();
     outside_networking.setup();
     parser.Add(&stripe_controller);
 

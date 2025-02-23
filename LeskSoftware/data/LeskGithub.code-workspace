@@ -10,6 +10,10 @@
 	],
 	"settings": {
 		"files.associations": {
+			"*.sqlbook": "sql",
+			"*.ndjson": "jsonl",
+			"*.dbclient-js": "javascript",
+			"*.ejs": "html",
 			"algorithm": "cpp",
 			"array": "cpp",
 			"atomic": "cpp",
@@ -99,7 +103,11 @@
 			"memory_resource": "cpp",
 			"csignal": "cpp",
 			"set": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"netfwd": "cpp",
+			"numbers": "cpp",
+			"semaphore": "cpp",
+			"text_encoding": "cpp"
 		}
 	}
 }

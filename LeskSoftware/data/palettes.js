@@ -63,3 +63,4 @@ const palettes = {
 };
 
 export default palettes;
+

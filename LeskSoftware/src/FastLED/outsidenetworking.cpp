@@ -13,20 +13,20 @@ OutSideNetworking::OutSideNetworking(AsyncWebServer* _server, StripeController* 
 void OutSideNetworking::setup() {
 
   // Initialize SPIFFS
-  if(!SPIFFS.begin(true)){
-    Serial.println("An Error has occurred while mounting SPIFFS");
-    return;
-  }
+  // if(!SPIFFS.begin(true)){
+  //   Serial.println("An Error has occurred while mounting SPIFFS");
+  //   return;
+  // }
 
-  const char* ssid = SSID; 
-  const char* password = SSID_PASSWORD;
+  // const char* ssid = SSID; 
+  // const char* password = SSID_PASSWORD;
 
-  // Connect to Wi-Fi
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi..");
-  }
+  // // Connect to Wi-Fi
+  // WiFi.begin(ssid, password);
+  // while (WiFi.status() != WL_CONNECTED) {
+  //   delay(1000);
+  //   Serial.println("Connecting to WiFi..");
+  // }
 
   // Print ESP32 Local IP Address
     Serial.println(WiFi.localIP());
