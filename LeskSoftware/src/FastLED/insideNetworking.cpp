@@ -1,10 +1,6 @@
 #include "insideNetworking.h"
 #include "../../.variables/variables.h"
 
-
-char* ssid = SSID_LOCAL; 
-char* password = SSID_PASSWORD_LOCAL;
-
 // Structure to send/receive data
 typedef struct {
     char message[32];
@@ -20,18 +16,33 @@ typedef struct {
 //Fourth we decide to make it a master 
 
 InsideNetworking::InsideNetworking() {
+
 }
 
 
 void InsideNetworking::setup() {
+    // Set the SSID and the password
     this->setSSID(SSID_LOCAL);
     this->setPassword(SSID_PASSWORD_LOCAL);
 
-    this->connectToWifi();
-    if (WiFi.status() == WL_CONNECTED) {
+    // Tries to connect to the wifi
+    this->connectToWifi(this->getSSID(), this->getPassword());
+
+    // Here we go in the case of not being connected to the wifi
+    // So I will, for the sake fo simplicity, divide those portions
+    Serial.print("Point 1648: Status --> ");
+    Serial.println(WiFi.status());
+    if (WiFi.status() == WL_CONNECT_FAILED) {
+        // We start by being a client
         this->setRole(CLIENT);
-        Serial.println("Connected to WiFi et nique sa mère la réré");
+        // Setting WiFi.mode and WiFi.disconnect helps to 
+        WiFi.mode(WIFI_STA);
+        WiFi.disconnect();
+        // We scann all the networks
         std::vector<std::pair<std::string, int>> network_map = this->scanAndSort();
+        // if we have at least one network
+        Serial.print("Size of network map: ");
+        Serial.println(network_map.size());
         if (network_map.size() > 0) {
             std::vector<std::pair<std::string, int>> result_lesk;
             // Here we check all the networks we have in memory
@@ -47,11 +58,13 @@ void InsideNetworking::setup() {
                 Serial.println("Failed to parse JSON file");
                 return;
             }
-            Serial.println("Point 98788: The JSON");
+            Serial.println("Point 98789: The JSON");
             Serial.println(doc["networks"].size());
             for (int i = 0; i < doc["networks"].size(); i++) {
                 std::string ssid = doc["networks"]["networks" + String(i)]["ssid"];
+                std::string password = doc["networks"]["networks" + String(i)]["password"];
                 Serial.println(ssid.c_str());
+                Serial.println(password.c_str());
             }
         }
     } else {
@@ -124,8 +137,8 @@ void InsideNetworking::setup() {
                       return;
                     }
                     // Register callbacks
-                    esp_now_register_send_cb(OnDataSent);
-                    esp_now_register_recv_cb(OnDataRecv);
+                    esp_now_register_send_cb(InsideNetworking::OnDataSent);
+                    esp_now_register_recv_cb(InsideNetworking::OnDataRecv);
 
                     // Send a broadcast message asking, "Are you the master?"
                     esp_now_message query;
@@ -170,23 +183,29 @@ void InsideNetworking::setup() {
             const char* password_temp = doc["personal_network"]["password"];
             WiFi.softAP(ssid_temp, password_temp);
             // Set the ESP-Now functions for master
-            esp_now_register_send_cb(OnDataSent);
-            esp_now_register_recv_cb(OnDataRecv);
+            esp_now_register_send_cb(InsideNetworking::OnDataSent);
+            esp_now_register_recv_cb(InsideNetworking::OnDataRecv);
         }
     }
-
-
-
 }
 
-void InsideNetworking::connectToWifi() {
+void InsideNetworking::connectToWifi(char * ssid, char * password) {
+    Serial.print("Pt9745: SSID in connectToWifi --> ");
+    Serial.println(ssid);
+    Serial.print("Pt 9746: PWD in connectToWifi --> ");
+    Serial.println(password); 
     WiFi.begin(ssid, password);
     int attempt = 0;
     // Here we try to connect
-    while (WiFi.status() != WL_CONNECTED && attempt < 10) {
+    while (WiFi.status() != WL_CONNECTED && attempt < 3) {
       delay(1000);
       Serial.println("Connecting to WiFi...");
+      Serial.print("Pt 5475: Attempts --> ");
+      Serial.println(attempt);
       attempt++;
+    }
+    if (WiFi.status() != WL_CONNECTED) {
+        WiFi._setStatus(WL_CONNECT_FAILED);
     }
 }
 
@@ -195,11 +214,16 @@ void InsideNetworking::setRole(enum role roleToSet) {
 }
 
 std::vector<std::pair<std::string, int>> InsideNetworking::scanAndSort() {
+    // WiFi.mode(WIFI_STA);
     int networksFound = WiFi.scanNetworks();
+    Serial.print("PT 44444: Number of networks found --> ");
+    Serial.println(networksFound);
     std::vector<std::pair<std::string, int>> network_map;
     for (int i = 0; i < networksFound; ++i) {
         std::string ssid_temp = WiFi.SSID(i).c_str();
         network_map.push_back(std::make_pair(ssid_temp, WiFi.RSSI(i)));
+        Serial.print("Pt 9747: SSID --> ");
+        Serial.println(ssid_temp.c_str());
     }
     auto cmp = [](std::pair<std::string, int> a, std::pair<std::string, int>b) { return a.second > b.second; };
 
@@ -207,7 +231,7 @@ std::vector<std::pair<std::string, int>> InsideNetworking::scanAndSort() {
     return network_map;
 }
 
-bool hasEnding (std::string const &fullString, std::string const &ending) {
+bool InsideNetworking::hasEnding(std::string const &fullString, std::string const &ending) {
     if (fullString.length() >= ending.length()) {
         return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
     } else {
@@ -230,12 +254,12 @@ char* InsideNetworking::getPassword() {
 }
 
 // Callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+void InsideNetworking::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
 
 // Callback when data is received
-void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
+void InsideNetworking::OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
     esp_now_message receivedMessage;
     memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
     
