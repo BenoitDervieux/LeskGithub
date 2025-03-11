@@ -22,7 +22,10 @@ class InsideNetworking2 {
         static void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len);
         void attemptToConnectToUsualWifi();
         void checkPreviousConnexion(std::vector<std::pair<std::string, int>> network_map);
-    
+        bool checkLesksAround(std::vector<std::pair<std::string, int>> network_map);
+        void tryToEstablishLeskConnexion();
+        void initializeAndRegisterEspFunction();
+        void sendRequestForMaster();
     private:
         void connectToWifi(char * ssid, char * password);
         void setRole(enum role role);

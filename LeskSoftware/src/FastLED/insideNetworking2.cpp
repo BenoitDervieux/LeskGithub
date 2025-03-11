@@ -7,6 +7,10 @@ typedef struct {
     bool isMaster;
 } esp_now_message;
 
+// Broadcast address
+uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+
 // The idea of this setup is that
 // first we try to connect to the wifi
 // Second we check if there isn't other networks available that we know of
@@ -32,6 +36,12 @@ void InsideNetworking2::setup() {
         // We scann all the networks
         std::vector<std::pair<std::string, int>> network_map = this->scanAndSort();
         this->checkPreviousConnexion(network_map);
+        if (WiFi.status() != WL_CONNECTED) {
+            bool foundOtherLesk = this->checkLesksAround(network_map);
+            if (foundOtherLesk) {
+                tryToEstablishLeskConnexion();
+            }
+        }
         
     }
 }
@@ -55,13 +65,13 @@ void InsideNetworking2::checkPreviousConnexion(std::vector<std::pair<std::string
         Serial.println("Failed to parse JSON file");
         return;
     }
-    Serial.println("Point 98789: The JSON");
-    Serial.println(network_map.size());
+    // Serial.println("Point 98789: The JSON");
+    // Serial.println(network_map.size());
     for (int i = 0; i < doc["networks"].size(); i++) {
         std::string ssid = doc["networks"]["networks" + String(i)]["ssid"];
         std::string password = doc["networks"]["networks" + String(i)]["password"];
-        Serial.println(ssid.c_str());
-        Serial.println(password.c_str());
+        // Serial.println(ssid.c_str());
+        // Serial.println(password.c_str());
         for (int j = 0; j < network_map.size(); j++) {
             if (network_map[j].first == ssid) {
                 Serial.println(network_map[j].first.c_str());
@@ -71,8 +81,29 @@ void InsideNetworking2::checkPreviousConnexion(std::vector<std::pair<std::string
         }
         Serial.println("");
     }
+}
+
+bool InsideNetworking2::checkLesksAround(std::vector<std::pair<std::string, int>> network_map) {
+    Serial.println("In the method checkLeskAround...");
+    bool foundOtherLesk = false;
+    for (auto n : network_map) {
+        if (n.first.find("lesklights") != std::string::npos) {
+            Serial.println("Found a Lesk around...");
+            foundOtherLesk = true;
+        }
+        Serial.println(n.first.c_str());
+    }
+
+    return foundOtherLesk;
+}
+
+void InsideNetworking2::tryToEstablishLeskConnexion() {
+    this->initializeAndRegisterEspFunction();
+    this->sendRequestForMaster();
+
 
 }
+
 
 void InsideNetworking2::connectToWifi(char * ssid, char * password) {
     Serial.print("Pt9745: SSID in connectToWifi --> ");
@@ -139,6 +170,38 @@ char* InsideNetworking2::getSSID() {
 }
 char* InsideNetworking2::getPassword() {
     return this->password;
+}
+
+// RegisterEspFunction
+void InsideNetworking2::initializeAndRegisterEspFunction() {
+        // Initialize ESP-NOW
+        if (esp_now_init() != ESP_OK) {
+            Serial.println("ESP-NOW Init Failed");
+            return;
+        }
+        // Register callbacks
+        esp_now_register_send_cb(InsideNetworking2::OnDataSent);
+        esp_now_register_recv_cb(InsideNetworking2::OnDataRecv);
+}
+
+void InsideNetworking2::sendRequestForMaster() {
+    // Send a broadcast message asking, "Are you the master?"
+    esp_now_message query;
+    strcpy(query.message, "Are you the master?");
+    query.isMaster = false;
+
+    // Add the broadcast address as a peer
+    esp_now_peer_info_t peerInfo;
+    memcpy(peerInfo.peer_addr, broadcastAddress, 6);
+    peerInfo.channel = 0;
+    peerInfo.encrypt = false;
+    if (esp_now_add_peer(&peerInfo) != ESP_OK) {
+        Serial.println("Failed to add broadcast peer");
+        return;
+    }
+    // Send the query
+    esp_now_send(broadcastAddress, (uint8_t *) &query, sizeof(query));
+    Serial.println("Broadcast query sent: Are you the master?");
 }
 
 // Callback when data is sent
