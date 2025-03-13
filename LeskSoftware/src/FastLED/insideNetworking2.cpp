@@ -10,6 +10,8 @@ typedef struct {
 // Broadcast address
 uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
+esp_now_peer_info_t peerInfo;
+InsideNetworking2::Role InsideNetworking2::role = CLIENT;
 
 // The idea of this setup is that
 // first we try to connect to the wifi
@@ -40,6 +42,9 @@ void InsideNetworking2::setup() {
             bool foundOtherLesk = this->checkLesksAround(network_map);
             if (foundOtherLesk) {
                 tryToEstablishLeskConnexion();
+            } 
+            if (role != SLAVE) {
+                becomeMaster();
             }
         }
         
@@ -99,8 +104,12 @@ bool InsideNetworking2::checkLesksAround(std::vector<std::pair<std::string, int>
 
 void InsideNetworking2::tryToEstablishLeskConnexion() {
     this->initializeAndRegisterEspFunction();
-    this->sendRequestForMaster();
-
+    int iteration = 0;
+    while (role != SLAVE && iteration < 10) {
+        this->sendRequestForMaster();
+        delay(1000);
+        iteration++;        
+    }
 
 }
 
@@ -128,8 +137,8 @@ void InsideNetworking2::connectToWifi(char * ssid, char * password) {
     }
 }
 
-void InsideNetworking2::setRole(enum role roleToSet) {
-    this->role = roleToSet;
+void InsideNetworking2::setRole(Role roleToSet) {
+    role = roleToSet;
 }
 
 std::vector<std::pair<std::string, int>> InsideNetworking2::scanAndSort() {
@@ -191,7 +200,6 @@ void InsideNetworking2::sendRequestForMaster() {
     query.isMaster = false;
 
     // Add the broadcast address as a peer
-    esp_now_peer_info_t peerInfo;
     memcpy(peerInfo.peer_addr, broadcastAddress, 6);
     peerInfo.channel = 0;
     peerInfo.encrypt = false;
@@ -202,6 +210,31 @@ void InsideNetworking2::sendRequestForMaster() {
     // Send the query
     esp_now_send(broadcastAddress, (uint8_t *) &query, sizeof(query));
     Serial.println("Broadcast query sent: Are you the master?");
+}
+
+void InsideNetworking2::becomeMaster() {
+    // Set the role has a master
+    role = MASTER;
+    Serial.println("Point 67128: Becoming a master");
+    fs::File listNetworks = SPIFFS.open("/networks.json", FILE_READ);
+    if (!listNetworks) {
+        Serial.println("Failed to open file");
+        // return;
+    }
+    DynamicJsonDocument doc(1024);
+    DeserializationError error = deserializeJson(doc, listNetworks);
+    listNetworks.close();
+    if (error) {
+        Serial.println("Failed to parse JSON file");
+        return;
+    }
+    Serial.println("Point 98788: The JSON");
+    const char* ssid_temp = doc["personal_network"]["ssid"];
+    const char* password_temp = doc["personal_network"]["password"];
+    WiFi.softAP(ssid_temp, password_temp);
+    // Set the ESP-Now functions for master
+    esp_now_register_send_cb(InsideNetworking2::OnDataSent);
+    esp_now_register_recv_cb(InsideNetworking2::OnDataRecv);
 }
 
 // Callback when data is sent
@@ -216,31 +249,12 @@ void InsideNetworking2::OnDataRecv(const uint8_t *mac, const uint8_t *incomingDa
     
     // Check if the response is from the master
     if (receivedMessage.isMaster && strcmp(receivedMessage.message, "Yes, I am the master.") == 0) {
-      Serial.println("Found master! Becoming a slave...");
-      
-      // Register the master as a peer
-      esp_now_peer_info_t peerInfo;
-      memcpy(peerInfo.peer_addr, mac, 6);
-      peerInfo.channel = 0;
-      peerInfo.encrypt = false;
-      if (esp_now_add_peer(&peerInfo) != ESP_OK) {
-        Serial.println("Failed to add master as peer");
-        return;
-      }
-      
-      Serial.println("Successfully became a slave.");
+        areYouTheMaster(mac);
+        role = SLAVE;
     }
     // Check if the message is "Are you the master?"
     if (strcmp(receivedMessage.message, "Are you the master?") == 0) {
-        Serial.println("Received query from a slave. Responding...");
-        
-        // Prepare the response
-        esp_now_message response;
-        strcpy(response.message, "Yes, I am the master.");
-        response.isMaster = true;
-        
-        // Send the response back to the sender
-        esp_now_send(mac, (uint8_t *) &response, sizeof(response));
+        if (role == MASTER) yesImTheMaster(mac);
     }
 
     /*
@@ -250,4 +264,39 @@ void InsideNetworking2::OnDataRecv(const uint8_t *mac, const uint8_t *incomingDa
     * But there is nothing here, only the slave/master connexion 
     *   
     */
+   if (receivedMessage.isMaster && std::string(receivedMessage.message).rfind("change", 0) == 0) {
+    Serial.println("Received change request from master.");
+    // Implement other type of logic here
+   }
+
 }
+
+void InsideNetworking2::areYouTheMaster(const uint8_t *mac) {
+    Serial.println("Found master! Becoming a slave..."); 
+    // Register the master as a peer
+    memcpy(peerInfo.peer_addr, mac, 6);
+    peerInfo.channel = 0;
+    peerInfo.encrypt = false;
+    if (esp_now_add_peer(&peerInfo) != ESP_OK) {
+      Serial.println("Failed to add master as peer");
+      return;
+    }
+    Serial.println("Successfully became a slave.");
+}
+
+void InsideNetworking2::yesImTheMaster(const uint8_t *mac) {
+    Serial.println("Received query from a slave. Responding...");
+    // Prepare the response
+    esp_now_message response;
+    strcpy(response.message, "Yes, I am the master.");
+    response.isMaster = true;
+    // Send the response back to the sender
+    esp_now_send(mac, (uint8_t *) &response, sizeof(response));
+}
+
+/*
+To do next: So check the fact of looping to check if the master is around
+I believe I'll need to add some delay before I get the answer
+As well as a return something (like as long as it's not connected continue for 10 times maybe)
+
+*/

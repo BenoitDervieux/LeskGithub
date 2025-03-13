@@ -12,10 +12,11 @@
 #include <vector>
 #include <utility>
 
-enum role {SLAVE, MASTER, SERVER, CLIENT };
+
 
 class InsideNetworking2 {
     public:
+        enum Role {SLAVE, MASTER, SERVER, CLIENT };
         InsideNetworking2();
         void setup();
         static void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status);
@@ -26,16 +27,20 @@ class InsideNetworking2 {
         void tryToEstablishLeskConnexion();
         void initializeAndRegisterEspFunction();
         void sendRequestForMaster();
+        static void areYouTheMaster(const uint8_t *mac);
+        static void yesImTheMaster(const uint8_t *mac);
+        void becomeMaster();
+        void setSlave();
     private:
         void connectToWifi(char * ssid, char * password);
-        void setRole(enum role role);
+        void setRole(Role role);
         void setSSID(char* ssidToSet);
         void setPassword(char* passwordToSet);
         bool hasEnding(std::string const &fullString, std::string const &ending);
         char* getSSID();
         char* getPassword();
         std::vector<std::pair<std::string, int>> scanAndSort();
-        enum role role;
+        static Role role;
         char* ssid;
         char* password;
 
