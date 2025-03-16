@@ -105,9 +105,9 @@ bool InsideNetworking2::checkLesksAround(std::vector<std::pair<std::string, int>
 void InsideNetworking2::tryToEstablishLeskConnexion() {
     this->initializeAndRegisterEspFunction();
     int iteration = 0;
-    while (role != SLAVE && iteration < 10) {
+    while (role != SLAVE && iteration < 20) {
         this->sendRequestForMaster();
-        delay(1000);
+        delay(100);
         iteration++;        
     }
 
@@ -198,6 +198,8 @@ void InsideNetworking2::sendRequestForMaster() {
     esp_now_message query;
     strcpy(query.message, "Are you the master?");
     query.isMaster = false;
+    Serial.print("Broadcasting query normalement:");
+    Serial.println(query.message);
 
     // Add the broadcast address as a peer
     memcpy(peerInfo.peer_addr, broadcastAddress, 6);
@@ -205,7 +207,8 @@ void InsideNetworking2::sendRequestForMaster() {
     peerInfo.encrypt = false;
     if (esp_now_add_peer(&peerInfo) != ESP_OK) {
         Serial.println("Failed to add broadcast peer");
-        return;
+    } else {
+        Serial.println("Successfully added broadcast peer michel");
     }
     // Send the query
     esp_now_send(broadcastAddress, (uint8_t *) &query, sizeof(query));
@@ -233,8 +236,7 @@ void InsideNetworking2::becomeMaster() {
     const char* password_temp = doc["personal_network"]["password"];
     WiFi.softAP(ssid_temp, password_temp);
     // Set the ESP-Now functions for master
-    esp_now_register_send_cb(InsideNetworking2::OnDataSent);
-    esp_now_register_recv_cb(InsideNetworking2::OnDataRecv);
+    this->initializeAndRegisterEspFunction();
 }
 
 // Callback when data is sent
@@ -246,6 +248,9 @@ void InsideNetworking2::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_
 void InsideNetworking2::OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
     esp_now_message receivedMessage;
     memcpy(&receivedMessage, incomingData, sizeof(receivedMessage));
+
+    Serial.print("Point 67128: Message received: ");
+    Serial.println(receivedMessage.message);
     
     // Check if the response is from the master
     if (receivedMessage.isMaster && strcmp(receivedMessage.message, "Yes, I am the master.") == 0) {
