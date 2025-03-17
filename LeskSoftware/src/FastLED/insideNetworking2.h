@@ -21,6 +21,12 @@ class InsideNetworking2 {
         void setup();
         static void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status);
         static void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len);
+
+        static void sentCallback(const uint8_t *macAddr, esp_now_send_status_t status);
+        static void receiveCallback(const uint8_t *macAddr, const uint8_t *data, int data_len);
+        static void formatMacAddress(const uint8_t *macAddr, char *buffer, int maxLength);
+        void broadcast(const String &message);
+
         void attemptToConnectToUsualWifi();
         void checkPreviousConnexion(std::vector<std::pair<std::string, int>> network_map);
         bool checkLesksAround(std::vector<std::pair<std::string, int>> network_map);

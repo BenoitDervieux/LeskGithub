@@ -40,10 +40,11 @@ void InsideNetworking2::setup() {
         this->checkPreviousConnexion(network_map);
         if (WiFi.status() != WL_CONNECTED) {
             bool foundOtherLesk = this->checkLesksAround(network_map);
-            if (foundOtherLesk) {
-                tryToEstablishLeskConnexion();
-            } 
+            // if (foundOtherLesk) {
+            //     tryToEstablishLeskConnexion();
+            // } 
             if (role != SLAVE) {
+                tryToEstablishLeskConnexion();
                 becomeMaster();
             }
         }
@@ -104,10 +105,12 @@ bool InsideNetworking2::checkLesksAround(std::vector<std::pair<std::string, int>
 
 void InsideNetworking2::tryToEstablishLeskConnexion() {
     this->initializeAndRegisterEspFunction();
+    WiFi.mode(WIFI_STA);
     int iteration = 0;
-    while (role != SLAVE && iteration < 20) {
-        this->sendRequestForMaster();
-        delay(100);
+    while (role != SLAVE && iteration < 10) {
+        // this->sendRequestForMaster();
+        this->broadcast("Is there a master here?");
+        delay(1000);
         iteration++;        
     }
 
@@ -186,11 +189,17 @@ void InsideNetworking2::initializeAndRegisterEspFunction() {
         // Initialize ESP-NOW
         if (esp_now_init() != ESP_OK) {
             Serial.println("ESP-NOW Init Failed");
-            return;
+            ESP.restart();
+            // return;
+        } else if (esp_now_init() == ESP_OK) {
+            Serial.println("ESP-NOW Init Success");
+            // Register callbacks
+            // esp_now_register_send_cb(InsideNetworking2::OnDataSent);
+            // esp_now_register_recv_cb(InsideNetworking2::OnDataRecv);
+            esp_now_register_send_cb(InsideNetworking2::sentCallback);
+            // esp_now_register_recv_cb(InsideNetworking2::receiveCallback);
+            esp_now_register_recv_cb(esp_now_recv_cb_t(InsideNetworking2::receiveCallback));
         }
-        // Register callbacks
-        esp_now_register_send_cb(InsideNetworking2::OnDataSent);
-        esp_now_register_recv_cb(InsideNetworking2::OnDataRecv);
 }
 
 void InsideNetworking2::sendRequestForMaster() {
@@ -215,10 +224,69 @@ void InsideNetworking2::sendRequestForMaster() {
     Serial.println("Broadcast query sent: Are you the master?");
 }
 
+void InsideNetworking2::broadcast(const String &message) {
+    // uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+    esp_now_peer_info_t peerInfo = {};
+    peerInfo.channel = 0;
+    peerInfo.encrypt = false;
+    memcpy(&peerInfo.peer_addr, broadcastAddress, 6);
+    if (!esp_now_is_peer_exist(broadcastAddress)) {
+        Serial.println("Peer is not existing. Adding broadcast peer");
+        if (esp_now_add_peer(&peerInfo) != ESP_OK){
+            Serial.println("Failed to add peer");
+            return;
+          }
+    }
+    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) message.c_str(), message.length());
+    if (result == ESP_OK) {
+        Serial.println("Broadcast message sent successfully");
+    } else if (result == ESP_ERR_ESPNOW_NOT_INIT) {
+        Serial.println("ESP-NOW not initialized");
+    } else if (result == ESP_ERR_ESPNOW_ARG) {
+        Serial.println("Invalid Argument");
+    } else if (result == ESP_ERR_ESPNOW_INTERNAL) {
+        Serial.println("Internal Error");
+    } else if (result == ESP_ERR_ESPNOW_NO_MEM) {
+        Serial.println("Out of Memory");
+    } else if (result == ESP_ERR_ESPNOW_NOT_FOUND) {
+      Serial.println("Peer not found.");
+    } else {
+      Serial.println("Unknown error");
+    }
+}
+
+void InsideNetworking2::formatMacAddress(const uint8_t *macAddr, char *buffer, int maxLength)
+{
+  snprintf(buffer, maxLength, "%02x:%02x:%02x:%02x:%02x:%02x", macAddr[0], macAddr[1], macAddr[2], macAddr[3], macAddr[4], macAddr[5]);
+}
+
+void InsideNetworking2::receiveCallback(const uint8_t *macAddr, const uint8_t *data, int data_len) {
+    char buffer[ESP_NOW_MAX_DATA_LEN + 1];
+    int msgLen = min (data_len, ESP_NOW_MAX_DATA_LEN);
+    strncpy(buffer, (const char *)data, msgLen);
+    buffer[msgLen] = '\0';
+    char macStr[18];
+    InsideNetworking2::formatMacAddress(macAddr, macStr, 18);
+    // debug log the message to the serial port
+    Serial.printf("Received message from: %s - %s\n", macStr, buffer);
+}
+
+void InsideNetworking2::sentCallback(const uint8_t *macAddr, esp_now_send_status_t status)
+{
+  char macStr[18];
+  InsideNetworking2::formatMacAddress(macAddr, macStr, 18);
+  Serial.print("Last Packet Sent to: ");
+  Serial.println(macStr);
+  Serial.print("Last Packet Send Status: ");
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+}
+
 void InsideNetworking2::becomeMaster() {
     // Set the role has a master
     role = MASTER;
     Serial.println("Point 67128: Becoming a master");
+    Serial.print("The role now: ");
+    Serial.println(role);
     fs::File listNetworks = SPIFFS.open("/networks.json", FILE_READ);
     if (!listNetworks) {
         Serial.println("Failed to open file");
@@ -231,10 +299,11 @@ void InsideNetworking2::becomeMaster() {
         Serial.println("Failed to parse JSON file");
         return;
     }
-    Serial.println("Point 98788: The JSON");
     const char* ssid_temp = doc["personal_network"]["ssid"];
     const char* password_temp = doc["personal_network"]["password"];
-    WiFi.softAP(ssid_temp, password_temp);
+    WiFi.mode(WIFI_AP);
+    // WiFi.softAP(ssid_temp, password_temp);
+    
     // Set the ESP-Now functions for master
     this->initializeAndRegisterEspFunction();
 }
